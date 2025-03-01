@@ -5,6 +5,7 @@ import { Box, useMediaQuery } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navBar";
 import MobileNav from "./components/mobileNav";
+import Footer from "./components/Footer"
 import NProgressHandler from "./NProgressHandler"; // Import the handler
 import Home from "./pages/Home";
 import Account from "./pages/Account";
@@ -47,7 +48,7 @@ const App = () => {
     <NProgressHandler /> {/* Global route progress bar */}
       {!isMobile && <Sidebar drawerOpen={drawerOpen} toggleDrawer={() => setDrawerOpen(!drawerOpen)} user={user} />}
       <Navbar toggleDrawer={() => setDrawerOpen(!drawerOpen)} />
-      <Box sx={{ minHeight: "calc(100vh - 56px)", background: "#000", color: "#fff", marginTop: "0rem" }}>
+      <Box sx={{ minHeight: "calc(100vh - 156px)", background: "#000", color: "#fff", marginTop: "0rem" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/account" element={<Account />} />
@@ -57,6 +58,7 @@ const App = () => {
           <Route path="/search" element={<Search />} />
         </Routes>
       </Box>
+      <Footer />
       {isMobile && <MobileNav />}
     </Router>
     </ThemeProvider>

@@ -88,7 +88,7 @@ const Search = () => {
   };
 
   return (
-    <Box className="main mt-4 mb-10 h-fit" sx={{paddingY: '3rem'}}>
+    <Box className="main mt-4a mb-10 h-fit" sx={{paddingY: '4rem'}}>
       {/* Search Bar */}
       <Box
         className="search-bar w-11/12 mx-auto"

@@ -12,7 +12,7 @@ const MovieCard = ({ result }) => {
             src={result.poster_path ? `https://image.tmdb.org/t/p/w342${result.poster_path}` : "/error.svg"}
             alt={result.title || "Movie Poster"}
             className="poster mx-auto hover:scale-105 transform transition ease-in-out duration-300"
-            style={{ width: "100%", borderRadius: "8px" }}
+            style={{ width: "100%", height:"240px", objectFit: "cover", borderRadius: "8px" }}
           />
         </Box>
         <Box className="text mx-auto" sx={{ width: "11rem", textAlign: "center", color: "white", mt: 1 }}>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Box, CircularProgress, Typography, Rating, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -6,9 +6,21 @@ const HomeBanner = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [randomMovie, setRandomMovie] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [rating, setRating] = useState(null);
+  const scrollY = useRef(0);
 
   useEffect(() => {
     fetchRandomMovie();
+
+    const handleScroll = () => {
+      scrollY.current = window.scrollY * 0.6; // Parallax speed
+      requestAnimationFrame(() => {
+        document.getElementById("banner-image").style.transform = `translateY(${scrollY.current}px)`;
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const fetchRandomMovie = async () => {
@@ -25,7 +37,7 @@ const HomeBanner = () => {
       );
 
       const data = await response.json();
-      const movies = data.results.filter((movie) => movie.backdrop_path); // Ensure backdrop exists
+      const movies = data.results.filter((movie) => movie.backdrop_path);
 
       if (movies.length === 0) {
         setIsLoading(false);
@@ -33,7 +45,10 @@ const HomeBanner = () => {
       }
 
       const randomIndex = Math.floor(Math.random() * movies.length);
-      setRandomMovie(movies[randomIndex]);
+      const selectedMovie = movies[randomIndex];
+
+      setRandomMovie(selectedMovie);
+      setRating((selectedMovie.vote_average / 2).toFixed(1));
     } catch (error) {
       console.error("Error fetching movies:", error);
     } finally {
@@ -42,7 +57,7 @@ const HomeBanner = () => {
   };
 
   return (
-    <Box sx={{ position: "relative", height: { xs: "60vh", md: "70vh" }, background: "#000", color: "#fff" }}>
+    <Box sx={{ position: "relative", height: { xs: "60vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
       {isLoading ? (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
           <CircularProgress />
@@ -50,7 +65,7 @@ const HomeBanner = () => {
       ) : (
         randomMovie && (
           <>
-            {/* Preload image but keep it hidden */}
+            {/* Preload Image */}
             <img
               src={`https://image.tmdb.org/t/p/original${randomMovie.backdrop_path}`}
               alt="Movie Background"
@@ -58,13 +73,16 @@ const HomeBanner = () => {
               style={{ display: "none" }}
             />
 
-            {/* Background Image with Transition */}
+            {/* Parallax Background with Gradient */}
             <Box
+              id="banner-image"
               sx={{
                 position: "absolute",
                 inset: 0,
                 backgroundImage: imageLoaded
-                  ? `linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url(https://image.tmdb.org/t/p/original${randomMovie.backdrop_path})`
+                  ? `linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2)), 
+                     linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.2)), 
+                     url(https://image.tmdb.org/t/p/original${randomMovie.backdrop_path})`
                   : "none",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -73,41 +91,28 @@ const HomeBanner = () => {
               }}
             />
 
-            {/* Movie Info (Always Visible) */}
-            <Box
-              sx={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
-                alignItems: "center",
-                px: { xs: 2, md: 12 },
-                zIndex: 1,
-              }}
-            >
+            {/* Movie Info */}
+            <Box sx={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", px: { xs: 2, md: 12 }, zIndex: 1 }}>
               <Box sx={{ maxWidth: "600px", borderRadius: 2 }}>
                 <Link to={`/info/${randomMovie.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                  <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 600, md: 700 } }}>{randomMovie.title}</Typography>
+                  <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 600, md: 700 } }}>
+                    {randomMovie.title}
+                  </Typography>
                 </Link>
-                <Grid 
-                container 
-                direction={{ xs: "column", md: "row" }} // Column on small screens, row on medium+
-                alignItems="left" 
-                spacing={0.4} 
-                sx={{ mt: 2, opacity: 0.9 }}
-              >
-                <Grid item>
-                  <Rating value={Math.random() * (5 - 2) + 2} readOnly size="large" />
+                <Grid container direction={{ xs: "column", md: "row" }} alignItems="left" spacing={0.4} sx={{ mt: 2, opacity: 0.9 }}>
+                  <Grid item>
+                    <Rating value={Number(rating)} readOnly size="large" />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1">{randomMovie.popularity.toFixed()} Reviews</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1">{randomMovie.vote_count} Votes</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Typography variant="body1">{randomMovie.popularity.toFixed()} Reviews</Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">{randomMovie.vote_count} Votes</Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
-                </Grid>
-              </Grid>
                 <Typography variant="body2" sx={{ mt: 2, opacity: 0.9, display: { xs: "none", md: "block" } }}>
                   {randomMovie.overview.slice(0, 300)}...
                 </Typography>

@@ -11,7 +11,7 @@ const Navbar = ({ toggleDrawer }) => {
   const isMobile = useMediaQuery("(max-width: 768px)"); // Check if screen width is 768px or smaller
 
   return (
-    <AppBar position="fixed" sx={{ background: "rgba(0, 0, 0, 0.8)" }}>
+    <AppBar position="fixed" sx={{ background: "rgba(0, 0, 0, 0.6)", backdropFilter: "blur(4px)" }}>
       <Toolbar>
         {!isMobile && (
         <IconButton edge="start" color="inherit" onClick={toggleDrawer}>

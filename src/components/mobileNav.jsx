@@ -17,6 +17,7 @@ const MobileNav = () => {
       sx={{
         position: "fixed",
         bottom: 0,
+        zIndex: 99,
         width: "100%",
         backgroundColor: "#121212", // Dark background
       }}
