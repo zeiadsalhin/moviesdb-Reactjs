@@ -5,9 +5,9 @@ import Typography from "@mui/material/Typography";
 
 const MovieCard = ({ result }) => {
   return (
-    <Box className="movie-item" sx={{ flexBasis: "14%", height: "fit-content", padding: "8px" }}>
+    <Box className="movie-item" sx={{ flexBasis: "8%", height: "fit-content", padding: "2px" }}>
       <Link to={`/info/${result.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-        <Box className="imagecover" sx={{ width: "11rem", height: "fit-content", overflow: "hidden", borderRadius: "8px" }}>
+        <Box className="imagecover" sx={{ marginInline: "auto", width: 160, height: "fit-content", overflow: "hidden", borderRadius: "8px" }}>
           <img
             src={result.poster_path ? `https://image.tmdb.org/t/p/w342${result.poster_path}` : "/error.svg"}
             alt={result.title || "Movie Poster"}
@@ -15,7 +15,7 @@ const MovieCard = ({ result }) => {
             style={{ width: "100%", height:"240px", objectFit: "cover", borderRadius: "8px" }}
           />
         </Box>
-        <Box className="text mx-auto" sx={{ width: "11rem", textAlign: "center", color: "white", mt: 1 }}>
+        <Box className="text mx-auto" sx={{ width: "10rem", textAlign: "center", color: "white", mt: 1 }}>
           <Typography variant="h6" sx={{ fontSize: "1rem" }}>
             {result.title || result.original_name}
           </Typography>

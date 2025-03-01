@@ -52,70 +52,70 @@ const MoviesPage = () => {
           <MediaList
             title="Action Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=28&language=en-US&page=1"
-            viewAllRoute="/action/movies"
+            viewAllRoute="/action/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Adventure Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=12&language=en-US&page=1"
-            viewAllRoute="/adventure/movies"
+            viewAllRoute="/adventure/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Crime Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=80&language=en-US&page=1"
-            viewAllRoute="/crime/movies"
+            viewAllRoute="/crime/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Documentaries"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=99&language=en-US&page=1"
-            viewAllRoute="/documentary/movies"
+            viewAllRoute="/documentary/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="History Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=36&language=en-US&page=1"
-            viewAllRoute="/history/movies"
+            viewAllRoute="/history/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Horror Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=27&language=en-US&page=1"
-            viewAllRoute="/horror/movies"
+            viewAllRoute="/horror/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Sci-Fi Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=878&language=en-US&page=1"
-            viewAllRoute="/sci-fi/movies"
+            viewAllRoute="/sci-fi/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Thriller Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=53&language=en-US&page=1"
-            viewAllRoute="/thriller/movies"
+            viewAllRoute="/thriller/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="War Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=10752&language=en-US&page=1"
-            viewAllRoute="/war/movies"
+            viewAllRoute="/war/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Latest Movies"
             apiEndpoint="https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
-            viewAllRoute="/latest/movies"
+            viewAllRoute="/latest/movie"
             mediaType="movie"
           />
 
@@ -129,7 +129,7 @@ const MoviesPage = () => {
           <MediaList
             title="Trending Movies"
             apiEndpoint="https://api.themoviedb.org/3/trending/movie/week?language=en-US"
-            viewAllRoute="/trending/movies"
+            viewAllRoute="/trending/movie"
             mediaType="movie"
           />
 

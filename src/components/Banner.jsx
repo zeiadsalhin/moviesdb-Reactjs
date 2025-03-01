@@ -15,7 +15,10 @@ const HomeBanner = () => {
     const handleScroll = () => {
       scrollY.current = window.scrollY * 0.6; // Parallax speed
       requestAnimationFrame(() => {
-        document.getElementById("banner-image").style.transform = `translateY(${scrollY.current}px)`;
+        const bannerImage = document.getElementById("banner-image");
+        if (bannerImage) {
+          bannerImage.style.transform = `translateY(${scrollY.current}px)`;
+        }
       });
     };
 

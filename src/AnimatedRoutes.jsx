@@ -3,18 +3,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Favorites from "./pages/Favorites";
-import Account from "./pages/Account";
 import Movies from "./pages/Movies";
+import Account from "./pages/Account";
 import About from "./pages/About";
+import ViewAll from "./pages/ViewAll";
 
 const pageVariants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.125 } },
-  exit: { opacity: 0, transition: { duration: 0.125 } },
+  animate: { opacity: 1, transition: { duration: 0.3 } },
+  exit: { opacity: 0, transition: { duration: 0 } },
 };
 
 const AnimatedRoutes = () => {
-  const location = useLocation(); // Get current location
+  const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
@@ -23,9 +24,12 @@ const AnimatedRoutes = () => {
           { path: "/", Component: Home },
           { path: "/search", Component: Search },
           { path: "/favorites", Component: Favorites },
-          { path: "/account", Component: Account },
           { path: "/movies", Component: Movies },
+          { path: "/account", Component: Account },
           { path: "/about", Component: About },
+
+          // View All Pages for Movies & TV Shows
+          { path: "/:category/:type", Component: ViewAll },
         ].map(({ path, Component }) => (
           <Route
             key={path}
