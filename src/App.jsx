@@ -1,18 +1,13 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { Box, useMediaQuery } from "@mui/material";
+import AnimatedRoutes from "./AnimatedRoutes";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navBar";
 import MobileNav from "./components/mobileNav";
 import Footer from "./components/Footer"
 import NProgressHandler from "./NProgressHandler"; // Import the handler
-import Home from "./pages/Home";
-import Account from "./pages/Account";
-import Movies from "./pages/Movies";
-import Favorites from "./pages/Favorites";
-import About from "./pages/About";
-import Search from "./pages/Search";
 import darkTheme from "./theme";
 
 
@@ -49,14 +44,7 @@ const App = () => {
       {!isMobile && <Sidebar drawerOpen={drawerOpen} toggleDrawer={() => setDrawerOpen(!drawerOpen)} user={user} />}
       <Navbar toggleDrawer={() => setDrawerOpen(!drawerOpen)} />
       <Box sx={{ minHeight: "calc(100vh - 156px)", background: "#000", color: "#fff", marginTop: "0rem" }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/search" element={<Search />} />
-        </Routes>
+          <AnimatedRoutes /> {/* Fade Animation when Navigating */}
       </Box>
       <Footer />
       {isMobile && <MobileNav />}

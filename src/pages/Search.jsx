@@ -46,7 +46,7 @@ const Search = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/multi?query=${search}&include_adult=false&language=en-US&page=${currentPage}`,
+        `https://api.themoviedb.org/3/search/multi?query=${search}&include_adult=true&language=en-US&page=${currentPage}`,
         {
           method: "GET",
           headers: { accept: "application/json", Authorization: import.meta.env.VITE_API_KEY },
