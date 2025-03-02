@@ -78,7 +78,7 @@ const DetailsPage = () => {
         <img
           src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
           alt="Movie Background"
-          onLoad={() => setTimeout(() => {setImageLoaded(true)},200)}
+          onLoad={() => setTimeout(() => {setImageLoaded(true)},100)}
           style={{ display: "none" }}
         />
 
@@ -236,7 +236,7 @@ const DetailsPage = () => {
           </Typography>  
         </Box>
       </Box> 
-      <Box sx={{px: { xs: 2, md: 12 }}}>
+      <Box sx={{px: { xs: 2, md: 12 }, pb:8}}>
       <Trailers id={data.id} type={type}  /> 
       <Cast id={data.id} type={type}  />
       <SimilarMedia mediaId={data.id} mediaType={type}  />
