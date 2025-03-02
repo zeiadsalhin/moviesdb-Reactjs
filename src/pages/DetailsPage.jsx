@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Box, Typography, Button, CircularProgress, Grid, Rating } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import AddIcon from '@mui/icons-material/Add';
 import Trailers from "../components/Trailers"
+import Cast from "../components/Cast";
+import SimilarMedia from "../components/SimilarMedia";
 
 const DetailsPage = () => {
   const { type, id } = useParams();
@@ -71,10 +73,10 @@ const DetailsPage = () => {
   return (
     <> 
       {/* Banner Section */}
-      <Box sx={{ position: "relative", height: { xs: "50vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
+      <Box sx={{ position: "relative", height: { xs: "60vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
         {/* Preload Image */}
         <img
-          src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+          src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
           alt="Movie Background"
           onLoad={() => setImageLoaded(true)}
           style={{ display: "none" }}
@@ -86,8 +88,7 @@ const DetailsPage = () => {
             position: "absolute",
             inset: 0,
             backgroundImage: imageLoaded
-              ? `linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2)), 
-                 linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.2)), 
+              ? `linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.2)), 
                  url(https://image.tmdb.org/t/p/original${data.backdrop_path})`
               : "none",
             backgroundSize: "cover",
@@ -100,11 +101,9 @@ const DetailsPage = () => {
         {/* Movie Info */}
         <Box sx={{ position: "absolute", inset: 10, display: "flex", alignItems: "center", px: { xs: 2, md: 12 }, zIndex: 1 }}>
           <Box sx={{ maxWidth: "600px", borderRadius: 2 }}>
-            <Link to={`/${type}/${data.id}`} style={{ textDecoration: "none", color: "inherit" }}>
               <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 600, md: 700 } }}>
                 {data.title || data.name}
               </Typography>
-            </Link>
             <Grid container direction={{ xs: "column", md: "row" }} alignItems="left" spacing={0.4} sx={{ mt: 2, opacity: 0.9 }}>
               <Grid item>
                     <Rating value={Number(rating)} readOnly size="large" />
@@ -131,7 +130,7 @@ const DetailsPage = () => {
               variant="contained"
               color="error"
               startIcon={<PlayArrowIcon />}
-              href={data.homepage ? data.homepage : `https://yts.mx/movies/${data.title.toLowerCase().replace(/ /g, '-') + '-' + data.release_date.slice(0, 4)}`}
+              href={data.homepage ? data.homepage : `https://yts.mx/movies/${data.title?.toLowerCase().replace(/ /g, '-') + '-' + data.release_date?.slice(0, 4)}`}
               target="_blank"
               rel="noopener noreferrer"
               >
@@ -165,10 +164,10 @@ const DetailsPage = () => {
           <Typography variant="h4" sx={{ fontWeight: "bold", mb: 3 }}>
             {data.title || data.name}
           </Typography>
-          <Typography variant="h5" sx={{ fontWeight: "light", mb: 1 }}>
+          <Typography variant="h5" sx={{ mb: 1 }}>
             Storyline
           </Typography>
-          <Typography variant="body1" sx={{ opacity: 0.8, mb: 2 }}>
+          <Typography variant="body1" sx={{ opacity: 0.8, mb: 5 }}>
             {data.overview || "No overview available."}
           </Typography>
 
@@ -178,7 +177,7 @@ const DetailsPage = () => {
               variant="contained"
               color="error"
               startIcon={<PlayArrowIcon />}
-              href={data.homepage ? data.homepage : `https://yts.mx/movies/${data.title.toLowerCase().replace(/ /g, '-') + '-' + data.release_date.slice(0, 4)}`}
+              href={data.homepage ? data.homepage : `https://yts.mx/movies/${data.title?.toLowerCase().replace(/ /g, '-') + '-' + data.release_date?.slice(0, 4)}`}
               target="_blank"
               rel="noopener noreferrer"
               >
@@ -192,28 +191,28 @@ const DetailsPage = () => {
           <div className="h-1 w-[10rem] rounded-2xl bg-gray-800 mx-auto my-8"></div>
 
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-            Genres: {data.genres?.map((genre) => genre.name).join(", ") || "N/A"}
+            Genres: <span style={{ opacity: 0.7, fontWeight: 500 }}>{data.genres?.map((genre) => genre.name).join(", ") || "N/A"}</span>
           </Typography>
 
           <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-            Release Date: {data.release_date || data.first_air_date || "N/A"}
+            Release Date: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.release_date || data.first_air_date || "N/A"}</span>
           </Typography>
 
           <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-            Rating: {data.vote_average ? `${data.vote_average}/10` : "N/A"}
+            Rating: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.vote_average ? `${data.vote_average}` : "N/A"}</span>
           </Typography>
 
           {/* Additional Details */}
           {type === "movie" && (
             <>
               <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-                Duration: {data.runtime ? `${data.runtime} min` : "N/A"}
+                Duration: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.runtime ? `${data.runtime} min` : "N/A"}</span>
               </Typography>
               <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-                Budget: {data.budget ? `$${data.budget.toLocaleString()}` : "N/A"}
+                Budget: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.budget ? `$${data.budget.toLocaleString()}` : "N/A"}</span>
               </Typography>
               <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-                Revenue: {data.revenue ? `$${data.revenue.toLocaleString()}` : "N/A"}
+                Revenue: <span style={{ opacity: 0.7, fontWeight: 500 }}>{data.revenue ? `$${data.revenue.toLocaleString()}` : "N/A"}</span>
               </Typography>
             </>
           )}
@@ -221,24 +220,26 @@ const DetailsPage = () => {
           {type === "tv" && (
             <>
               <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-                Seasons: {data.number_of_seasons || "N/A"}
+                Seasons: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.number_of_seasons || "N/A"}</span>
               </Typography>
               <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-                Total Episodes: {data.number_of_episodes || "N/A"}
+                Total Episodes: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.number_of_episodes || "N/A"}</span>
               </Typography>
             </>
           )}
 
           <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-            Language: {data.original_language?.toUpperCase() || "N/A"}
+            Language: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.original_language?.toUpperCase() || "N/A"}</span>
           </Typography>
           <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-            Production: {data.production_companies?.map((p) => p.name).join(", ") || "N/A"}
+            Production: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.production_companies?.map((p) => p.name).join(", ") || "N/A"}</span>
           </Typography>  
         </Box>
       </Box> 
-      <Box sx={{px:1}}>
+      <Box sx={{px: { xs: 2, md: 12 }}}>
       <Trailers id={data.id} type={type}  /> 
+      <Cast id={data.id} type={type}  />
+      <SimilarMedia mediaId={data.id} mediaType={type}  />
       </Box>
     </>
   );

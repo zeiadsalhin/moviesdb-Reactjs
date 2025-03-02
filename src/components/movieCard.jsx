@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-const MovieCard = ({ result }) => {  
+const MovieCard = ({ result, type }) => {  
   return (
     <Box className="movie-item" sx={{ flexBasis: "8%", height: "fit-content", padding: "2px" }}>
-      <Link to={`/details/${result.media_type}/${result.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+      <Link to={`/details/${result.media_type || type}/${result.id}`} style={{ textDecoration: "none", color: "inherit" }}>
         <Box className="imagecover" sx={{ marginInline: "auto", width: 160, height: "fit-content", overflow: "hidden", borderRadius: "8px" }}>
           <img
             src={result.poster_path ? `https://image.tmdb.org/t/p/w342${result.poster_path}` : "/error.svg"}
@@ -39,6 +39,7 @@ MovieCard.propTypes = {
     release_date: PropTypes.string,
     poster_path: PropTypes.string,
   }).isRequired,
+  type: PropTypes.string,
 };
 
 export default MovieCard;
