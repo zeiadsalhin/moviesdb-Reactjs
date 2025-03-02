@@ -38,112 +38,112 @@ const MoviesPage = () => {
           <MediaList
             title="Upcoming Movies"
             apiEndpoint="https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1"
-            viewAllRoute="/upcoming/movie"
+            viewAllRoute="/all/upcoming/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Top Rated Movies"
             apiEndpoint="https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1"
-            viewAllRoute="/toprated/movie"
+            viewAllRoute="/all/toprated/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Action Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=28&language=en-US&page=1"
-            viewAllRoute="/action/movie"
+            viewAllRoute="/all/action/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Adventure Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=12&language=en-US&page=1"
-            viewAllRoute="/adventure/movie"
+            viewAllRoute="/all/adventure/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Crime Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=80&language=en-US&page=1"
-            viewAllRoute="/crime/movie"
+            viewAllRoute="/all/crime/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Documentaries"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=99&language=en-US&page=1"
-            viewAllRoute="/documentary/movie"
+            viewAllRoute="/all/documentary/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="History Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=36&language=en-US&page=1"
-            viewAllRoute="/history/movie"
+            viewAllRoute="/all/history/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Horror Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=27&language=en-US&page=1"
-            viewAllRoute="/horror/movie"
+            viewAllRoute="/all/horror/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Sci-Fi Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=878&language=en-US&page=1"
-            viewAllRoute="/sci-fi/movie"
+            viewAllRoute="/all/sci-fi/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Thriller Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=53&language=en-US&page=1"
-            viewAllRoute="/thriller/movie"
+            viewAllRoute="/all/thriller/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="War Movies"
             apiEndpoint="https://api.themoviedb.org/3/discover/movie?with_genres=10752&language=en-US&page=1"
-            viewAllRoute="/war/movie"
+            viewAllRoute="/all/war/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Latest Movies"
             apiEndpoint="https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
-            viewAllRoute="/latest/movie"
+            viewAllRoute="/all/latest/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Latest TV Shows"
             apiEndpoint="https://api.themoviedb.org/3/tv/on_the_air?language=en-US&page=1"
-            viewAllRoute="/latest/tv"
+            viewAllRoute="/all/latest/tv"
             mediaType="tv"
           />
 
           <MediaList
             title="Trending Movies"
             apiEndpoint="https://api.themoviedb.org/3/trending/movie/week?language=en-US"
-            viewAllRoute="/trending/movie"
+            viewAllRoute="/all/trending/movie"
             mediaType="movie"
           />
 
           <MediaList
             title="Trending TV Shows"
             apiEndpoint="https://api.themoviedb.org/3/trending/tv/week?language=en-US"
-            viewAllRoute="/trending/tv"
+            viewAllRoute="/all/trending/tv"
             mediaType="tv"
           />
 
           <MediaList
             title="Top Rated TV Shows"
             apiEndpoint="https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1"
-            viewAllRoute="/toprated/tv"
+            viewAllRoute="/all/toprated/tv"
             mediaType="tv"
           />
         </>

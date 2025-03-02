@@ -7,7 +7,7 @@ import Movies from "./pages/Movies";
 import Account from "./pages/Account";
 import About from "./pages/About";
 import ViewAll from "./pages/ViewAll";
-
+import ViewDetails from "./pages/DetailsPage";
 const pageVariants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.3 } },
@@ -29,7 +29,9 @@ const AnimatedRoutes = () => {
           { path: "/about", Component: About },
 
           // View All Pages for Movies & TV Shows
-          { path: "/:category/:type", Component: ViewAll },
+          { path: "/all/:category/:type", Component: ViewAll },
+          // View Details Movies & TV Shows
+          { path: "/details/:type/:id", Component: ViewDetails },
         ].map(({ path, Component }) => (
           <Route
             key={path}

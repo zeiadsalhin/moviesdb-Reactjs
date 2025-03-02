@@ -33,9 +33,9 @@ const HomeBanner = () => {
         {
           method: "GET",
           headers: {
-            accept: "application/json",
-            Authorization: import.meta.env.VITE_API_KEY,
-          },
+            accept: 'application/json',
+            Authorization: import.meta.env.VITE_API_KEY
+        }
         }
       );
 
@@ -97,7 +97,7 @@ const HomeBanner = () => {
             {/* Movie Info */}
             <Box sx={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", px: { xs: 2, md: 12 }, zIndex: 1 }}>
               <Box sx={{ maxWidth: "600px", borderRadius: 2 }}>
-                <Link to={`/info/${randomMovie.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                <Link to={`/details/movie/${randomMovie.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                   <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 600, md: 700 } }}>
                     {randomMovie.title}
                   </Typography>

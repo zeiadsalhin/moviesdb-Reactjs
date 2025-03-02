@@ -105,7 +105,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
             items.map((item) => (
               <Link
                 key={item.id}
-                to={`/${mediaType}/info/${item.id}`}
+                to={`/details/${mediaType}/${item.id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <Box

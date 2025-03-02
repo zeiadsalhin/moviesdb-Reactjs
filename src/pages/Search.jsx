@@ -120,7 +120,7 @@ const Search = () => {
       {/* Movie List */}
       {results.length > 0 ? (
         <Box className="movie-list flex justify-center">
-          <Box className="movie-row p-1" display="flex" flexWrap="wrap" justifyContent="center">
+          <Box className="movie-row p-1" display="flex" flexWrap="wrap" justifyContent="center" sx={{gap:3}}>
             {results.map((result) => (
               <MovieCard key={result.id} result={result} />
             ))}

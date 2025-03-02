@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -95,6 +96,11 @@ const Favorites = () => {
          </div> 
           ) : (
             movies.map((movie) => (
+              <Link
+                key={movie.id}
+                to={`/details/movie/${movie.id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
               <Card
                 key={movie.id}
                 sx={{
@@ -121,6 +127,7 @@ const Favorites = () => {
                   </Typography>
                 </CardContent>
               </Card>
+              </Link>
             ))
           )}
         </Box>

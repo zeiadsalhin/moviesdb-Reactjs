@@ -11,28 +11,28 @@ const Home = () => {
       <MediaList
         title="Latest Movies"
         apiEndpoint="https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
-        viewAllRoute="/latest/movies"
+        viewAllRoute="/all/latest/movies"
         mediaType="movie"
       />
 
       <MediaList
         title="Latest TV Shows"
         apiEndpoint="https://api.themoviedb.org/3/tv/on_the_air?language=en-US&page=1"
-        viewAllRoute="/latest/tv"
+        viewAllRoute="/all/latest/tv"
         mediaType="tv"
       />
 
       <MediaList
         title="Trending Movies"
         apiEndpoint="https://api.themoviedb.org/3/trending/movie/week?language=en-US"
-        viewAllRoute="/trending/movies"
+        viewAllRoute="/all/trending/movies"
         mediaType="movie"
       />
 
       <MediaList
         title="Trending TV Shows"
         apiEndpoint="https://api.themoviedb.org/3/trending/tv/week?language=en-US"
-        viewAllRoute="/trending/tv"
+        viewAllRoute="/all/trending/tv"
         mediaType="tv"
       />
     </div>
