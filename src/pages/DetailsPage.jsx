@@ -76,9 +76,9 @@ const DetailsPage = () => {
       <Box sx={{ position: "relative", height: { xs: "60vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
         {/* Preload Image */}
         <img
-          src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+          src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
           alt="Movie Background"
-          onLoad={() => setImageLoaded(true)}
+          onLoad={() => setTimeout(() => {setImageLoaded(true)},200)}
           style={{ display: "none" }}
         />
 
