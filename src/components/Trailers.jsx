@@ -9,6 +9,7 @@ const TrailerPhotos = ({ id, type }) => {
   const [images, setImages] = useState([]);
   const [videoKey, setVideoKey] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [error, setError] = useState(null);
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -24,10 +25,17 @@ const TrailerPhotos = ({ id, type }) => {
             },
           }
         );
+        if (!res.ok) throw new Error("Failed to fetch data");
+
         const data = await res.json();
         setImages(data.backdrops || []);
+
+        if(data.backdrops.length == 0) {
+          setError('Not Available')
+        }
       } catch (error) {
         console.error("Error fetching images:", error);
+        setError(error.message);
       }
     };
 
@@ -65,6 +73,17 @@ const TrailerPhotos = ({ id, type }) => {
       });
     }
   };
+
+  if (error) {
+    return (
+      <Box sx={{ py: 2 }}>
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+        Trailer & Photos
+      </Typography>
+        <Typography color="error" variant="body1" sx={{ textAlign: "center", mt: 4}}>{error}</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ mx: 2, position: "relative", overflow: "hidden" }}>

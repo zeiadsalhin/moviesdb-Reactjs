@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 const Cast = ({ id, type }) => {
   const [cast, setCast] = useState([]);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const scrollContainerRef = useRef(null);
 
@@ -20,8 +21,14 @@ const Cast = ({ id, type }) => {
             },
           }
         );
+        if (!response.ok) throw new Error("Failed to fetch data");
+
         const data = await response.json();
         setCast(data.cast || []);
+
+        if(data.cast.length == 0) {
+          setError('Not Available')
+        }
       } catch (error) {
         console.error("Error fetching cast:", error);
       } finally {
@@ -41,6 +48,17 @@ const Cast = ({ id, type }) => {
       });
     }
   };
+
+  if (error) {
+    return (
+      <Box sx={{ py: 2 }}>
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+        Cast
+      </Typography>
+        <Typography color="error" variant="body1" sx={{ textAlign: "center", mt: 4}}>{error}</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ mt: 3, p: 2, bgcolor: "background.default", borderRadius: 2 }}>
