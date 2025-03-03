@@ -1,7 +1,13 @@
+import { useEffect } from "react";
 import Banner from "../components/Banner";
 import MediaList from "../components/MediaList";
 
 const Home = () => {
+
+  useEffect(()=> {
+    document.title = 'The Movies - Home';
+  },[])
+
   return (
     <div className="pb-20">
       {/* Banner Section */}
@@ -11,7 +17,7 @@ const Home = () => {
       <MediaList
         title="Latest Movies"
         apiEndpoint="https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
-        viewAllRoute="/all/latest/movies"
+        viewAllRoute="/all/latest/movie"
         mediaType="movie"
       />
 
@@ -25,7 +31,7 @@ const Home = () => {
       <MediaList
         title="Trending Movies"
         apiEndpoint="https://api.themoviedb.org/3/trending/movie/week?language=en-US"
-        viewAllRoute="/all/trending/movies"
+        viewAllRoute="/all/trending/movie"
         mediaType="movie"
       />
 

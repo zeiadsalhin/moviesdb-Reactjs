@@ -18,6 +18,8 @@ const Favorites = () => {
   const scrollContainerRef = React.useRef(null);
 
   React.useEffect(() => {
+    document.title = 'The Movies - Trending';
+
     fetchMovies();
   }, []);
 

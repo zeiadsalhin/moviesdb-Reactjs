@@ -12,6 +12,8 @@ const Account = () => {
   const [avatarSrc, setAvatarSrc] = useState("");
 
   useEffect(() => {
+    document.title = 'The Movies - My Account';
+
     const fetchAccountInfo = async () => {
       try {
         setLoading(true);

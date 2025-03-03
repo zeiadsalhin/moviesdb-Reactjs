@@ -60,7 +60,7 @@ const HomeBanner = () => {
   };
 
   return (
-    <Box sx={{ position: "relative", height: { xs: "60vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
+    <Box sx={{ position: "relative", height: { xs: "50vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
       {isLoading ? (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
           <CircularProgress />

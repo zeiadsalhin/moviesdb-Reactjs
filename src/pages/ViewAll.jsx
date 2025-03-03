@@ -53,6 +53,8 @@ const ViewAll = () => {
   };
 
   useEffect(() => {
+    document.title = `The Movies - ${category.replace("-", " ").charAt(0).toUpperCase() + category.slice(1) + (type === "movie" ? " Movies" : " TV Shows")}`;
+
     setItems([]); // Reset items when category changes
     setPage(1);
     fetchItems();
@@ -75,7 +77,7 @@ const ViewAll = () => {
     <Box sx={{ py: 3 }}>
   <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2, mt: 10 }}>
     <Typography variant="h5" textAlign="center" sx={{ mb: 2, px: 3.5 }}>
-      {category.replace("-", " ").toUpperCase()} {type === "movie" ? "Movies" : "TV Shows"}
+      {category.replace("-", " ").charAt(0).toUpperCase() + category.slice(1)} {type === "movie" ? "Movies" : "TV Shows"}
     </Typography>
   </Box>
 
@@ -89,7 +91,7 @@ const ViewAll = () => {
     }}
   >
     {items.map((item) => (
-      <MovieCard key={item.id} result={item} />
+      <MovieCard key={item.id} result={item} type={type} />
     ))}
   </Box>
 

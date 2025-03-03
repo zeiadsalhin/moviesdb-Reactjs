@@ -3,8 +3,12 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { useEffect } from "react";
 
 const About = () => {
+  useEffect(()=> {
+    document.title = 'The Movies - About Us';
+  }, [])
   return (
     <Box className="about flex flex-col items-center text-center space-y-4" sx={{ paddingY: '8rem'}}>
       {/* Logo Section */}

@@ -6,6 +6,8 @@ const MoviesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    document.title = 'The Movies - Browse All Movies & TV Shows';
+
     setTimeout(() => {
       setIsLoading(false);
     }, 200);

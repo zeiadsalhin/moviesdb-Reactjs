@@ -8,6 +8,8 @@ import Account from "./pages/Account";
 import About from "./pages/About";
 import ViewAll from "./pages/ViewAll";
 import ViewDetails from "./pages/DetailsPage";
+// import ErrorPage from "./pages/Error404";
+
 const pageVariants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.3 } },
@@ -32,6 +34,8 @@ const AnimatedRoutes = () => {
           { path: "/all/:category/:type", Component: ViewAll },
           // View Details Movies & TV Shows
           { path: "/details/:type/:id", Component: ViewDetails },
+          // 404 Page
+          // { path: "*", Component: ErrorPage },
         ].map(({ path, Component }) => (
           <Route
             key={path}

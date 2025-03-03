@@ -15,6 +15,8 @@ const Search = () => {
   const debounceRef = useRef(null);
 
   useEffect(() => {
+    document.title = 'The Movies - Search Movies & TV Shows';
+
     if (window.pageYOffset === 0) {
       searchRef.current.scrollIntoView({ behavior: "smooth" });
       setTimeout(() => searchRef.current.focus(), 500);

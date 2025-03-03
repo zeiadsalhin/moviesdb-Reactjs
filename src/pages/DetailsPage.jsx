@@ -40,6 +40,9 @@ const DetailsPage = () => {
         const result = await response.json();
         setData(result);
         setRating((result.vote_average / 2).toFixed(1));
+
+        document.title = `${(result.title || result.name) } (${((result.release_date || result.first_air_date).slice(0, 4))}) - The Movies`;
+
       } catch (error) {
         console.error("Error fetching details:", error);
         setError(error.message);
@@ -73,7 +76,7 @@ const DetailsPage = () => {
   return (
     <> 
       {/* Banner Section */}
-      <Box sx={{ position: "relative", height: { xs: "60vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
+      <Box sx={{ position: "relative", height: { xs: "40vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
         {/* Preload Image */}
         <img
           src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
@@ -88,7 +91,7 @@ const DetailsPage = () => {
             position: "absolute",
             inset: 0,
             backgroundImage: imageLoaded
-              ? `linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.2)), 
+              ? `linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)), 
                  url(https://image.tmdb.org/t/p/original${data.backdrop_path})`
               : "none",
             backgroundSize: "cover",
@@ -101,7 +104,7 @@ const DetailsPage = () => {
         {/* Movie Info */}
         <Box sx={{ position: "absolute", inset: 10, display: "flex", alignItems: "center", px: { xs: 2, md: 12 }, zIndex: 1 }}>
           <Box sx={{ maxWidth: "600px", borderRadius: 2 }}>
-              <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 600, md: 700 } }}>
+              <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 500, md: 700 }, mt: 5 }}>
                 {data.title || data.name}
               </Typography>
             <Grid container direction={{ xs: "column", md: "row" }} alignItems="left" spacing={0.4} sx={{ mt: 2, opacity: 0.9 }}>
