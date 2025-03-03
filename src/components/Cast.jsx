@@ -51,7 +51,7 @@ const Cast = ({ id, type }) => {
 
   if (error) {
     return (
-      <Box sx={{ py: 2 }}>
+      <Box sx={{ py: 2, px:1 }}>
         <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
         Cast
       </Typography>
@@ -61,7 +61,7 @@ const Cast = ({ id, type }) => {
   }
 
   return (
-    <Box sx={{ mt: 3, p: 2, bgcolor: "background.default", borderRadius: 2 }}>
+    <Box sx={{ mt: 3, mx: 0, p: 2, bgcolor: "background.default", borderRadius: 2 }}>
       <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
         Cast
       </Typography>

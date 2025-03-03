@@ -77,7 +77,7 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
                     sx={{
                         position: 'absolute',
                         left: 0,
-                        top: '50%',
+                        top: '40%',
                         zIndex: 2,
                         bgcolor: "rgba(0,0,0,0.6)",
                         color: "white",
@@ -107,7 +107,7 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
                     sx={{
                         position: 'absolute',
                         right: 0,
-                        top: '50%',
+                        top: '40%',
                         zIndex: 2,
                         bgcolor: "rgba(0,0,0,0.6)",
                         color: "white",

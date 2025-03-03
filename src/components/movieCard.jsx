@@ -16,8 +16,8 @@ const MovieCard = ({ result, type }) => {
           />
         </Box>
         <Box className="text mx-auto" sx={{ width: "10rem", textAlign: "center", color: "white", mt: 1 }}>
-          <Typography variant="h6" sx={{ fontSize: "1rem" }}>
-            {result.title || result.original_name}
+          <Typography variant="h6" sx={{ fontSize: "1rem" }} noWrap>
+            {(result.title || result.original_name)}
           </Typography>
           {result.release_date && (
             <Typography variant="body2" sx={{ opacity: 0.7 }}>

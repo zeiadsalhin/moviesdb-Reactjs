@@ -51,6 +51,7 @@ const TrailerPhotos = ({ id, type }) => {
             },
           }
         );
+        fetchImages();
         const data = await res.json();
         if (data.results.length > 0) {
           setVideoKey(data.results[0].key);
@@ -60,7 +61,6 @@ const TrailerPhotos = ({ id, type }) => {
       }
     };
 
-    fetchImages();
     fetchVideos();
   }, [id, type]);
 
@@ -86,7 +86,7 @@ const TrailerPhotos = ({ id, type }) => {
   }
 
   return (
-    <Box sx={{ mx: 2, position: "relative", overflow: "hidden" }}>
+    <Box sx={{ mx: 1, position: "relative", overflow: "hidden" }}>
       <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
         Trailer & Photos
       </Typography>

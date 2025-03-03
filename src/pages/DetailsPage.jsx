@@ -240,7 +240,7 @@ const DetailsPage = () => {
           </Typography>  
         </Box>
       </Box> 
-      <Box sx={{px: { xs: 2, md: 12 }, pb:8}}>
+      <Box sx={{px: { xs: 2, md: 12 }, pb:5}}>
       <Trailers id={data.id} type={type}  /> 
       <Cast id={data.id} type={type}  />
       <SimilarMedia mediaId={data.id} mediaType={type}  />
