@@ -111,8 +111,10 @@ const TrailerPhotos = ({ id, type }) => {
         {videoKey && (
           <Box
             sx={{
-              minWidth: { xs: "100%", sm: "50%", md: "50rem" },
-              maxWidth: { md: "400px", lg: "800px" },
+              minWidth: { xs: "100%", sm: "34rem", md: "40rem" },
+              maxWidth: { md: "20rem", lg: "20rem" },
+              minHeight: { xs: "200px", sm: "300px", md: "200px" },
+              maxHeight: { xs: "200px", sm: "300px", md: "600px" },
               aspectRatio: "16/9",
               borderRadius: 2,
               overflow: "hidden",
@@ -148,8 +150,10 @@ const TrailerPhotos = ({ id, type }) => {
           <Box
             key={index}
             sx={{
-              minWidth: { xs: "100%", sm: "50%", md: "fit-content" },
-              maxWidth: { md: "400px", lg: "600px" },
+              minWidth: { xs: "100%", sm: "34rem", md: "40rem" },
+              maxWidth: { md: "20rem", lg: "20rem" },
+              minHeight: { xs: "200px", sm: "300px", md: "200px" },
+              maxHeight: { xs: "200px", sm: "300px", md: "600px" },
               aspectRatio: "16/9",
               borderRadius: 2,
               overflow: "hidden",

@@ -4,9 +4,11 @@ import { Box, Typography, Button, CircularProgress, Grid, Rating } from "@mui/ma
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import AddIcon from '@mui/icons-material/Add';
+import StarIcon from "@mui/icons-material/Star";
 import Trailers from "../components/Trailers"
 import Cast from "../components/Cast";
 import SimilarMedia from "../components/SimilarMedia";
+import { useMediaQuery } from "@mui/material"
 
 const DetailsPage = () => {
   const { type, id } = useParams();
@@ -17,6 +19,7 @@ const DetailsPage = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [rating, setRating] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -108,20 +111,41 @@ const DetailsPage = () => {
               <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 500, md: 700 }, mt: 0 }}>
                 {data.title || data.name}
               </Typography>
+            
             <Grid container direction={{ xs: "column", md: "row" }} alignItems="left" spacing={0} sx={{ mt: {xs: 1, md: 2}, opacity: 0.9 }}>
+              
               <Grid item>
                     <Rating value={Number(rating)} readOnly />
               </Grid>
+
+              <Grid container spacing={1} direction={{ xs: "column", md: "row" }}>
+              
               {data.popularity && (
                 <Grid item>
                   <Typography variant="body1">{data.popularity.toFixed()} Reviews</Typography>
                 </Grid>
               )}
+              
+              {!isMobile && (
+              <Grid item>
+              •
+              </Grid>
+              )}
+              
               <Grid item>
                 <Typography variant="body1">{data.vote_count} Votes</Typography>
               </Grid>
+              
+              {!isMobile && (
               <Grid item>
-                <Typography variant="body1">{data.release_date?.slice(0, 4)}</Typography>
+              •
+              </Grid>
+              )}
+              
+              <Grid item>
+                <Typography variant="body1" fontWeight="bold">{data.release_date?.slice(0, 4)}</Typography>
+              </Grid>
+              
               </Grid>
             </Grid>
             <Typography variant="body2" sx={{ mt: 1, opacity: 0.9, display: { xs: "none", md: "block" } }}>
@@ -129,7 +153,7 @@ const DetailsPage = () => {
             </Typography>
             
             {/* Watch Now and save Buttons */}
-             <Box sx={{display: "flex", gap:2, mt: 2}}>
+             <Box sx={{display: "flex", gap:2, mt: {xs: 2, md: 3}}}>
              <Button
               variant="contained"
               color="error"
@@ -203,7 +227,8 @@ const DetailsPage = () => {
           </Typography>
 
           <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-            Rating: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.vote_average ? `${data.vote_average}` : "N/A"}</span>
+            Rating: <span style={{ opacity: 0.7, fontWeight: 500 }}>{data.vote_average ? `${(data.vote_average).toFixed(1)}` : "N/A"}</span>
+            <StarIcon sx={{ fontSize: 18, color: "#FFD700", ml: 0.5, mb: 0.5 }} />
           </Typography>
 
           {/* Additional Details */}
@@ -242,7 +267,7 @@ const DetailsPage = () => {
       </Box> 
       <Box sx={{px: { xs: 2, md: 12 }, pb:5}}>
       <Trailers id={data.id} type={type}  /> 
-      <Cast id={data.id} type={type}  />
+      <Cast id={data.id} type={type} display={isMobile}  />
       <SimilarMedia mediaId={data.id} mediaType={type}  />
       </Box>
     </>

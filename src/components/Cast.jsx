@@ -2,15 +2,12 @@ import PropTypes from "prop-types";
 import { useState, useEffect, useRef } from "react";
 import { Box, Typography, IconButton, CircularProgress } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import { useMediaQuery } from "@mui/material"
 
-const Cast = ({ id, type }) => {
+const Cast = ({ id, type, display }) => {
   const [cast, setCast] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const scrollContainerRef = useRef(null);
-
-  const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     const fetchCast = async () => {
@@ -76,7 +73,7 @@ const Cast = ({ id, type }) => {
       ) : cast.length > 0 ? (
         <Box sx={{ position: "relative", overflow: "hidden" }}>
          
-         {(isMobile || !isMobile && cast.length > 12) && (
+         {(display || !display && cast.length > 12) && (
            <IconButton
            onClick={() => scroll("left")}
            sx={{
@@ -133,7 +130,7 @@ const Cast = ({ id, type }) => {
             ))}
           </Box>
 
-          {(isMobile || !isMobile && cast.length > 12) && (
+          {(display || !display && cast.length > 12) && (
             <IconButton
               onClick={() => scroll("right")}
               sx={{
@@ -163,6 +160,7 @@ const Cast = ({ id, type }) => {
 Cast.propTypes = {
   id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
+  display: PropTypes.bool.isRequired,
 };
 
 export default Cast;
