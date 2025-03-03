@@ -5,6 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { InvertColors } from "@mui/icons-material";
 
 const Account = () => {
   const [accountInfo, setAccountInfo] = useState(null);
@@ -50,7 +51,7 @@ const Account = () => {
         {loading ? (
           <CircularProgress />
         ) : (
-          <Avatar src={avatarSrc} alt="User Avatar" className="invert" sx={{ width: 100, height: 100 }} />
+          <Avatar src={avatarSrc} alt="User Avatar" className="invert" sx={{ width: 100, height: 100, filter: "invert(100%)" }} />
         )}
       </Box>
 
