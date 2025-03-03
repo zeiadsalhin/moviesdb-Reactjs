@@ -66,9 +66,9 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
                 <Typography variant="h5" fontWeight="bold">
                     Similar {mediaType === 'movie' ? 'Movies' : 'TV Shows'}
                 </Typography>
-                <Link to="/discover" style={{ marginLeft: 'auto', color: '#38bdf8', fontSize: '0.9rem' }}>
+                {/* <Link to="/discover" style={{ marginLeft: 'auto', color: '#38bdf8', fontSize: '0.9rem' }}>
                     View All
-                </Link>
+                </Link> */}
             </Box>
 
             <Box position="relative" sx={{ overflow: 'hidden', mt: 2 }}>
