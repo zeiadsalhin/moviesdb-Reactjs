@@ -111,8 +111,8 @@ const TrailerPhotos = ({ id, type }) => {
         {videoKey && (
           <Box
             sx={{
-              minWidth: { xs: "100%", sm: "50%", md: "40%" },
-              maxWidth: { md: "600px", lg: "700px" },
+              minWidth: { xs: "100%", sm: "50%", md: "50rem" },
+              maxWidth: { md: "400px", lg: "800px" },
               aspectRatio: "16/9",
               borderRadius: 2,
               overflow: "hidden",

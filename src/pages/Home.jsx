@@ -9,10 +9,11 @@ const Home = () => {
   },[])
 
   return (
-    <div className="pb-20">
+    <>
       {/* Banner Section */}
       <Banner />
-
+      
+      <div className="pb-20 md:px-8 md:max-w-[120rem] mx-auto">
       {/* Movies and TV Shows Sections */}
       <MediaList
         title="Latest Movies"
@@ -42,6 +43,7 @@ const Home = () => {
         mediaType="tv"
       />
     </div>
+    </>
   );
 };
 

@@ -2,12 +2,15 @@ import PropTypes from "prop-types";
 import { useState, useEffect, useRef } from "react";
 import { Box, Typography, IconButton, CircularProgress } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material"
 
 const Cast = ({ id, type }) => {
   const [cast, setCast] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const scrollContainerRef = useRef(null);
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     const fetchCast = async () => {
@@ -72,21 +75,24 @@ const Cast = ({ id, type }) => {
         </Box>
       ) : cast.length > 0 ? (
         <Box sx={{ position: "relative", overflow: "hidden" }}>
-          <IconButton
-            onClick={() => scroll("left")}
-            sx={{
-              position: "absolute",
-              left: 0,
-              top: "50%",
-              transform: "translateY(-50%)",
-              zIndex: 2,
-              bgcolor: "rgba(0,0,0,0.6)",
-              color: "white",
-              "&:hover": { bgcolor: "rgba(0,0,0,0.8)" },
-            }}
-          >
-            <ChevronLeft />
-          </IconButton>
+         
+         {(isMobile || !isMobile && cast.length > 12) && (
+           <IconButton
+           onClick={() => scroll("left")}
+           sx={{
+             position: "absolute",
+             left: 0,
+             top: "50%",
+             transform: "translateY(-50%)",
+             zIndex: 2,
+             bgcolor: "rgba(0,0,0,0.6)",
+             color: "white",
+             "&:hover": { bgcolor: "rgba(0,0,0,0.8)" },
+           }}
+         >
+           <ChevronLeft />
+         </IconButton>
+         )}
 
           <Box
             ref={scrollContainerRef}
@@ -110,6 +116,7 @@ const Cast = ({ id, type }) => {
                   alt={person.name}
                   style={{
                     width: "100%",
+                    maxWidth: "8rem",
                     borderRadius: "8px",
                     transition: "transform 0.3s ease-in-out",
                   }}
@@ -126,21 +133,23 @@ const Cast = ({ id, type }) => {
             ))}
           </Box>
 
-          <IconButton
-            onClick={() => scroll("right")}
-            sx={{
-              position: "absolute",
-              right: 0,
-              top: "50%",
-              transform: "translateY(-50%)",
-              zIndex: 2,
-              bgcolor: "rgba(0,0,0,0.6)",
-              color: "white",
-              "&:hover": { bgcolor: "rgba(0,0,0,0.8)" },
-            }}
-          >
-            <ChevronRight />
-          </IconButton>
+          {(isMobile || !isMobile && cast.length > 12) && (
+            <IconButton
+              onClick={() => scroll("right")}
+              sx={{
+                position: "absolute",
+                right: 0,
+                top: "50%",
+                transform: "translateY(-50%)",
+                zIndex: 2,
+                bgcolor: "rgba(0,0,0,0.6)",
+                color: "white",
+                "&:hover": { bgcolor: "rgba(0,0,0,0.8)" },
+              }}
+            >
+              <ChevronRight />
+            </IconButton>
+          )}
         </Box>
       ) : (
         <Typography sx={{ textAlign: "center", opacity: 0.7 }}>

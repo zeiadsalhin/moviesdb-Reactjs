@@ -60,7 +60,7 @@ const HomeBanner = () => {
   };
 
   return (
-    <Box sx={{ position: "relative", height: { xs: "50vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
+    <Box sx={{ position: "relative", height: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
       {isLoading ? (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
           <CircularProgress />
@@ -94,7 +94,7 @@ const HomeBanner = () => {
             />
 
             {/* Movie Info */}
-            <Box sx={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", px: { xs: 2, md: 12 }, zIndex: 1 }}>
+            <Box sx={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", px: { xs: 2, md: 6 }, zIndex: 1 }}>
               <Box sx={{ maxWidth: "600px", borderRadius: 2 }}>
                 <Link to={`/details/movie/${randomMovie.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                   <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 600, md: 700 } }}>

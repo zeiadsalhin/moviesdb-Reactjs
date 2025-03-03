@@ -13,7 +13,7 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
     React.useEffect(() => {
         const fetchSimilarMedia = async () => {
             try {
-                const response = await fetch(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/similar?language=en-US&page=1`, 
+                const response = await fetch(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/similar?&include_adult=false&language=en-US&page=1`, 
                     {
                         method: "GET",
                         headers: {

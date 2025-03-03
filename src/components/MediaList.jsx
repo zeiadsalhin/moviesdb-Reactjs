@@ -42,7 +42,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
 
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
-      const scrollAmount = 250;
+      const scrollAmount = 400;
       scrollContainerRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",

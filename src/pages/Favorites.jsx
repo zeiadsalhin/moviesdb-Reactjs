@@ -56,7 +56,7 @@ const Favorites = () => {
   };
 
   return (
-    <Box sx={{ px: 0, scale: 1, padding: '16px' }}>
+    <Box sx={{ px: {md:6}, scale: 1, padding: '16px' }}>
       
       {/* 🔥 Fire Icon Added Next to Title */}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, mt:10 }}>

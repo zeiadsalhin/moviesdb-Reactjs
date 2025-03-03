@@ -153,9 +153,9 @@ const DetailsPage = () => {
       </Typography>
 
       {/* Movie/TV Details */}
-      <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 3, m:3,py:2, alignItems: "center" }}>
+      <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 3, m:3, py: 2, px: { xs: 0, md: 10 }, alignItems: "center" }}>
         {/* Poster Image */}
-        <Box sx={{ width: { xs: "100%", md: "300px" } }}>
+        <Box sx={{ width: { xs: "100%", md: "23rem" } }}>
           <img
             src={data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : "/error.svg"}
             alt={data.title || data.name}

@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material"
@@ -15,13 +16,14 @@ const Navbar = ({ toggleDrawer }) => {
       <Toolbar>
         {!isMobile && (
         <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
-          <MenuIcon />
+          <MenuIcon fontSize="large" />
         </IconButton>
         )}
         <img src="/logo.png" alt="Logo" width="50" style={{ marginLeft: isMobile? '0px' : "auto", marginRight: "auto" }} />
-        <IconButton component={Link} to="/search" color="inherit">
-          <SearchIcon />
-        </IconButton>
+        <Button component={Link} to="/search" color="inherit" disableRipple>
+        {!isMobile && <span style={{ marginRight: "5px" }}>Search</span>}
+          <SearchIcon  />
+        </Button>
       </Toolbar>
     </AppBar>
   );
