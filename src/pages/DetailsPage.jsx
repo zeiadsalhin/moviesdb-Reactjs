@@ -108,9 +108,9 @@ const DetailsPage = () => {
               <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 500, md: 700 }, mt: 0 }}>
                 {data.title || data.name}
               </Typography>
-            <Grid container direction={{ xs: "column", md: "row" }} alignItems="left" spacing={0.4} sx={{ mt: 2, opacity: 0.9 }}>
+            <Grid container direction={{ xs: "column", md: "row" }} alignItems="left" spacing={0} sx={{ mt: {xs: 1, md: 2}, opacity: 0.9 }}>
               <Grid item>
-                    <Rating value={Number(rating)} readOnly size="large" />
+                    <Rating value={Number(rating)} readOnly />
               </Grid>
               {data.popularity && (
                 <Grid item>
@@ -124,7 +124,7 @@ const DetailsPage = () => {
                 <Typography variant="body1">{data.release_date?.slice(0, 4)}</Typography>
               </Grid>
             </Grid>
-            <Typography variant="body2" sx={{ mt: 2, opacity: 0.9, display: { xs: "none", md: "block" } }}>
+            <Typography variant="body2" sx={{ mt: 1, opacity: 0.9, display: { xs: "none", md: "block" } }}>
               {data.overview ? data.overview.slice(0, 300) + "..." : "No overview available."}
             </Typography>
             

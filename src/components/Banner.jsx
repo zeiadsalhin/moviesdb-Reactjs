@@ -101,11 +101,16 @@ const HomeBanner = () => {
                     {randomMovie.title}
                   </Typography>
                 </Link>
-                <Grid container direction={{ xs: "column", md: "row" }} alignItems="left" spacing={0.4} sx={{ mt: 2, opacity: 0.9 }}>
-                  <Grid item>
+                <Grid container direction={{ xs: "column", md: "col" }} alignItems="left" spacing={0} sx={{ mt: 2, opacity: 0.9 }}>
+                  
+                  <Grid container>
+                    <Grid item>
                     <Rating value={Number(rating)} readOnly size="large" />
+                    </Grid>
                   </Grid>
-                  <Grid item>
+                  
+                  <Grid container direction={{ xs: "column", md: "row" }} gap={1}>
+                    <Grid item>
                     <Typography variant="body1">{randomMovie.popularity.toFixed()} Reviews</Typography>
                   </Grid>
                   <Grid item>
@@ -114,6 +119,8 @@ const HomeBanner = () => {
                   <Grid item>
                     <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
                   </Grid>
+                  </Grid>
+                
                 </Grid>
                 <Typography variant="body2" sx={{ mt: 2, opacity: 0.9, display: { xs: "none", md: "block" } }}>
                   {randomMovie.overview.slice(0, 300)}...
