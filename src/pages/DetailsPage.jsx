@@ -76,7 +76,7 @@ const DetailsPage = () => {
   return (
     <> 
       {/* Banner Section */}
-      <Box sx={{ position: "relative", height: { xs: "40vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
+      <Box sx={{ position: "relative", height: { xs: "60vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
         {/* Preload Image */}
         <img
           src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
@@ -91,7 +91,8 @@ const DetailsPage = () => {
             position: "absolute",
             inset: 0,
             backgroundImage: imageLoaded
-              ? `linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)), 
+              ? `linear-gradient(to right, rgba(0, 0, 0, 0.9)10%, rgba(0, 0, 0, 0)60%),
+                 linear-gradient(to top, black 5% , transparent 50%),
                  url(https://image.tmdb.org/t/p/original${data.backdrop_path})`
               : "none",
             backgroundSize: "cover",
@@ -104,7 +105,7 @@ const DetailsPage = () => {
         {/* Movie Info */}
         <Box sx={{ position: "absolute", inset: 10, display: "flex", alignItems: "center", px: { xs: 2, md: 12 }, zIndex: 1 }}>
           <Box sx={{ maxWidth: "600px", borderRadius: 2 }}>
-              <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 500, md: 700 }, mt: 5 }}>
+              <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 500, md: 700 }, mt: 0 }}>
                 {data.title || data.name}
               </Typography>
             <Grid container direction={{ xs: "column", md: "row" }} alignItems="left" spacing={0.4} sx={{ mt: 2, opacity: 0.9 }}>

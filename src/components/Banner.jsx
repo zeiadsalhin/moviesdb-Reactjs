@@ -83,8 +83,7 @@ const HomeBanner = () => {
                 position: "absolute",
                 inset: 0,
                 backgroundImage: imageLoaded
-                  ? `linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2)), 
-                     linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.2)), 
+                  ? `linear-gradient(to right, black 25%, transparent 85%), 
                      url(https://image.tmdb.org/t/p/original${randomMovie.backdrop_path})`
                   : "none",
                 backgroundSize: "cover",
