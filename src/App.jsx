@@ -54,7 +54,7 @@ const App = () => {
     <Wrapper>
     <NProgressHandler /> {/* Global route progress bar */}
       {!isMobile && <Sidebar drawerOpen={drawerOpen} toggleDrawer={() => setDrawerOpen(!drawerOpen)} user={user} />}
-      <Navbar toggleDrawer={() => setDrawerOpen(!drawerOpen)} />
+      <Navbar toggleDrawer={() => setDrawerOpen(!drawerOpen)} display={isMobile} />
       <Box sx={{ minHeight: "calc(100vh - 156px)", background: "#000", color: "#fff", marginTop: "0rem" }}>      
           <AnimatedRoutes /> {/* Fade Animation when Navigating */}
       </Box>

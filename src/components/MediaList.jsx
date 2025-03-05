@@ -73,7 +73,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
           onClick={() => scroll("left")}
           sx={{
             position: "absolute",
-            left: -10,
+            left: 0,
             zIndex: 2,
             backgroundColor: "rgba(0,0,0,0.5)",
             color: "#fff",
@@ -113,8 +113,6 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                   sx={{
                     width: 160,
                     textAlign: "center",
-                    zIndex: 999,
-                    position: "relative",
                     cursor: "pointer",
                     "&:hover": { transform: "scale(1.05)", transition: "0.3s" },
                   }}
@@ -154,7 +152,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
           onClick={() => scroll("right")}
           sx={{
             position: "absolute",
-            right: -10,
+            right: 0,
             zIndex: 2,
             backgroundColor: "rgba(0,0,0,0.5)",
             color: "#fff",

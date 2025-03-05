@@ -34,10 +34,11 @@ const MobileNav = () => {
           icon={icon}
           component={Link}
           to={to}
+          disableTouchRipple
           sx={{
             backgroundColor: location.pathname === to ? alpha("#ffffff", 0.1) : "transparent", // Lighter background when active
             borderRadius: "8px",
-            transition: "background-color 0.3s ease",
+            // transition: "background-color 0.3s ease",
           }}
         />
       ))}

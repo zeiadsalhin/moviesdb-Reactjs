@@ -14,7 +14,7 @@ const About = () => {
       {/* Logo Section */}
       <Box className="flex items-center space-x-2">
         <Avatar src="/logo.png" alt="Logo" sx={{ width: 50, height: 50 }} />
-        <Typography variant="h6">The Movies Website</Typography>
+        <Typography variant="h6">The Movies&reg; Website</Typography>
       </Box>
 
       {/* Divider */}
@@ -49,8 +49,8 @@ const About = () => {
       </Box>
 
       {/* Created With Section */}
-      <Typography className="mt-5">Created with</Typography>
-      <Box className="flex justify-center space-x-2 mt-2">
+      <Typography sx={{mt: 5}}>Created with</Typography>
+      <Box className="flex justify-center mt-2" sx={{ gap: 1, opacity: 0.75 }}>
         {/* React.js Icon */}
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-10.5 -9.45 21 18.9">
         <circle cx="0" cy="0" r="2" fill="white"/>

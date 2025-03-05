@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import MediaList from "../components/MediaList";
+const MediaList = lazy(() => import("../components/MediaList")); // Lazy load MediaList
 
 const MoviesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -108,7 +108,8 @@ const MoviesPage = () => {
             </Box>
           </Box>
 
-          {/* 🔹 Loop through mediaCategories */}
+          {/* 🔹 Loop through mediaCategories with lazy load */}
+          <Suspense>
           {mediaCategories.map(({ title, endpoint, type }) => (
             <MediaList
               key={title}
@@ -118,6 +119,7 @@ const MoviesPage = () => {
               mediaType={type}
             />
           ))}
+          </Suspense>
         </>
       )}
     </Box>
