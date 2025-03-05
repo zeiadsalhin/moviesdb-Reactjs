@@ -60,7 +60,7 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
     }
 
     return (
-        <Box sx={{ mt: 4 }}>
+        <Box sx={{ mt: 4, mx: 1 }}>
             <Box display="flex" alignItems="center">
                 <WhatshotIcon color="error" sx={{ fontSize: 32, mr: 1 }} />
                 <Typography variant="h5" fontWeight="bold">

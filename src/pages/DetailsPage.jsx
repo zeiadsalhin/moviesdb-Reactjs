@@ -19,7 +19,7 @@ const DetailsPage = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [rating, setRating] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 899px)");
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -126,18 +126,19 @@ const DetailsPage = () => {
                 </Grid>
               )}
               
-              {!isMobile && (
-              <Grid item>
+              {!isMobile && data.vote_count > 0 && (
+              <Grid item sx={{marginBlock: "auto", height: "90%"}} >
               •
               </Grid>
               )}
               
+              {data.vote_count > 0 && (
               <Grid item>
                 <Typography variant="body1">{data.vote_count} Votes</Typography>
               </Grid>
-              
-              {!isMobile && (
-              <Grid item>
+              )}
+              {!isMobile && data.release_date && (
+              <Grid item sx={{marginBlock: "auto", height: "90%"}}>
               •
               </Grid>
               )}
@@ -172,9 +173,11 @@ const DetailsPage = () => {
         </Box>
       </Box>
 
-      <Typography variant="h4" sx={{ mt: 4, opacity: 0.8, textAlign:"center" }}>
+      <Typography sx={{ mt: 4, opacity: 0.8, textAlign:"center", fontSize: "2rem", fontWeight: 700 }}>
         About
       </Typography>
+
+      <div className="h-1 w-[2rem] rounded-2xl bg-gray-200 opacity-30 mx-auto my-2"></div>
 
       {/* Movie/TV Details */}
       <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 3, m:3, py: 2, px: { xs: 0, md: 10 }, alignItems: "center" }}>
@@ -216,7 +219,7 @@ const DetailsPage = () => {
             </Button>
             </Box>
 
-          <div className="h-1 w-[10rem] rounded-2xl bg-gray-800 mx-auto my-8"></div>
+          <div className="h-1 w-[10rem] rounded-2xl bg-gray-200 opacity-15 mx-auto my-8"></div>
 
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>
             Genres: <span style={{ opacity: 0.7, fontWeight: 500 }}>{data.genres?.map((genre) => genre.name).join(", ") || "N/A"}</span>

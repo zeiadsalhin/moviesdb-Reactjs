@@ -53,7 +53,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
   return (
     <Box sx={{ px: 2, mt: 4 }}>
       {/* Title with Fire Icon */}
-      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
         {["Top Rated Movies", "Trending Movies", "Trending TV Shows", "Top Rated TV Shows"].includes(title) && (
           <WhatshotIcon color="error" sx={{ fontSize: 32, mr: 1 }} />
         )}
@@ -68,7 +68,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
       </Box>
 
       {/* Scrollable List with Buttons */}
-      <Box sx={{ position: "relative", display: "flex", alignItems: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
         <IconButton
           onClick={() => scroll("left")}
           sx={{
@@ -89,6 +89,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
             display: "flex",
             overflowX: "auto",
             gap: 2,
+            pt: 3,
             minHeight: 330,
             scrollbarWidth: "none",
             "&::-webkit-scrollbar": { display: "none" },
@@ -112,6 +113,8 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                   sx={{
                     width: 160,
                     textAlign: "center",
+                    zIndex: 999,
+                    position: "relative",
                     cursor: "pointer",
                     "&:hover": { transform: "scale(1.05)", transition: "0.3s" },
                   }}

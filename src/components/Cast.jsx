@@ -61,8 +61,8 @@ const Cast = ({ id, type, display }) => {
   }
 
   return (
-    <Box sx={{ mt: 3, mx: 0, p: 2, bgcolor: "background.default", borderRadius: 2 }}>
-      <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+    <Box sx={{ mt: 3, mx: 1, p: 2, bgcolor: "background.default", borderRadius: 2 }}>
+      <Typography variant="h5" sx={{ fontWeight: "bold", mb: 0 }}>
         Cast
       </Typography>
       
@@ -96,6 +96,8 @@ const Cast = ({ id, type, display }) => {
             sx={{
               display: "flex",
               gap: 2,
+              pt: 2,
+              px: 0.5,
               overflowX: "auto",
               scrollbarWidth: "none",
               "&::-webkit-scrollbar": { display: "none" },
@@ -103,7 +105,7 @@ const Cast = ({ id, type, display }) => {
             }}
           >
             {cast.map((person) => (
-              <Box key={person.id} sx={{ textAlign: "center", minWidth: 120 }}>
+              <Box key={person.id} sx={{ textAlign: "center", minWidth: 120, maxWidth: 128 }}>
                 <img
                   src={
                     person.profile_path
