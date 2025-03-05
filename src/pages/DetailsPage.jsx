@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import StarIcon from "@mui/icons-material/Star";
 import Trailers from "../components/Trailers"
 import Cast from "../components/Cast";
+import Reviews from "../components/Reviews";
 import SimilarMedia from "../components/SimilarMedia";
 import { useMediaQuery } from "@mui/material"
 
@@ -44,7 +45,7 @@ const DetailsPage = () => {
         setData(result);
         setRating((result.vote_average / 2).toFixed(1));
 
-        document.title = `${(result.title || result.name) } (${((result.release_date || result.first_air_date).slice(0, 4))}) - The Movies`;
+        document.title = `${(result?.title || result?.name) } (${((result?.release_date || result.first_air_date)?.slice(0, 4))}) - The Movies`;
 
       } catch (error) {
         console.error("Error fetching details:", error);
@@ -271,6 +272,7 @@ const DetailsPage = () => {
       <Box sx={{px: { xs: 2, md: 12 }, pb:5}}>
       <Trailers id={data.id} type={type}  /> 
       <Cast id={data.id} type={type} display={isMobile}  />
+      <Reviews mediaId={data.id} mediaType={type} />
       <SimilarMedia mediaId={data.id} mediaType={type}  />
       </Box>
     </>
