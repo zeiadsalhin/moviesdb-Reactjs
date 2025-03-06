@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const NotFoundPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    document.title = 'Page Not Found - The Movies';
+    document.title = 'Page Not Found | The Movies';
   }, []);
   return (
     <Box
@@ -20,12 +20,12 @@ const NotFoundPage = () => {
         pt: 16,
       }}
     >
-      <Typography color="secondary" sx={{ fontWeight: "bold", fontSize: {xs: "5rem", md: "8rem"} }}>
+      <Typography color="secondary" sx={{ fontWeight: "bold", fontSize: {xs: "4.5rem", md: "6rem"} }}>
         404
       </Typography>
 
       {/* Message & Button */}
-      <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
         Page Not Found 🎬
       </Typography>
       <Typography variant="h6" sx={{ mt: 1, color: "#BDBDBD" }}>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Box, Typography, Button, CircularProgress, Grid, Rating } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -9,11 +9,11 @@ import Trailers from "../components/Trailers"
 import Cast from "../components/Cast";
 import Reviews from "../components/Reviews";
 import SimilarMedia from "../components/SimilarMedia";
+import ErrorComponent from "../components/ErrorShow";
 import { useMediaQuery } from "@mui/material"
 
 const DetailsPage = () => {
   const { type, id } = useParams();
-  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -66,16 +66,7 @@ const DetailsPage = () => {
     );
   }
 
-  if (error) {
-    return (
-      <Box sx={{ textAlign: "center", pt: 20 }}>
-        <Typography color="error" variant="h6">{error}</Typography>
-        <Button variant="contained" onClick={() => navigate(-1)} sx={{ mt: 2 }}>
-          Go Back
-        </Button>
-      </Box>
-    );
-  }
+  if (error) return <ErrorComponent message="Oops! 🎬 The item you are looking for is not found" />;
 
   return (
     <> 
