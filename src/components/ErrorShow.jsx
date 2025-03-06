@@ -17,7 +17,7 @@ const ErrorComponent = ({ message = "Oops! 🎬 The item you are looking for is 
     }, []);
 
     return (
-        <Fade in={fadeIn} timeout={200}>
+        <Fade in={fadeIn} timeout={300}>
             <Box
                 display="flex"
                 flexDirection="column"
