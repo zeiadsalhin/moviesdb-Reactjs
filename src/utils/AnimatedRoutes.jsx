@@ -1,14 +1,17 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import Home from "../pages/Home";
-import Search from "../pages/Search";
-import Favorites from "../pages/Favorites";
-import Movies from "../pages/Movies";
-import Account from "../pages/Account";
-import About from "../pages/About";
-import ViewAll from "../pages/ViewAll";
-import ViewDetails from "../pages/DetailsPage";
-import ErrorPage from "../pages/404Page";
+import { lazy, Suspense } from "react";
+
+// Lazy Loading Pages
+const Home = lazy(() => import("../pages/Home"));
+const Search = lazy(() => import("../pages/Search"));
+const Favorites = lazy(() => import("../pages/Favorites"));
+const Movies = lazy(() => import("../pages/Movies"));
+const Account = lazy(() => import("../pages/Account"));
+const About = lazy(() => import("../pages/About"));
+const ViewAll = lazy(() => import("../pages/ViewAll"));
+const ViewDetails = lazy(() => import("../pages/DetailsPage"));
+const ErrorPage = lazy(() => import("../pages/404Page"));
 
 const pageVariants = {
   initial: { opacity: 0 },
@@ -41,9 +44,11 @@ const AnimatedRoutes = () => {
             key={path}
             path={path}
             element={
+            <Suspense fallback={null}>
               <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
                 <Component />
               </motion.div>
+            </Suspense>
             }
           />
         ))}

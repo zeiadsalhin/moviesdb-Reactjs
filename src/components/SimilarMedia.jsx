@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import * as React from 'react';
 import { Box, Typography, IconButton, CircularProgress } from '@mui/material';
 import { ChevronLeft, ChevronRight, Whatshot as WhatshotIcon } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import MovieCard from './movieCard';
 
 const SimilarMedia = ({ mediaType, mediaId }) => {
