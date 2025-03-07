@@ -63,7 +63,7 @@ const HomeBanner = () => {
       img.fetchPriority = "high"; // Prioritize download
       img.onload = () => setTimeout(() => {
         setImageLoaded(true)
-      }, 0);
+      }, 300);
 
     } catch (error) {
       console.error("Error fetching movies:", error);
