@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { Box, CircularProgress, Typography, Rating, Grid } from "@mui/material";
+import { Box, CircularProgress, Typography, Rating, Grid, Button } from "@mui/material";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import AddIcon from '@mui/icons-material/Add';
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 
@@ -9,6 +12,7 @@ const HomeBanner = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [rating, setRating] = useState(null);
   const scrollY = useRef(0);
+  const isSaved = false;
   const isMobile = useMediaQuery("(max-width: 899px)");
 
   useEffect(() => {
@@ -112,15 +116,15 @@ const HomeBanner = () => {
             <Box sx={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", px: { xs: 2, md: 6 }, zIndex: 1 }}>
               <Box sx={{ maxWidth: "600px", borderRadius: 2 }}>
                 <Link to={`/details/movie/${randomMovie.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                  <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 600, md: 700 } }}>
+                  <Typography sx={{ typography: { xs: "h5", md: "h3" }, fontWeight: { xs: 600, md: 700 } }}>
                     {randomMovie.title}
                   </Typography>
                 </Link>
-                <Grid container direction={{ xs: "column", md: "col" }} alignItems="left" spacing={0} sx={{ mt: 2, opacity: 0.9 }}>
+                <Grid container direction={{ xs: "column", md: "col" }} alignItems="left" spacing={0} sx={{ mt: 1, opacity: 0.9 }}>
                   
                   <Grid container>
                     <Grid item>
-                    <Rating value={Number(rating)} readOnly size="large" />
+                    <Rating value={Number(rating)} readOnly size={isMobile ? 'small' : 'large'} />
                     </Grid>
                   </Grid>
                   
@@ -140,6 +144,23 @@ const HomeBanner = () => {
                 <Typography variant="body2" sx={{ mt: 2, opacity: 0.9, display: { xs: "none", md: "block" } }}>
                   {randomMovie.overview.slice(0, 300)}...
                 </Typography>
+                
+                {/* Watch Now and save Buttons */}
+                  <Box sx={{display: "flex", gap:2, mt: {xs: 2, md: 3}}}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size={isMobile ? "small" : "normal"}
+                    startIcon={<PlayArrowIcon />}
+                    component={Link}
+                    to={`/details/movie/${randomMovie.id}`}
+                    >
+                    <Typography variant="body2" sx={{mt: 0.2}}>View</Typography>
+                  </Button>
+                  <Button onClick={undefined} size={isMobile ? "small" : "normal"} startIcon={isSaved ? <BookmarkIcon /> : <AddIcon />} variant="outlined" color="secondary">
+                  <Typography variant="body2" sx={{mt: 0.2}}>{isSaved ? " Saved" : " Save"}</Typography>
+                  </Button>
+                  </Box>
               </Box>
             </Box>
           </>
