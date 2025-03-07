@@ -114,7 +114,7 @@ const HomeBanner = () => {
                   height: "100%",
                   objectFit: "cover",
                   opacity: imageLoaded ? 1 : 0,
-                  transition: "opacity 1s ease-in-out",
+                  transition: "opacity 1ss ease-in-out",
                 }}
                 onLoad={() => setImageLoaded(true)}
                 fetchPriority="high"
