@@ -3,7 +3,7 @@ import { Box, CircularProgress, Typography, Rating, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 
-const Banner = () => {
+const HomeBanner = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [randomMovie, setRandomMovie] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -61,7 +61,7 @@ const Banner = () => {
       img.src = imageSrc;
       img.onload = () => setImageLoaded(true);
 
-      // Inject <link rel="preload"> in <head> for faster loading
+      // Inject <link rel="preload"> for faster loading
       const preloadLink = document.createElement("link");
       preloadLink.rel = "preload";
       preloadLink.as = "image";
@@ -80,8 +80,7 @@ const Banner = () => {
     <Box
       sx={{
         position: "relative",
-        width: "100%",
-        aspectRatio: "16 / 9", // Prevents height shifts
+        height: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
         background: "#000",
         color: "#fff",
         overflow: "hidden",
@@ -94,8 +93,18 @@ const Banner = () => {
       ) : (
         randomMovie && (
           <>
-            {/* High-Quality Image as <img> (instead of backgroundImage) */}
+            {/* Image Background with Gradient Overlay */}
             <Box sx={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "hidden" }}>
+              {/* Gradient Overlay */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(to right, black 25%, transparent 85%)",
+                  zIndex: 2, // Ensures gradient is above the image
+                }}
+              />
+
               <img
                 id="banner-image"
                 src={`https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${randomMovie.backdrop_path}`}
@@ -105,7 +114,7 @@ const Banner = () => {
                   height: "100%",
                   objectFit: "cover",
                   opacity: imageLoaded ? 1 : 0,
-                  transition: "opacity 0.5s ease-in-out",
+                  transition: "opacity 1s ease-in-out",
                 }}
                 onLoad={() => setImageLoaded(true)}
                 fetchPriority="high"
@@ -113,7 +122,7 @@ const Banner = () => {
             </Box>
 
             {/* Movie Info */}
-            <Box sx={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", px: { xs: 2, md: 6 }, zIndex: 1 }}>
+            <Box sx={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", px: { xs: 2, md: 6 }, zIndex: 3 }}>
               <Box sx={{ maxWidth: "600px", borderRadius: 2 }}>
                 <Link to={`/details/movie/${randomMovie.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                   <Typography sx={{ typography: { xs: "h4", md: "h3" }, fontWeight: { xs: 600, md: 700 } }}>
@@ -151,4 +160,4 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+export default HomeBanner;

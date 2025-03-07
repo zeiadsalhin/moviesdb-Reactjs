@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <>
-    <div className="min-h-[1200px]">
+    <div>
       {/* Banner Section */}
       <Banner />
       
