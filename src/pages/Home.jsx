@@ -10,6 +10,7 @@ const Home = () => {
 
   return (
     <>
+    <div className="min-h-[1200px]">
       {/* Banner Section */}
       <Banner />
       
@@ -50,6 +51,7 @@ const Home = () => {
         mediaType="tv"
       />
       </Suspense>
+    </div>
     </div>
     </>
   );
