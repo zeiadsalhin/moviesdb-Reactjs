@@ -104,6 +104,7 @@ const HomeBanner = () => {
                 position: "absolute",
                 inset: 0,
                 height: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
+                maxHeight: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
                 backgroundImage: imageLoaded
                   ? `linear-gradient(to right, black 25%, transparent 85%), url(${preloadedImage})`
                   : "none",
