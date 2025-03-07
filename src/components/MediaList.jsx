@@ -5,12 +5,12 @@ import {
   Typography,
   IconButton,
   CircularProgress,
-  Rating,
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import { Link } from "react-router-dom";
+import StarIcon from "@mui/icons-material/Star";
 
 const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
   const [items, setItems] = useState([]);
@@ -136,7 +136,8 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                   {/* Rating & Release Date (except for Upcoming Movies) */}
                   {!['Upcoming Movies'].includes(title) && (
                     <>
-                      <Rating value={item.vote_average / 2} precision={0.5} size="small" readOnly />
+                      <span style={{ opacity: 0.7, fontWeight: 500 }}>{item.vote_average ? `${(item.vote_average).toFixed(1)}` : "N/A"}</span>
+                      <StarIcon sx={{ fontSize: 18, color: "#FFD700", ml: 0.5, mb: 0.5 }} />
                       {mediaType !== "tv" && (
                         <Typography variant="caption" display="block">
                           Released: {item.release_date}
