@@ -114,7 +114,7 @@ const DetailsPage = () => {
               
               {data.popularity && (
                 <Grid item>
-                  <Typography variant="body1">{(data.popularity?.toFixed()).toLocaleString()} Reviews</Typography>
+                  <Typography variant="body1">{(data.popularity?.toLocaleString()).toFixed()} Reviews</Typography>
                 </Grid>
               )}
               
