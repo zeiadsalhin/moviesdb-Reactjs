@@ -106,7 +106,7 @@ const Search = () => {
         className="search-bar w-11/12 mx-auto"
         sx={{
           mt: 0,
-          mb: 10,  
+          mb: 6,  
           position: "sticky",
           top: 60,
           zIndex: 1000,
