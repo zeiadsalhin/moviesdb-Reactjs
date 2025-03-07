@@ -37,11 +37,11 @@ const Account = () => {
 
 
       {/* Footer */}
-      <Typography className="text-md text-zinc-400 mt-10">
-        Powered by{" "}
-        <a href="https://www.themoviedb.org/" title="The movie database">
+      <Typography className="text-md text-zinc-400" sx={{ display: "flex", justifyContent: "center" }}>
+        Powered by
+        <a href="https://www.themoviedb.org/" title="The movie database" className="mx-1">
           TMDB
-        </a>{" "}
+        </a>
         API
       </Typography>
 
