@@ -2,13 +2,13 @@ import { useState, useEffect, useLayoutEffect } from "react";
 import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { Box, useMediaQuery } from "@mui/material";
-import AnimatedRoutes from "./AnimatedRoutes";
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/navBar";
-import MobileNav from "./components/mobileNav";
-import Footer from "./components/Footer"
-import NProgressHandler from "./NProgressHandler"; // Import the handler
-import darkTheme from "./theme";
+import AnimatedRoutes from "./utils/AnimatedRoutes";
+import Sidebar from "./layouts/Sidebar";
+import Navbar from "./layouts/navBar";
+import MobileNav from "./layouts/mobileNav";
+import Footer from "./layouts/Footer"
+import NProgressHandler from "./utils/NProgressHandler"; // Import the handler
+import darkTheme from "./styles/theme";
 
 
 const fetchUserData = async (setUser) => {

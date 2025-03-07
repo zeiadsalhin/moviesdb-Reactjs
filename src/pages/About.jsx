@@ -38,7 +38,7 @@ const About = () => {
         <Typography>MIT License</Typography>
       </Box>
 
-      <Typography className="opacity-75">v2.Final</Typography>
+      <Typography className="opacity-75">v3.Final</Typography>
 
       {/* GitHub Link */}
       <Box className="opacity-75 mt-10 flex items-center space-x-1">

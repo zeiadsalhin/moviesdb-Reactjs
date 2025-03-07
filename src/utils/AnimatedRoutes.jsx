@@ -1,14 +1,14 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import Home from "./pages/Home";
-import Search from "./pages/Search";
-import Favorites from "./pages/Favorites";
-import Movies from "./pages/Movies";
-import Account from "./pages/Account";
-import About from "./pages/About";
-import ViewAll from "./pages/ViewAll";
-import ViewDetails from "./pages/DetailsPage";
-import ErrorPage from "./pages/404Page";
+import Home from "../pages/Home";
+import Search from "../pages/Search";
+import Favorites from "../pages/Favorites";
+import Movies from "../pages/Movies";
+import Account from "../pages/Account";
+import About from "../pages/About";
+import ViewAll from "../pages/ViewAll";
+import ViewDetails from "../pages/DetailsPage";
+import ErrorPage from "../pages/404Page";
 
 const pageVariants = {
   initial: { opacity: 0 },

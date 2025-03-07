@@ -20,7 +20,7 @@ const Navbar = ({ toggleDrawer, display }) => {
         </IconButton>
         )}
         <img src="/logo.png" alt="Logo" width="50" style={{ marginLeft: display? '0px' : "1raem", marginRight: "auto", padding:0 }} />
-        <h1 className="md:text-xl font-black mt-0.5 md:mt-0">The Movies</h1>
+        <h1 className="md:text-xl font-black mt-0.5 md:mt-0 ml-2">The Movies</h1>
         </div>
 
         <Button component={Link} to="/search" color="inherit" disableRipple>

@@ -27,7 +27,7 @@ const Reviews = ({ mediaId, mediaType }) => {
 
         const data = await response.json();
 
-        if (data.total_result === 0) {
+        if (data.results.length === 0) {
           setError("Not Available");
         } else {
           setReviews((prev) => {
