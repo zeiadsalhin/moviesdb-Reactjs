@@ -45,7 +45,7 @@ const DetailsPage = () => {
         setData(result);
         setRating((result.vote_average / 2).toFixed(1));
 
-        document.title = `${(result?.title || result?.name) } (${((result?.release_date || result.first_air_date)?.slice(0, 4))}) - The Movies`;
+        document.title = `${(result?.title || result?.name) } (${((result?.release_date || result.first_air_date)?.slice(0, 4))}) | The Movies`;
 
       } catch (error) {
         console.error("Error fetching details:", error);
@@ -114,7 +114,7 @@ const DetailsPage = () => {
               
               {data.popularity && (
                 <Grid item>
-                  <Typography variant="body1">{data.popularity.toFixed()} Reviews</Typography>
+                  <Typography variant="body1">{data.popularity?.toLocaleString()} Reviews</Typography>
                 </Grid>
               )}
               
@@ -126,7 +126,7 @@ const DetailsPage = () => {
               
               {data.vote_count > 0 && (
               <Grid item>
-                <Typography variant="body1">{data.vote_count} Votes</Typography>
+                <Typography variant="body1">{data.vote_count?.toLocaleString()} Votes</Typography>
               </Grid>
               )}
               {!isMobile && data.release_date && (
