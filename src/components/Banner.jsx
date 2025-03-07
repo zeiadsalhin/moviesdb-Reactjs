@@ -113,29 +113,27 @@ const HomeBanner = () => {
                     {randomMovie.title}
                   </Typography>
                 </Link>
-                <Grid container direction="column" alignItems="flex-start" spacing={0} sx={{ mt: 2, opacity: 0.9 }}>
-                  {/* Rating */}
-                  <Grid item sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Grid container direction={{ xs: "column", md: "col" }} alignItems="left" spacing={0} sx={{ mt: 2, opacity: 0.9 }}>
+                  
+                  <Grid container>
+                    <Grid item>
                     <Rating value={Number(rating)} readOnly size="large" />
-                    <Typography variant="body1" sx={{ color: "#ffcc00", fontWeight: "bold" }}>
-                      {rating}/5
-                    </Typography>
+                    </Grid>
                   </Grid>
-
-                  {/* Other Details */}
+                  
                   <Grid container direction={{ xs: "column", md: "row" }} gap={1}>
                     <Grid item>
-                      <Typography variant="body1">{randomMovie.popularity.toFixed()} Reviews</Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">{randomMovie.vote_count} Votes</Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
-                    </Grid>
+                    <Typography variant="body1">{randomMovie.popularity.toFixed()} Reviews</Typography>
                   </Grid>
+                  <Grid item>
+                    <Typography variant="body1">{randomMovie.vote_count} Votes</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
+                  </Grid>
+                  </Grid>
+                
                 </Grid>
-                {/* Overview */}
                 <Typography variant="body2" sx={{ mt: 2, opacity: 0.9, display: { xs: "none", md: "block" } }}>
                   {randomMovie.overview.slice(0, 300)}...
                 </Typography>

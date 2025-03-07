@@ -19,7 +19,7 @@ const Navbar = ({ toggleDrawer, display }) => {
           <MenuIcon fontSize="large" />
         </IconButton>
         )}
-        <img src="/logo.png" alt="Logo" width="50" height="100%" style={{ marginRight: "auto", padding:0 }} />
+        <img src="/logo.png" alt="Logo" width="50" height="100%" style={{ marginRight: "auto", padding:0 }} loading="lazy" />
         <h1 className="md:text-xl font-black mt-0.5 md:mt-0 ml-2">The Movies</h1>
         </div>
 
