@@ -126,10 +126,10 @@ const HomeBanner = () => {
                   
                   <Grid container direction={{ xs: "column", md: "row" }} gap={1}>
                     <Grid item>
-                    <Typography variant="body1">{randomMovie.popularity.toFixed()} Reviews</Typography>
+                    <Typography variant="body1">{randomMovie.popularity?.toFixed().toLocaleString()} Reviews</Typography>
                   </Grid>
                   <Grid item>
-                    <Typography variant="body1">{randomMovie.vote_count} Votes</Typography>
+                    <Typography variant="body1">{randomMovie.vote_count?.toLocaleString()} Votes</Typography>
                   </Grid>
                   <Grid item>
                     <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
