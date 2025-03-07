@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Box, CircularProgress, Typography, Rating, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useMediaQuery } from "@mui/material"
+import { useMediaQuery } from "@mui/material";
 
 const HomeBanner = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +15,7 @@ const HomeBanner = () => {
     fetchRandomMovie();
 
     const handleScroll = () => {
-      scrollY.current = window.scrollY * 0.6; // Parallax speed
+      scrollY.current = window.scrollY * 0.6; // Parallax effect
       requestAnimationFrame(() => {
         const bannerImage = document.getElementById("banner-image");
         if (bannerImage) {
@@ -35,9 +35,9 @@ const HomeBanner = () => {
         {
           method: "GET",
           headers: {
-            accept: 'application/json',
-            Authorization: import.meta.env.VITE_API_KEY
-        }
+            accept: "application/json",
+            Authorization: import.meta.env.VITE_API_KEY,
+          },
         }
       );
 
@@ -54,6 +54,15 @@ const HomeBanner = () => {
 
       setRandomMovie(selectedMovie);
       setRating((selectedMovie.vote_average / 2).toFixed(1));
+
+      // Preload the image
+      const imageSrc = `https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${selectedMovie.backdrop_path}`;
+      const img = new Image();
+      img.src = imageSrc;
+      img.onload = () => setTimeout(() => {
+        setImageLoaded(true)
+      }, 400);
+
     } catch (error) {
       console.error("Error fetching movies:", error);
     } finally {
@@ -62,7 +71,15 @@ const HomeBanner = () => {
   };
 
   return (
-    <Box sx={{ position: "relative", height: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
+    <Box
+      sx={{
+        position: "relative",
+        height: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
+        background: "#000",
+        color: "#fff",
+        overflow: "hidden",
+      }}
+    >
       {isLoading ? (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
           <CircularProgress />
@@ -70,15 +87,7 @@ const HomeBanner = () => {
       ) : (
         randomMovie && (
           <>
-            {/* Preload Image */}
-            <img
-              src={`https://image.tmdb.org/t/p/${isMobile ? 'w1280' : 'original'}${randomMovie.backdrop_path}`}
-              alt="Movie Background"
-              onLoad={() => setImageLoaded(true)}
-              style={{ display: "none" }}
-            />
-
-            {/* Parallax Background with Gradient */}
+            {/* Parallax Background with Fade-In */}
             <Box
               id="banner-image"
               sx={{
@@ -87,12 +96,12 @@ const HomeBanner = () => {
                 height: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
                 backgroundImage: imageLoaded
                   ? `linear-gradient(to right, black 25%, transparent 85%), 
-                     url(https://image.tmdb.org/t/p/${isMobile ? 'w1280' : 'original'}${randomMovie.backdrop_path})`
+                     url(https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${randomMovie.backdrop_path})`
                   : "none",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                opacity: imageLoaded ? 1 : 0,
-                transition: "opacity 0.5s ease-in-out",
+                opacity: imageLoaded ? 1 : 0, // Starts invisible, fades in when loaded
+                transition: "opacity 0.5s ease-in-out", // Smooth fade-in effect
               }}
             />
 
@@ -104,27 +113,29 @@ const HomeBanner = () => {
                     {randomMovie.title}
                   </Typography>
                 </Link>
-                <Grid container direction={{ xs: "column", md: "col" }} alignItems="left" spacing={0} sx={{ mt: 2, opacity: 0.9 }}>
-                  
-                  <Grid container>
-                    <Grid item>
+                <Grid container direction="column" alignItems="flex-start" spacing={0} sx={{ mt: 2, opacity: 0.9 }}>
+                  {/* Rating */}
+                  <Grid item sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <Rating value={Number(rating)} readOnly size="large" />
-                    </Grid>
+                    <Typography variant="body1" sx={{ color: "#ffcc00", fontWeight: "bold" }}>
+                      {rating}/5
+                    </Typography>
                   </Grid>
-                  
+
+                  {/* Other Details */}
                   <Grid container direction={{ xs: "column", md: "row" }} gap={1}>
                     <Grid item>
-                    <Typography variant="body1">{randomMovie.popularity.toFixed()} Reviews</Typography>
+                      <Typography variant="body1">{randomMovie.popularity.toFixed()} Reviews</Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">{randomMovie.vote_count} Votes</Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <Typography variant="body1">{randomMovie.vote_count} Votes</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
-                  </Grid>
-                  </Grid>
-                
                 </Grid>
+                {/* Overview */}
                 <Typography variant="body2" sx={{ mt: 2, opacity: 0.9, display: { xs: "none", md: "block" } }}>
                   {randomMovie.overview.slice(0, 300)}...
                 </Typography>
