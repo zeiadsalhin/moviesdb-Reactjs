@@ -19,6 +19,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
 
   useEffect(() => {
     fetchMedia();
+    console.log(window.devicePixelRatio);
   }, []);
 
   const fetchMedia = async () => {
@@ -121,10 +122,8 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                   <img
                     src={`https://image.tmdb.org/t/p/w154${item.poster_path}`}
                     srcSet={`
-                      https://image.tmdb.org/t/p/w154${item.poster_path}.avif 1x,
-                      https://image.tmdb.org/t/p/w342${item.poster_path}.avif 2x,
-                      https://image.tmdb.org/t/p/w${item.poster_path} 1x,
-                      https://image.tmdb.org/t/p/w342${item.poster_path} 2x
+                      https://image.tmdb.org/t/p/w154${item.poster_path} 1x,
+                      https://image.tmdb.org/t/p/w342${item.poster_path} 2x,
                     `}
                     type="image/avif"
                     alt={item?.title || item?.name || item?.original_name}
