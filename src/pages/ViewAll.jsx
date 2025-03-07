@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "../components/movieCard";
 import { useParams } from "react-router-dom";
 
 const ViewAll = () => {
