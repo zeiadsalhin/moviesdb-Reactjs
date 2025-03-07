@@ -13,7 +13,7 @@ const About = () => {
     <Box className="about flex flex-col items-center text-center space-y-4" sx={{ paddingY: '8rem'}}>
       {/* Logo Section */}
       <Box className="flex items-center space-x-2">
-        <Avatar src="/logo.png" alt="Logo" sx={{ width: 50, height: 50 }} />
+        <Avatar src="/logo.webp" alt="Logo" sx={{ width: 50, height: 50 }} />
         <Typography variant="h6">The Movies&reg; Website</Typography>
       </Box>
 

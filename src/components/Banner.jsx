@@ -7,7 +7,6 @@ const HomeBanner = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [randomMovie, setRandomMovie] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [preloadedImage, setPreloadedImage] = useState(null);
   const [rating, setRating] = useState(null);
   const scrollY = useRef(0);
   const isMobile = useMediaQuery("(max-width: 899px)");
@@ -56,18 +55,14 @@ const HomeBanner = () => {
       setRandomMovie(selectedMovie);
       setRating((selectedMovie.vote_average / 2).toFixed(1));
 
-      // Generate Image URL
-      const imageSrc = `https://image.tmdb.org/t/p/${isMobile ? "w154" : "original"}${selectedMovie.backdrop_path}`;
-
-      // Preload Image
+      // Preload the image
+      const imageSrc = `https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${selectedMovie.backdrop_path}`;
       const img = new Image();
       img.src = imageSrc;
-      img.loading = "eager"; // Load ASAP
-      img.fetchPriority = "high"; // Prioritize download
-      img.onload = () => {
-        setPreloadedImage(imageSrc);
-        setImageLoaded(true);
-      };
+      img.onload = () => setTimeout(() => {
+        setImageLoaded(true)
+      }, 300);
+
     } catch (error) {
       console.error("Error fetching movies:", error);
     } finally {
@@ -92,12 +87,7 @@ const HomeBanner = () => {
       ) : (
         randomMovie && (
           <>
-            {/* Preload Image in <head> */}
-            {preloadedImage && (
-              <link rel="preload" as="image" href={preloadedImage} fetchPriority="high" />
-            )}
-
-            {/* Parallax Background with High-Quality Image */}
+            {/* Parallax Background with Fade-In */}
             <Box
               id="banner-image"
               sx={{
@@ -106,12 +96,13 @@ const HomeBanner = () => {
                 height: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
                 maxHeight: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
                 backgroundImage: imageLoaded
-                  ? `linear-gradient(to right, black 25%, transparent 85%), url(${preloadedImage})`
+                  ? `linear-gradient(to right, black 25%, transparent 85%), 
+                     url(https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${randomMovie.backdrop_path})`
                   : "none",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 opacity: imageLoaded ? 1 : 0, // Starts invisible, fades in when loaded
-                transition: "opacity 0.8s ease-in-out", // Smooth fade-in effect
+                transition: "opacity 0.5s ease-in-out", // Smooth fade-in effect
               }}
             />
 
@@ -127,20 +118,20 @@ const HomeBanner = () => {
                   
                   <Grid container>
                     <Grid item>
-                      <Rating value={Number(rating)} readOnly size="large" />
+                    <Rating value={Number(rating)} readOnly size="large" />
                     </Grid>
                   </Grid>
                   
                   <Grid container direction={{ xs: "column", md: "row" }} gap={1}>
                     <Grid item>
-                      <Typography variant="body1">{randomMovie.popularity.toFixed()} Reviews</Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">{randomMovie.vote_count} Votes</Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
-                    </Grid>
+                    <Typography variant="body1">{randomMovie.popularity.toFixed()} Reviews</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1">{randomMovie.vote_count} Votes</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
+                  </Grid>
                   </Grid>
                 
                 </Grid>
