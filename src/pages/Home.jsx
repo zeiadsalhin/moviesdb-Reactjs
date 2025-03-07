@@ -12,7 +12,9 @@ const Home = () => {
     <>
     <div className="min-h-[1200px]">
       {/* Banner Section */}
+      <div className="min-h-[400px]">
       <Banner />
+      </div>
       
       <div className="pb-20 md:px-8 md:max-w-[120rem] min-h-[1200px] mx-auto">
       {/* Movies and TV Shows Sections with lazy loaded */}
