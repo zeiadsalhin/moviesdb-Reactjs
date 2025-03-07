@@ -15,22 +15,22 @@ const MoviesPage = () => {
   }, []);
 
   const mediaCategories = [
-    { title: "Upcoming Movies", endpoint: "movie/upcoming", type: "movie" },
-    { title: "Top Rated Movies", endpoint: "movie/top_rated", type: "movie" },
-    { title: "Action Movies", endpoint: "discover/movie?with_genres=28", type: "movie" },
-    { title: "Adventure Movies", endpoint: "discover/movie?with_genres=12", type: "movie" },
-    { title: "Crime Movies", endpoint: "discover/movie?with_genres=80", type: "movie" },
-    { title: "Documentaries", endpoint: "discover/movie?with_genres=99", type: "movie" },
-    { title: "History Movies", endpoint: "discover/movie?with_genres=36", type: "movie" },
-    { title: "Horror Movies", endpoint: "discover/movie?with_genres=27", type: "movie" },
-    { title: "Sci-Fi Movies", endpoint: "discover/movie?with_genres=878", type: "movie" },
-    { title: "Thriller Movies", endpoint: "discover/movie?with_genres=53", type: "movie" },
-    { title: "War Movies", endpoint: "discover/movie?with_genres=10752", type: "movie" },
-    { title: "Latest Movies", endpoint: "movie/now_playing", type: "movie" },
-    { title: "Latest TV Shows", endpoint: "tv/on_the_air", type: "tv" },
-    { title: "Trending Movies", endpoint: "trending/movie/week", type: "movie" },
-    { title: "Trending TV Shows", endpoint: "trending/tv/week", type: "tv" },
-    { title: "Top Rated TV Shows", endpoint: "tv/top_rated", type: "tv" },
+    { title: "Upcoming Movies", endpoint: "movie/upcoming", genre: "upcoming", type: "movie" },
+    { title: "Top Rated Movies", endpoint: "movie/top_rated", genre: "toprated", type: "movie" },
+    { title: "Action Movies", endpoint: "discover/movie?with_genres=28", genre: "action", type: "movie" },
+    { title: "Adventure Movies", endpoint: "discover/movie?with_genres=12", genre: "adventure", type: "movie" },
+    { title: "Crime Movies", endpoint: "discover/movie?with_genres=80", genre: "crime", type: "movie" },
+    { title: "Documentaries", endpoint: "discover/movie?with_genres=99", genre: "documentary", type: "movie" },
+    { title: "History Movies", endpoint: "discover/movie?with_genres=36", genre: "history", type: "movie" },
+    { title: "Horror Movies", endpoint: "discover/movie?with_genres=27", genre: "horror", type: "movie" },
+    { title: "Sci-Fi Movies", endpoint: "discover/movie?with_genres=878", genre: "sci-fi", type: "movie" },
+    { title: "Thriller Movies", endpoint: "discover/movie?with_genres=53", genre: "thriller", type: "movie" },
+    { title: "War Movies", endpoint: "discover/movie?with_genres=10752", genre: "war", type: "movie" },
+    { title: "Latest Movies", endpoint: "movie/now_playing", genre: "latest", type: "movie" },
+    { title: "Latest TV Shows", endpoint: "tv/on_the_air", genre: "latest", type: "tv" },
+    { title: "Trending Movies", endpoint: "trending/movie/week", genre: "trending", type: "movie" },
+    { title: "Trending TV Shows", endpoint: "trending/tv/week", genre: "trending", type: "tv" },
+    { title: "Top Rated TV Shows", endpoint: "tv/top_rated", genre: "toprated", type: "tv" },
   ];
 
   return (
@@ -110,12 +110,12 @@ const MoviesPage = () => {
 
           {/* 🔹 Loop through mediaCategories with lazy load */}
           <Suspense>
-          {mediaCategories.map(({ title, endpoint, type }) => (
+          {mediaCategories.map(({ title, endpoint, genre, type }) => (
             <MediaList
               key={title}
               title={title}
               apiEndpoint={`https://api.themoviedb.org/3/${endpoint}?language=en-US&page=1`}
-              viewAllRoute={`/all/${endpoint.replace(/\//g, "-")}/${type}`}
+              viewAllRoute={`/all/${genre.replace(/\//g, "-")}/${type}`}
               mediaType={type}
             />
           ))}
