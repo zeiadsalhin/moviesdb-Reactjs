@@ -55,14 +55,13 @@ const HomeBanner = () => {
       setRandomMovie(selectedMovie);
       setRating((selectedMovie.vote_average / 2).toFixed(1));
 
-      // Preload the image
-      const imageSrc = `https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${selectedMovie.backdrop_path}`;
+      // Preload the high-priority image
+      const imageSrc = `https://image.tmdb.org/t/p/${isMobile ? "w1280" : "w1280"}${selectedMovie.backdrop_path}`;
       const img = new Image();
       img.src = imageSrc;
-      img.onload = () => setTimeout(() => {
-        setImageLoaded(true)
-      }, 400);
-
+      img.loading = "eager"; // Load ASAP
+      img.fetchPriority = "high"; // Prioritize download
+      img.onload = () => setImageLoaded(true);
     } catch (error) {
       console.error("Error fetching movies:", error);
     } finally {
@@ -87,17 +86,38 @@ const HomeBanner = () => {
       ) : (
         randomMovie && (
           <>
-            {/* Parallax Background with Fade-In */}
+            {/* Preload Image in <head> */}
+            <link
+              rel="preload"
+              as="image"
+              href={`https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${randomMovie.backdrop_path}`}
+              fetchPriority="high"
+            />
+
+            {/* Low-Quality Placeholder */}
+            <Box
+              sx={{
+                position: "absolute",
+                inset: 0,
+                height: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
+                backgroundImage: `linear-gradient(to right, black 25%, transparent 85%), 
+                   url(https://image.tmdb.org/t/p/w300${randomMovie.backdrop_path})`, // Low-quality placeholder
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                filter: "blur(10px)", // Blur effect for low-quality image
+              }}
+            />
+
+            {/* Parallax Background with High-Quality Image */}
             <Box
               id="banner-image"
               sx={{
                 position: "absolute",
                 inset: 0,
                 height: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
-                maxHeight: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
                 backgroundImage: imageLoaded
                   ? `linear-gradient(to right, black 25%, transparent 85%), 
-                     url(https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${randomMovie.backdrop_path})`
+                     url(https://image.tmdb.org/t/p/${isMobile ? "w1280" : "w1280"}${randomMovie.backdrop_path})`
                   : "none",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
