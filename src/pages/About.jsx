@@ -10,7 +10,7 @@ const About = () => {
     document.title = 'The Movies - About Us';
   }, [])
   return (
-    <Box className="about flex flex-col items-center text-center space-y-4" sx={{ paddingY: '8rem'}}>
+    <Box className="about flex flex-col items-center text-center space-y-4" sx={{ paddingY: '4rem'}}>
       {/* Logo Section */}
       <Box className="flex items-center space-x-2">
         <Avatar src="/logo.webp" alt="Logo" sx={{ width: 50, height: 50 }} />
