@@ -99,7 +99,7 @@ const HomeBanner = () => {
                 maxHeight: { xs: "50vh", md: "70vh", lg: "60vh", xl: "60vh" },
                 backgroundImage: imageLoaded
                   ? `linear-gradient(to right, black 25%, transparent 85%), 
-                     url(https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${randomMovie.backdrop_path})`
+                     url(https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${randomMovie.backdrop_path}.avif)`
                   : "none",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
