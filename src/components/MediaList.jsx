@@ -120,6 +120,13 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                 >
                   <img
                     src={`https://image.tmdb.org/t/p/w154${item.poster_path}`}
+                    srcSet={`
+                      https://image.tmdb.org/t/p/w154${item.poster_path}.avif 1x,
+                      https://image.tmdb.org/t/p/w342${item.poster_path}.avif 2x,
+                      https://image.tmdb.org/t/p/w${item.poster_path} 1x,
+                      https://image.tmdb.org/t/p/w342${item.poster_path} 2x
+                    `}
+                    type="image/avif"
                     alt={item?.title || item?.name || item?.original_name}
                     style={{
                       width: "100%",
@@ -129,6 +136,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                     }}
                     loading="lazy"
                   />
+
                   <Typography sx={{ mt: 1, fontSize: 18 }} noWrap>
                     {item.title || item.name}
                   </Typography>
