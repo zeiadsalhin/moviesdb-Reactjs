@@ -25,7 +25,7 @@ const Home = () => {
       />
       </Suspense>
       
-      {/* <Suspense>
+      <Suspense>
       <MediaList
         title="Latest TV Shows"
         apiEndpoint="https://api.themoviedb.org/3/tv/on_the_air?language=en-US&page=1"
@@ -50,7 +50,7 @@ const Home = () => {
         viewAllRoute="/all/trending/tv"
         mediaType="tv"
       />
-      </Suspense> */}
+      </Suspense>
     </div>
     </div>
     </>
