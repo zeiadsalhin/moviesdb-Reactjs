@@ -74,7 +74,7 @@ const DetailsPage = () => {
       <Box sx={{ position: "relative", height: { xs: "60vh", md: "70vh" }, background: "#000", color: "#fff", overflow: "hidden" }}>
         {/* Preload Image */}
         <img
-          src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/${isMobile ? 'w1280' : 'original'}${data.backdrop_path}`}
           alt="Movie Background"
           onLoad={() => setTimeout(() => {setImageLoaded(true)},100)}
           style={{ display: "none" }}
@@ -88,7 +88,7 @@ const DetailsPage = () => {
             backgroundImage: imageLoaded
               ? `linear-gradient(to right, rgba(0, 0, 0, 0.9)10%, rgba(0, 0, 0, 0)60%),
                  linear-gradient(to top, black 5% , transparent 50%),
-                 url(https://image.tmdb.org/t/p/original${data.backdrop_path})`
+                 url(https://image.tmdb.org/t/p/${isMobile ? 'w1280' : 'original'}${data.backdrop_path})`
               : "none",
             backgroundSize: "cover",
             backgroundPosition: "center",
