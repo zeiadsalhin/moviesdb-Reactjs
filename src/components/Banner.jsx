@@ -59,9 +59,11 @@ const HomeBanner = () => {
       const imageSrc = `https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${selectedMovie.backdrop_path}`;
       const img = new Image();
       img.src = imageSrc;
+      img.loading = "eager"; // Load ASAP
+      img.fetchPriority = "high"; // Prioritize download
       img.onload = () => setTimeout(() => {
         setImageLoaded(true)
-      }, 300);
+      }, 0);
 
     } catch (error) {
       console.error("Error fetching movies:", error);
