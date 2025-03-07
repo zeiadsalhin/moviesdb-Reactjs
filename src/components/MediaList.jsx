@@ -1,20 +1,16 @@
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
 import { useState, useEffect, useRef } from "react";
-import { Box, Typography, IconButton, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Typography,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import { Link } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
-
-// Cloudinary Base URL for optimized images
-const CLOUDINARY_BASE = "https://res.cloudinary.com/dykefqf7x/image/fetch/f_auto,f_avif/";
-
-// Function to get an optimized image URL
-const getOptimizedImage = (path, size = "w154") => {
-  if (!path) return ""; // Handle missing images gracefully
-  return `${CLOUDINARY_BASE}https://image.tmdb.org/t/p/${size}${path}`;
-};
 
 const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
   const [items, setItems] = useState([]);
@@ -104,12 +100,16 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
           }}
         >
           {loading ? (
-            <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}>
-              <CircularProgress />
-            </Box>
+            <Box sx={{ width: loading? "100vw" : "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "auto"}}>
+            <CircularProgress />
+          </Box>
           ) : (
             items.map((item) => (
-              <Link key={item.id} to={`/details/${mediaType}/${item.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+              <Link
+                key={item.id}
+                to={`/details/${mediaType}/${item.id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <Box
                   sx={{
                     width: 160,
@@ -119,11 +119,12 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                   }}
                 >
                   <img
-                    src={getOptimizedImage(item.poster_path, "w154")}
+                    src={`https://image.tmdb.org/t/p/w154${item.poster_path}`}
                     srcSet={`
-                      ${getOptimizedImage(item.poster_path, "w154")} 1x,
-                      ${getOptimizedImage(item.poster_path, "w342")} 2x
+                      https://image.tmdb.org/t/p/w154${item.poster_path}.avif 1x,
+                      https://image.tmdb.org/t/p/w342${item.poster_path}.avif 2x,
                     `}
+                    type="image/avif"
                     alt={item?.title || item?.name || item?.original_name}
                     style={{
                       width: "100%",
@@ -131,7 +132,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                       objectFit: "cover",
                       borderRadius: "8px",
                     }}
-                    loading="lazy"
+                    // loading="lazy"
                   />
 
                   <Typography sx={{ mt: 1, fontSize: 18 }} noWrap>
@@ -141,9 +142,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                   {/* Rating & Release Date (except for Upcoming Movies) */}
                   {!['Upcoming Movies'].includes(title) && (
                     <>
-                      <span style={{ opacity: 0.7, fontWeight: 500 }}>
-                        {item.vote_average ? `${item.vote_average.toFixed(1)}` : "N/A"}
-                      </span>
+                      <span style={{ opacity: 0.7, fontWeight: 500 }}>{item.vote_average ? `${(item.vote_average).toFixed(1)}` : "N/A"}</span>
                       <StarIcon sx={{ fontSize: 18, color: "#FFD700", ml: 0.5, mb: 0.5 }} />
                       {mediaType !== "tv" && (
                         <Typography variant="caption" display="block">
@@ -181,7 +180,7 @@ MediaList.propTypes = {
   title: PropTypes.string.isRequired,
   apiEndpoint: PropTypes.string.isRequired,
   mediaType: PropTypes.string.isRequired,
-  viewAllRoute: PropTypes.string.isRequired,
-};
+  viewAllRoute: PropTypes.string.isRequired
+}
 
 export default MediaList;
