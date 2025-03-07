@@ -1,0 +1,14 @@
+name: Weekly Supabase Login (Keep Alive Projects)
+
+on:
+  schedule:
+    - cron: "0 0 * * 1" # Runs every Monday at midnight UTC
+
+jobs:
+  call-supabase-function:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Supabase Edge Function
+        run: |
+          curl -X POST "https://your-project-ref.functions.supabase.co/weekly-login" \
+          -H "Authorization: Bearer YOUR_SUPABASE_ANON_KEY"
