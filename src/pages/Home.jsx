@@ -14,7 +14,7 @@ const Home = () => {
       {/* Banner Section */}
       <Banner />
       
-      <div className="pb-20 md:px-8 md:max-w-[120rem] mx-auto">
+      <div className="pb-20 md:px-8 md:max-w-[120rem] min-h-[1200px] mx-auto">
       {/* Movies and TV Shows Sections with lazy loaded */}
       <Suspense>
       <MediaList
