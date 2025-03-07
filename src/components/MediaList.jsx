@@ -57,7 +57,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
         {["Top Rated Movies", "Trending Movies", "Trending TV Shows", "Top Rated TV Shows"].includes(title) && (
           <WhatshotIcon color="error" sx={{ fontSize: 32, mr: 1 }} />
         )}
-        <Typography variant="h5" fontWeight="bold">
+        <Typography fontWeight="bold" sx={{ fontSize: 23.5 }}>
           {title}
         </Typography>
         <Link to={viewAllRoute} style={{ textDecoration: "none", marginLeft: "auto" }}>
@@ -70,6 +70,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
       {/* Scrollable List with Buttons */}
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <IconButton
+          aria-label="scroll left"
           onClick={() => scroll("left")}
           sx={{
             position: "absolute",
@@ -119,7 +120,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                 >
                   <img
                     src={`https://image.tmdb.org/t/p/w154${item.poster_path}`}
-                    alt={item.title || item.name}
+                    alt={item?.title || item?.name || item?.original_name}
                     style={{
                       width: "100%",
                       height: "240px",
@@ -149,6 +150,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
         </Box>
 
         <IconButton
+          aria-label="scroll right"
           onClick={() => scroll("right")}
           sx={{
             position: "absolute",

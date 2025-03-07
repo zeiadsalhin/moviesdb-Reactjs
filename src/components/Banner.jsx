@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Box, CircularProgress, Typography, Rating, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "@mui/material"
 
 const HomeBanner = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -8,6 +9,7 @@ const HomeBanner = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [rating, setRating] = useState(null);
   const scrollY = useRef(0);
+  const isMobile = useMediaQuery("(max-width: 899px)");
 
   useEffect(() => {
     fetchRandomMovie();
@@ -70,7 +72,7 @@ const HomeBanner = () => {
           <>
             {/* Preload Image */}
             <img
-              src={`https://image.tmdb.org/t/p/original${randomMovie.backdrop_path}`}
+              src={`https://image.tmdb.org/t/p/${isMobile ? 'w1280' : 'original'}${randomMovie.backdrop_path}`}
               alt="Movie Background"
               onLoad={() => setImageLoaded(true)}
               style={{ display: "none" }}
@@ -84,7 +86,7 @@ const HomeBanner = () => {
                 inset: 0,
                 backgroundImage: imageLoaded
                   ? `linear-gradient(to right, black 25%, transparent 85%), 
-                     url(https://image.tmdb.org/t/p/original${randomMovie.backdrop_path})`
+                     url(https://image.tmdb.org/t/p/${isMobile ? 'w1280' : 'original'}${randomMovie.backdrop_path})`
                   : "none",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
