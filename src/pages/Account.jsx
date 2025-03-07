@@ -31,7 +31,7 @@ const Account = () => {
           🔐 Authentication Coming Soon!
         </Typography>
         <Typography variant="body2" sx={{ color: "white" }}>
-          In the future, you will be able to log in to access personalized features.
+          You will be able to log in to access personalized features.
         </Typography>
       </Box>
 
@@ -39,7 +39,7 @@ const Account = () => {
       {/* Footer */}
       <Typography className="text-md text-zinc-400" sx={{ display: "flex", justifyContent: "center" }}>
         Powered by
-        <a href="https://www.themoviedb.org/" title="The movie database" className="mx-1">
+        <a href="https://www.themoviedb.org/" title="The movie database" className="mx-1 font-bold">
           TMDB
         </a>
         API

@@ -10,7 +10,7 @@ const About = () => {
     document.title = 'The Movies - About Us';
   }, [])
   return (
-    <Box className="about flex flex-col items-center text-center space-y-4" sx={{ paddingY: '4rem'}}>
+    <Box className="about flex flex-col items-center text-center space-y-4" sx={{ paddingY: '6rem'}}>
       {/* Logo Section */}
       <Box className="flex items-center space-x-2">
         <Avatar src="/logo.webp" alt="Logo" sx={{ width: 50, height: 50 }} />
@@ -18,17 +18,17 @@ const About = () => {
       </Box>
 
       {/* Divider */}
-      <Box className="w-1/5 h-1 bg-zinc-900" />
+      <Box className="w-1/5 h-1 bg-zinc-500 rounded-2xl mt-2" />
 
       {/* Credits */}
-      <Typography variant="h5" className="mt-5">
+      <Typography variant="h5" sx={{ my: 2 }}>
         Credits:
       </Typography>
 
       <Typography className="opacity-75">© Ziadsalhin</Typography>
 
       {/* License Section */}
-      <Box className="opacity-75 flex items-center justify-center space-x-1">
+      <Box className="opacity-75 flex items-center justify-center space-x-1" sx={{ gap: 0.5 }}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="1" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11" />
@@ -41,7 +41,7 @@ const About = () => {
       <Typography className="opacity-75">v3.Final</Typography>
 
       {/* GitHub Link */}
-      <Box className="opacity-75 mt-10 flex items-center space-x-1">
+      <Box className="opacity-75 mt-8 flex items-center space-x-1">
         <Typography>Follow me:</Typography>
         <Link to="https://github.com/zeiadsalhin" target="_blank" rel="noopener noreferrer">
           <GitHubIcon sx={{ fontSize: 30, color: "gray", "&:hover": { color: "white" } }} />
@@ -49,7 +49,7 @@ const About = () => {
       </Box>
 
       {/* Created With Section */}
-      <Typography sx={{mt: 5}}>Created with</Typography>
+      <Typography sx={{mt: 3}}>Created with</Typography>
       <Box className="flex justify-center mt-2" sx={{ gap: 1, opacity: 0.75 }}>
         {/* React.js Icon */}
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-10.5 -9.45 21 18.9">
