@@ -127,6 +127,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                       objectFit: "cover",
                       borderRadius: "8px",
                     }}
+                    loading="lazy"
                   />
                   <Typography sx={{ mt: 1, fontSize: 18 }} noWrap>
                     {item.title || item.name}
