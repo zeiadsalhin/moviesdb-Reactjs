@@ -9,7 +9,7 @@ const MovieCard = ({ result, type }) => {
       <Link to={`/details/${result.media_type || type}/${result.id}`} style={{ textDecoration: "none", color: "inherit" }}>
         <Box className="imagecover" sx={{ marginInline: "auto", width: 160, height: "fit-content", overflow: "hidden", borderRadius: "8px" }}>
           <img
-            src={result.poster_path ? `https://image.tmdb.org/t/p/w342${result.poster_path}` : "/error.svg"}
+            src={result.poster_path ? `https://image.tmdb.org/t/p/w154${result.poster_path}` : "/error.svg"}
             alt={result.title || "Movie Poster"}
             className="poster mx-auto hover:scale-105 transform transition ease-in-out duration-300"
             style={{ width: "100%", height:"240px", objectFit: "cover", borderRadius: "8px" }}
