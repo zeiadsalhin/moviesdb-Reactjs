@@ -15,7 +15,7 @@ const Navbar = ({ toggleDrawer, display }) => {
 
       <div className="flex" style={{ display: "flex", alignItems: "center" }}>
         {!display && (
-        <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
+        <IconButton aria-label="menu-button" edge="start" color="inherit" onClick={toggleDrawer}>
           <MenuIcon fontSize="large" />
         </IconButton>
         )}
