@@ -57,7 +57,7 @@ const HomeBanner = () => {
       setRating((selectedMovie.vote_average / 2).toFixed(1));
 
       // Generate Image URL
-      const imageSrc = `https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${selectedMovie.backdrop_path}`;
+      const imageSrc = `https://image.tmdb.org/t/p/${isMobile ? "w154" : "original"}${selectedMovie.backdrop_path}`;
 
       // Preload Image
       const img = new Image();
