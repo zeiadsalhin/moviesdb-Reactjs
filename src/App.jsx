@@ -6,7 +6,7 @@ import AnimatedRoutes from "./utils/AnimatedRoutes";
 import Sidebar from "./layouts/sideBar";
 import Navbar from "./layouts/navBar";
 import MobileNav from "./layouts/mobileNav";
-// import Footer from "./layouts/Footer"
+import Footer from "./layouts/Footer"
 import NProgressHandler from "./utils/NProgressHandler"; // Import the handler
 import darkTheme from "./styles/theme";
 
@@ -37,7 +37,7 @@ const App = () => {
       <Box sx={{ minHeight: "calc(100vh - 156px)", background: "#000", color: "#fff", marginTop: "0rem" }}>      
           <AnimatedRoutes /> {/* Fade Animation when Navigating */}
       </Box>
-      {/* <Footer /> */}
+      <Footer />
       {isMobile && <MobileNav />}
       </Wrapper>
     </Router>
