@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { Box, CircularProgress, Typography, Rating, Grid } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import CustomButton from "./useCustomButton";
 import { useMediaQuery } from "@mui/material";
@@ -34,21 +35,19 @@ const HomeBanner = () => {
   }, []);
 
   const fetchRandomMovie = async () => {
+    setIsLoading(true);
     try {
-      const response = await fetch(
-        "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
-        {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization: import.meta.env.VITE_API_KEY,
-          },
+      const { data } = await axios.get("https://api.themoviedb.org/3/discover/movie", {
+        params: {
+          include_adult: false,
+          include_video: false,
+          language: "en-US",
+          page: 1,
+          sort_by: "popularity.desc",
         }
-      );
+      });
 
-      const data = await response.json();
       const movies = data.results.filter((movie) => movie.backdrop_path);
-
       if (movies.length === 0) {
         setIsLoading(false);
         return;
@@ -66,10 +65,7 @@ const HomeBanner = () => {
       img.src = imageSrc;
       img.loading = "eager"; // Load ASAP
       img.fetchPriority = "high"; // Prioritize download
-      img.onload = () => setTimeout(() => {
-        setImageLoaded(true)
-      }, 300);
-
+      img.onload = () => setTimeout(() => setImageLoaded(true), 300);
     } catch (error) {
       console.error("Error fetching movies:", error);
     } finally {
@@ -121,53 +117,52 @@ const HomeBanner = () => {
                     {randomMovie.title}
                   </Typography>
                 </Link>
+
                 <Grid container direction={{ xs: "column", md: "col" }} alignItems="left" spacing={0} sx={{ mt: 1, opacity: 0.9 }}>
-                  
                   <Grid container>
                     <Grid item>
-                    <Rating value={Number(rating)} readOnly size={isMobile ? 'small' : 'large'} />
+                      <Rating value={Number(rating)} readOnly size={isMobile ? "small" : "large"} />
                     </Grid>
                   </Grid>
-                  
+
                   <Grid container direction={{ xs: "column", md: "row" }} gap={1}>
                     <Grid item>
-                    <Typography variant="body1">{Number(randomMovie.popularity?.toFixed()).toLocaleString()} Reviews</Typography>
+                      <Typography variant="body1">{Number(randomMovie.popularity?.toFixed()).toLocaleString()} Reviews</Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">{randomMovie.vote_count?.toLocaleString()} Votes</Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <Typography variant="body1">{randomMovie.vote_count?.toLocaleString()} Votes</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="body1">{randomMovie.release_date.slice(0, 4)}</Typography>
-                  </Grid>
-                  </Grid>
-                
                 </Grid>
+
                 <Typography variant="body2" sx={{ mt: 2, opacity: 0.9, display: { xs: "none", md: "block" } }}>
                   {randomMovie.overview.slice(0, 300)}...
                 </Typography>
-                
+
                 {/* Watch Now and Save Buttons */}
                 <Box sx={{ display: "flex", gap: 2, mt: { xs: 2, md: 3 } }}>
-                <CustomButton
-                  text="View"
-                  color="secondary"
-                  size={isMobile ? "small" : "medium"}
-                  icon={<PlayArrowIcon />}
-                  component={Link}
-                  to={`/details/movie/${randomMovie.id}`}
-                  sx={{ gap: 0 }}
-                />
+                  <CustomButton
+                    text="View"
+                    color="secondary"
+                    size={isMobile ? "small" : "medium"}
+                    icon={<PlayArrowIcon />}
+                    component={Link}
+                    to={`/details/movie/${randomMovie.id}`}
+                    sx={{ gap: 0 }}
+                  />
 
-                <CustomButton
-                  text={isSaved ? "Saved" : "Save"}
-                  color="secondary"
-                  size={isMobile ? "small" : "medium"}
-                  variant="outlined"
-                  icon={isSaved ? <BookmarkIcon /> : <AddIcon />}
-                  sx={{ gap: 0 }}
-                />
-              </Box>
-
+                  <CustomButton
+                    text={isSaved ? "Saved" : "Save"}
+                    color="secondary"
+                    size={isMobile ? "small" : "medium"}
+                    variant="outlined"
+                    icon={isSaved ? <BookmarkIcon /> : <AddIcon />}
+                    sx={{ gap: 0 }}
+                  />
+                </Box>
               </Box>
             </Box>
           </>

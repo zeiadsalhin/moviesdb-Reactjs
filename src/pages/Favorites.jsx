@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 import { Link } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -19,29 +20,20 @@ const Favorites = () => {
 
   React.useEffect(() => {
     document.title = 'Favorites | The Movies';
-
     fetchMovies();
   }, []);
 
   const fetchMovies = async () => {
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: import.meta.env.VITE_API_KEY,
-      },
-    };
-
     try {
-      const response = await fetch(
-        'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1',
-        options
-      );
-      const data = await response.json();
-      setMovies(data.results || []);
-      setLoading(false);
+      const response = await axios.get('https://api.themoviedb.org/3/movie/now_playing', {
+        params: { language: 'en-US', page: 1 },
+      });
+
+      setMovies(response.data.results || []);      
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching movies:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,11 +48,10 @@ const Favorites = () => {
   };
 
   return (
-    <Box sx={{ px: {md:6}, scale: 1, padding: '16px' }}>
-      
+    <Box sx={{ px: { md: 6 }, padding: '16px' }}>
       {/* 🔥 Fire Icon Added Next to Title */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, mt:10 }}>
-        <WhatshotIcon color="error" sx={{ fontSize: 32 }} /> 
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, mt: 10 }}>
+        <WhatshotIcon color="error" sx={{ fontSize: 32 }} />
         <Typography variant="h5">Theatre Playing Movies</Typography>
       </Box>
 
@@ -79,7 +70,7 @@ const Favorites = () => {
           <ChevronLeftIcon />
         </IconButton>
 
-        <Box className='mx-auto min-h-[22rem]'
+        <Box
           ref={scrollContainerRef}
           sx={{
             display: 'flex',
@@ -93,42 +84,37 @@ const Favorites = () => {
           }}
         >
           {loading ? (
-           <div className="flex justify-center items-center w-full">
-           <CircularProgress />
-         </div> 
+            <div className="flex justify-center items-center w-full">
+              <CircularProgress />
+            </div>
           ) : (
             movies.map((movie) => (
-              <Link
-                key={movie.id}
-                to={`/details/movie/${movie.id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-              <Card
-                key={movie.id}
-                sx={{
-                  flex: '0 0 auto',
-                  width: 180,
-                  textAlign: 'center',
-                  boxShadow: 3,
-                  '&:hover': { transform: 'scale(1.05)', transition: '0.3s' },
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
-                  alt={movie.title}
-                  sx={{ height: 240, objectFit: 'cover' }}
-                />
-                <CardContent>
-                  <Typography variant="body2" noWrap>
-                    {movie.title}
-                  </Typography>
-                  <Rating value={Math.random() * (5 - 2) + 2} precision={0.5} size="small" />
-                  <Typography variant="caption" display="block">
-                    Released: {movie.release_date}
-                  </Typography>
-                </CardContent>
-              </Card>
+              <Link key={movie.id} to={`/details/movie/${movie.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                <Card
+                  sx={{
+                    flex: '0 0 auto',
+                    width: 180,
+                    textAlign: 'center',
+                    boxShadow: 3,
+                    '&:hover': { transform: 'scale(1.05)', transition: '0.3s' },
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    image={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
+                    alt={movie.title}
+                    sx={{ height: 240, objectFit: 'cover' }}
+                  />
+                  <CardContent>
+                    <Typography variant="body2" noWrap>
+                      {movie.title}
+                    </Typography>
+                    <Rating value={(movie.vote_average)/2} precision={0.5} size="small" />
+                    <Typography variant="caption" display="block">
+                      Released: {movie.release_date}
+                    </Typography>
+                  </CardContent>
+                </Card>
               </Link>
             ))
           )}

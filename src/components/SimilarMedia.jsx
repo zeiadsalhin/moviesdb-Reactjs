@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import * as React from 'react';
-import { Box, Typography, IconButton, CircularProgress } from '@mui/material';
-import { ChevronLeft, ChevronRight, Whatshot as WhatshotIcon } from '@mui/icons-material';
-// import { Link } from 'react-router-dom';
-import MovieCard from './movieCard';
+import * as React from "react";
+import { Box, Typography, IconButton, CircularProgress } from "@mui/material";
+import { ChevronLeft, ChevronRight, Whatshot as WhatshotIcon } from "@mui/icons-material";
+import MovieCard from "./movieCard";
+import axios from "axios";
 
 const SimilarMedia = ({ mediaType, mediaId }) => {
     const [media, setMedia] = React.useState([]);
@@ -12,19 +12,19 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
 
     React.useEffect(() => {
         const fetchSimilarMedia = async () => {
+            setLoading(true);
             try {
-                const response = await fetch(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/similar?&include_adult=false&language=en-US&page=1`, 
-                    {
-                        method: "GET",
-                        headers: {
-                          accept: 'application/json',
-                          Authorization: import.meta.env.VITE_API_KEY
-                      }                 
-            });
-                const data = await response.json();
-                setMedia(data.results || []);       
+                const { data } = await axios.get(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/similar`, {
+                    params: {
+                        include_adult: false,
+                        language: "en-US",
+                        page: 1,
+                    },
+                });
+
+                setMedia(data.results || []);
             } catch (error) {
-                console.error('Error fetching similar media:', error);
+                console.error("Error fetching similar media:", error);
             } finally {
                 setLoading(false);
             }
@@ -35,13 +35,13 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
 
     const scroll = (direction) => {
         if (scrollRef.current) {
-          const scrollAmount = 300;
-          scrollRef.current.scrollBy({
-            left: direction === "left" ? -scrollAmount : scrollAmount,
-            behavior: "smooth",
-          });
+            const scrollAmount = 300;
+            scrollRef.current.scrollBy({
+                left: direction === "left" ? -scrollAmount : scrollAmount,
+                behavior: "smooth",
+            });
         }
-      };
+    };
 
     if (loading) {
         return (
@@ -54,7 +54,7 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
     if (media.length === 0) {
         return (
             <Typography variant="h6" textAlign="center" sx={{ mt: 4 }}>
-                No similar {mediaType === 'movie' ? 'movies' : 'TV shows'} found.
+                No similar {mediaType === "movie" ? "movies" : "TV shows"} found.
             </Typography>
         );
     }
@@ -64,20 +64,17 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
             <Box display="flex" alignItems="center">
                 <WhatshotIcon color="error" sx={{ fontSize: 32, mr: 1 }} />
                 <Typography variant="h5" fontWeight="bold">
-                    Similar {mediaType === 'movie' ? 'Movies' : 'TV Shows'}
+                    Similar {mediaType === "movie" ? "Movies" : "TV Shows"}
                 </Typography>
-                {/* <Link to="/discover" style={{ marginLeft: 'auto', color: '#38bdf8', fontSize: '0.9rem' }}>
-                    View All
-                </Link> */}
             </Box>
 
-            <Box position="relative" sx={{ overflow: 'hidden', mt: 2 }}>
+            <Box position="relative" sx={{ overflow: "hidden", mt: 2 }}>
                 <IconButton
                     onClick={() => scroll("left")}
                     sx={{
-                        position: 'absolute',
+                        position: "absolute",
                         left: 0,
-                        top: '40%',
+                        top: "40%",
                         zIndex: 2,
                         bgcolor: "rgba(0,0,0,0.6)",
                         color: "white",
@@ -91,10 +88,10 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
                 <Box
                     ref={scrollRef}
                     sx={{
-                        display: 'flex',
-                        overflowX: 'auto',
-                        scrollBehavior: 'smooth',
-                        '&::-webkit-scrollbar': { display: 'none' },
+                        display: "flex",
+                        overflowX: "auto",
+                        scrollBehavior: "smooth",
+                        "&::-webkit-scrollbar": { display: "none" },
                     }}
                 >
                     {media?.map((item) => (
@@ -105,9 +102,9 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
                 <IconButton
                     onClick={() => scroll("right")}
                     sx={{
-                        position: 'absolute',
+                        position: "absolute",
                         right: 0,
-                        top: '40%',
+                        top: "40%",
                         zIndex: 2,
                         bgcolor: "rgba(0,0,0,0.6)",
                         color: "white",
@@ -123,8 +120,8 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
 };
 
 SimilarMedia.propTypes = {
-  mediaId: PropTypes.number.isRequired,
-  mediaType: PropTypes.string.isRequired,
+    mediaId: PropTypes.number.isRequired,
+    mediaType: PropTypes.string.isRequired,
 };
 
 export default SimilarMedia;

@@ -4,6 +4,7 @@ import { Box, Typography, IconButton, Modal } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import axios from "axios";
 
 const TrailerPhotos = ({ id, type }) => {
   const [images, setImages] = useState([]);
@@ -15,44 +16,30 @@ const TrailerPhotos = ({ id, type }) => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/${type}/${id}/images`,
-          {
-            method: "GET",
-            headers: {
-              accept: "application/json",
-              Authorization: import.meta.env.VITE_API_KEY,
-            },
-          }
-        );
-        if (!res.ok) throw new Error("Failed to fetch data");
+        const { data } = await axios.get(`https://api.themoviedb.org/3/${type}/${id}/images`);
 
-        const data = await res.json();
         setImages(data.backdrops || []);
 
-        if(data.backdrops.length == 0) {
-          setError('Not Available')
+        if (data.backdrops.length === 0) {
+          setError("Not Available");
         }
       } catch (error) {
         console.error("Error fetching images:", error);
-        setError(error.message);
+        setError("Failed to fetch images");
       }
     };
 
     const fetchVideos = async () => {
       try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/${type}/${id}/videos?language=en-US`,
-          {
-            method: "GET",
-            headers: {
-              accept: "application/json",
-              Authorization: import.meta.env.VITE_API_KEY,
-            },
-          }
-        );
-        fetchImages();
-        const data = await res.json();
+        const { data } = await axios.get(`https://api.themoviedb.org/3/${type}/${id}/videos`, {
+          params: { language: "en-US" },
+          headers: {
+            accept: "application/json",
+            Authorization: import.meta.env.VITE_API_KEY,
+          },
+        });
+
+        fetchImages(); // Fetch images after videos
         if (data.results.length > 0) {
           setVideoKey(data.results[0].key);
         }
@@ -78,9 +65,11 @@ const TrailerPhotos = ({ id, type }) => {
     return (
       <Box sx={{ py: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
-        Trailer & Photos
-      </Typography>
-        <Typography color="error" variant="body1" sx={{ textAlign: "center", mt: 4}}>{error}</Typography>
+          Trailer & Photos
+        </Typography>
+        <Typography color="error" variant="body1" sx={{ textAlign: "center", mt: 4 }}>
+          {error}
+        </Typography>
       </Box>
     );
   }
@@ -100,8 +89,6 @@ const TrailerPhotos = ({ id, type }) => {
           flexWrap: "nowrap",
           pb: 2,
           "&::-webkit-scrollbar": { display: "none" },
-          "&::-webkit-scrollbar-thumb": { display: "none" },
-          "&::-webkit-scrollbar-track": { display: "none" },
           gap: 2,
           scrollbarWidth: "none",
           scrollSnapType: "x mandatory",

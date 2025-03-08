@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Typography, CircularProgress, Grid, Rating } from "@mui/material";
@@ -29,28 +30,18 @@ const DetailsPage = () => {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(
-          `https://api.themoviedb.org/3/${type}/${id}?language=en-US`,
-          {
-            method: "GET",
-            headers: {
-              accept: 'application/json',
-              Authorization: import.meta.env.VITE_API_KEY
-          }
-          }
+        // Fetch movie or TV show details
+        const { data: result } = await axios.get(
+          `https://api.themoviedb.org/3/${type}/${id}?language=en-US`
         );
 
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const result = await response.json();
         setData(result);
         setRating((result.vote_average / 2).toFixed(1));
 
-        document.title = `${(result?.title || result?.name) } (${((result?.release_date || result.first_air_date)?.slice(0, 4))}) | The Movies`;
-
+        document.title = `${result?.title || result?.name} (${(result?.release_date || result.first_air_date)?.slice(0, 4)}) | The Movies`;
       } catch (error) {
         console.error("Error fetching details:", error);
-        setError(error.message);
+        setError(error.response?.data?.status_message || "Failed to fetch data");
       } finally {
         setLoading(false);
       }

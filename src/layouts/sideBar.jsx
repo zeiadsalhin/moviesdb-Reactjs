@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -18,23 +19,16 @@ import InfoIcon from "@mui/icons-material/Info";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Link } from "react-router-dom";
 
+// Set Axios Authorization header globally
+axios.defaults.headers.common["Authorization"] = import.meta.env.VITE_API_KEY;
+
 const Sidebar = ({ drawerOpen, toggleDrawer }) => {
   const [user, setUser] = useState({ name: "", avatar: "" });
 
   // Fetch user data
   const fetchUserData = async () => {
     try {
-      const response = await fetch("https://api.themoviedb.org/3/account/21017366", {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: import.meta.env.VITE_API_KEY,
-        },
-      });
-
-      if (!response.ok) throw new Error("Failed to fetch user data");
-
-      const data = await response.json();
+      const { data } = await axios.get("https://api.themoviedb.org/3/account/21017366");
 
       return {
         name: data.name || "Guest",

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
@@ -37,7 +38,7 @@ const Search = () => {
     setResults([]);
   };
 
-  // Function to fetch search results
+  // Function to fetch search results using Axios
   const fetchResults = async (query, page = 1) => {
     if (!query.trim()) {
       setResults([]);
@@ -46,34 +47,34 @@ const Search = () => {
 
     setLoading(true);
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=en-US&page=${page}`,
-        {
-          method: "GET",
-          headers: { accept: "application/json", Authorization: import.meta.env.VITE_API_KEY },
-        }
-      );
-      const data = await response.json();
+      const response = await axios.get("https://api.themoviedb.org/3/search/multi", {
+        params: {
+          query,
+          include_adult: false,
+          language: "en-US",
+          page,
+        },
+      });
 
       if (page === 1) {
-        setResults(data.results || []);
+        setResults(response.data.results || []);
         setCurrentPage(2);
 
-        // **Scroll to top only when a new search starts**
+        // Scroll to top only when a new search starts
         window.scrollTo({ top: 0, behavior: "auto" });
 
-        // **Ensure input field stays in view on first search**
+        // Ensure input field stays in view on first search
         setTimeout(() => searchRef.current?.scrollIntoView({ behavior: "smooth" }), 300);
       } else {
         setResults((prevResults) => {
           const existingIds = new Set(prevResults.map((movie) => movie.id));
-          const newResults = data.results.filter((movie) => !existingIds.has(movie.id));
+          const newResults = response.data.results.filter((movie) => !existingIds.has(movie.id));
           return [...prevResults, ...newResults];
         });
         setCurrentPage((prevPage) => prevPage + 1);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching search results:", error);
     } finally {
       setLoading(false);
     }
@@ -106,7 +107,7 @@ const Search = () => {
         className="search-bar w-11/12 mx-auto"
         sx={{
           mt: 0,
-          mb: 6,  
+          mb: 6,
           position: "sticky",
           top: 60,
           zIndex: 1000,
@@ -129,8 +130,9 @@ const Search = () => {
             </IconButton>
           )}
         </Box>
-
       </Box>
+
+      {/* Results Count */}
       <Box 
         sx={{ 
           width: "calc(11/12 * 100%)", 
@@ -143,7 +145,6 @@ const Search = () => {
         {results.length > 0 && `${results.length} results found`}
       </Box>
 
-
       {/* Movie List */}
       {results.length > 0 ? (
         <Box className="movie-list flex justify-center">
@@ -153,7 +154,7 @@ const Search = () => {
             ))}
           </Box>
         </Box>
-      ) : !loading && search.length > 0 ? ( // Show "No results found" if search is not empty and no results
+      ) : !loading && search.length > 0 ? (
         <Box className="no-results flex justify-center p-5 opacity-50">
           <h1>No results found</h1>
         </Box>

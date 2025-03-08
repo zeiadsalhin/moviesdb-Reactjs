@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from "react";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography, MenuItem, Select, FormControl } from "@mui/material";
 import MovieCard from "../components/movieCard";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const ViewAll = () => {
-  const { category, type } = useParams(); // Get category and type from URL
+  const { category, type } = useParams();
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [sortBy, setSortBy] = useState(""); // Default sorting is determined dynamically
   const observer = useRef();
 
-  // Define API endpoints based on type (movie/tv) and category
   const apiEndpoints = {
     latest: `https://api.themoviedb.org/3/${type === "movie" ? "movie/now_playing" : "tv/on_the_air"}?language=en-US`,
     trending: `https://api.themoviedb.org/3/trending/${type}/week?language=en-US`,
@@ -30,20 +31,18 @@ const ViewAll = () => {
   const fetchItems = async () => {
     if (loading || !apiEndpoints[category]) return;
     setLoading(true);
-    
+
     try {
-      const response = await fetch(`${apiEndpoints[category]}&page=${page}`, {
+      const { data } = await axios.get(`${apiEndpoints[category]}&page=${page}`, {
         headers: { Authorization: import.meta.env.VITE_API_KEY },
       });
-      const data = await response.json();
 
-      if (data.results && Array.isArray(data.results)) {
+      if (data.results) {
         setItems((prev) => {
           const existingIds = new Set(prev.map((item) => item.id));
           const newItems = data.results.filter((item) => item.id && !existingIds.has(item.id));
           return [...prev, ...newItems];
         });
-
         setPage((prev) => prev + 1);
       }
     } catch (error) {
@@ -55,7 +54,7 @@ const ViewAll = () => {
   useEffect(() => {
     document.title = `${category.replace("-", " ").charAt(0).toUpperCase() + category.slice(1) + (type === "movie" ? " Movies" : " TV Shows")} | The Movies`;
 
-    setItems([]); // Reset items when category changes
+    setItems([]);
     setPage(1);
     fetchItems();
   }, [category, type]);
@@ -73,32 +72,72 @@ const ViewAll = () => {
     return () => observer.current?.disconnect();
   }, [items]);
 
+  // **Dynamic Sorting Logic**
+  const sortedItems = [...items].sort((a, b) => {
+    // Default sorting based on category
+    if (category === "trending" || category === "toprated") {
+      return (b.vote_average || 0) - (a.vote_average || 0); // Sort by rating for trending/top-rated
+    }
+    return new Date(b.release_date || b.first_air_date) - new Date(a.release_date || a.first_air_date); // Default to release date
+  });
+
+  // Apply manual sorting from dropdown if selected
+  if (sortBy === "release_date") {
+    sortedItems.sort((a, b) => new Date(b.release_date || b.first_air_date) - new Date(a.release_date || a.first_air_date));
+  } else if (sortBy === "rating") {
+    sortedItems.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
+  } else if (sortBy === "name") {
+    sortedItems.sort((a, b) => (a.title || a.name || "").localeCompare(b.title || b.name || ""));
+  }
+
   return (
     <Box sx={{ py: 3 }}>
-  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2, mt: 10 }}>
-    <Typography variant="h5" textAlign="center" sx={{ mb: 2, px: 3.5 }}>
-      {category.replace("-", " ").charAt(0).toUpperCase() + category.slice(1)} {type === "movie" ? "Movies" : "TV Shows"}
-    </Typography>
-  </Box>
+      {/* Title and Sort Dropdown */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", px: { xs: 3.5, md: 5 }, mb: 2, mt: 10 }}>
+        <Typography variant="h5">
+          {category.replace("-", " ").charAt(0).toUpperCase() + category.slice(1)} {type === "movie" ? "Movies" : "TV Shows"}
+        </Typography>
 
-  <Box
-    sx={{
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      gap: 2,
-      px:1
-    }}
-  >
-    {items.map((item) => (
-      <MovieCard key={item.id} result={item} type={type} />
-    ))}
-  </Box>
+        <FormControl
+          size="small"
+          sx={{
+            minWidth: 80,
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": { borderColor: "white" }, // Outline color white
+              "&:hover fieldset": { borderColor: "white" },
+              "&.Mui-focused fieldset": { borderColor: "white" },
+            },
+          }}
+        >
+          <Select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            displayEmpty
+            sx={{
+              color: "white",
+              fontSize: "0.875rem",
+            }}
+          >
+            <MenuItem value="">Default</MenuItem>
+            <MenuItem value="release_date">Date</MenuItem>
+            <MenuItem value="rating">Rating</MenuItem>
+            <MenuItem value="name">A-Z</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
-  <div id="load-more" style={{ height: 50, display: "flex", justifyContent: "center", alignItems: "center" }}>
-    {loading && <CircularProgress />}
-  </div>
-</Box>
+      {/* Movies List */}
+      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 2, px: 1 }}>
+        {sortedItems.map((item) => (
+          <MovieCard key={item.id} result={item} type={type} />
+        ))}
+      </Box>
+
+      {/* Loading Indicator */}
+      <div id="load-more" style={{ height: 50, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        {loading && <CircularProgress />}
+      </div>
+    </Box>
   );
 };
 

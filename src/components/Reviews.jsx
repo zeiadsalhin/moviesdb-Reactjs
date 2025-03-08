@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { Box, Typography, CircularProgress, Avatar, Button } from "@mui/material";
 import DOMPurify from "dompurify";
+import axios from "axios";
 
 const Reviews = ({ mediaId, mediaType }) => {
   const [reviews, setReviews] = useState([]);
@@ -12,20 +13,11 @@ const Reviews = ({ mediaId, mediaType }) => {
 
   useEffect(() => {
     const fetchReviews = async () => {
+      setLoading(true);
       try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/${mediaType}/${mediaId}/reviews?language=en-US&page=1`,
-          {
-            headers: {
-              accept: "application/json",
-              Authorization: import.meta.env.VITE_API_KEY,
-            },
-          }
-        );
-
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const data = await response.json();
+        const { data } = await axios.get(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/reviews`, {
+          params: { language: "en-US", page: 1 }
+        });
 
         if (data.results.length === 0) {
           setError("Not Available");
@@ -38,6 +30,7 @@ const Reviews = ({ mediaId, mediaType }) => {
         }
       } catch (error) {
         console.error("Error fetching reviews:", error);
+        setError("Failed to load reviews");
       } finally {
         setLoading(false);
       }
@@ -71,7 +64,7 @@ const Reviews = ({ mediaId, mediaType }) => {
   }
 
   return (
-    <Box sx={{ mx: 1}}>
+    <Box sx={{ mx: 1 }}>
       <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
         Reviews {reviews.length > 0 && `(${reviews.length})`}
       </Typography>
@@ -109,28 +102,26 @@ const Reviews = ({ mediaId, mediaType }) => {
                   />
                   <Box sx={{ alignItems: "center", gap: 0 }}>
                     <Typography>{review.author}</Typography>
-                    
+
                     {/* Dynamic date update */}
                     <Typography variant="caption" color="text.secondary">
-
                       {review.updated_at && review.updated_at !== review.created_at
-                      ? `Updated ${new Date(review.updated_at).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          hour12: true,
-                        })}`
-                      : `Posted ${new Date(review.created_at).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          hour12: true,
-                        })}`}
-
+                        ? `Updated ${new Date(review.updated_at).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: true,
+                          })}`
+                        : `Posted ${new Date(review.created_at).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: true,
+                          })}`}
                     </Typography>
                   </Box>
                 </Box>
@@ -141,7 +132,7 @@ const Reviews = ({ mediaId, mediaType }) => {
                   </Typography>
                 )}
 
-                {/* handle html tags with safety */}
+                {/* Handle HTML tags safely */}
                 <Typography
                   variant="body2"
                   sx={{
@@ -163,11 +154,9 @@ const Reviews = ({ mediaId, mediaType }) => {
                         : review.content
                     ),
                   }}
-                >
-                  {/* {review.content} */}
-                </Typography>
+                />
 
-                {/* see more */}
+                {/* See More / See Less Button */}
                 {isLongText && (
                   <Button
                     onClick={() => toggleExpand(review.id)}

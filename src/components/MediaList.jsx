@@ -1,10 +1,11 @@
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import {
   Box,
   Typography,
   IconButton,
-  CircularProgress,
+  CircularProgress
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -24,15 +25,21 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
   const fetchMedia = async () => {
     setLoading(true);
     try {
-      const response = await fetch(apiEndpoint, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: import.meta.env.VITE_API_KEY,
-        },
-      });
-      const data = await response.json();
-      setItems(data.results || []);
+      const response = await axios.get(apiEndpoint);
+
+      let sortedItems = response.data.results || [];
+
+      // Default sorting by release date (newest first)
+      sortedItems.sort((a, b) =>
+        new Date(b.release_date || b.first_air_date || 0) - new Date(a.release_date || a.first_air_date || 0)
+      );
+
+      // Override sorting for Trending & Top Rated (sort by rating)
+      if (title.includes("Trending") || title.includes("Top Rated")) {
+        sortedItems.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
+      }
+
+      setItems(sortedItems);
     } catch (error) {
       console.error(`Error fetching ${title}:`, error);
     } finally {
@@ -52,7 +59,7 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
 
   return (
     <Box sx={{ px: 2, mt: 4 }}>
-      {/* Title with Fire Icon */}
+      {/* Title */}
       <Box sx={{ display: "flex", alignItems: "center" }}>
         {["Top Rated Movies", "Trending Movies", "Trending TV Shows", "Top Rated TV Shows"].includes(title) && (
           <WhatshotIcon color="error" sx={{ fontSize: 32, mr: 1 }} />
@@ -67,8 +74,8 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
         </Link>
       </Box>
 
-      {/* Scrollable List with Buttons */}
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      {/* Scrollable List */}
+      <Box sx={{ display: "flex", alignItems: "center", position: "relative" }}>
         <IconButton
           aria-label="scroll left"
           onClick={() => scroll("left")}
@@ -100,9 +107,9 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
           }}
         >
           {loading ? (
-            <Box sx={{ width: loading? "100vw" : "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "auto"}}>
-            <CircularProgress />
-          </Box>
+            <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}>
+              <CircularProgress />
+            </Box>
           ) : (
             items.map((item) => (
               <Link
@@ -132,17 +139,17 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
                       objectFit: "cover",
                       borderRadius: "8px",
                     }}
-                    // loading="lazy"
                   />
 
                   <Typography sx={{ mt: 1, fontSize: 18 }} noWrap>
                     {item.title || item.name}
                   </Typography>
 
-                  {/* Rating & Release Date (except for Upcoming Movies) */}
-                  {!['Upcoming Movies'].includes(title) && (
+                  {!["Upcoming Movies"].includes(title) && (
                     <>
-                      <span style={{ opacity: 0.7, fontWeight: 500 }}>{item.vote_average ? `${(item.vote_average).toFixed(1)}` : "N/A"}</span>
+                      <span style={{ opacity: 0.7, fontWeight: 500 }}>
+                        {item.vote_average ? `${(item.vote_average).toFixed(1)}` : "N/A"}
+                      </span>
                       <StarIcon sx={{ fontSize: 18, color: "#FFD700", ml: 0.5, mb: 0.5 }} />
                       {mediaType !== "tv" && (
                         <Typography variant="caption" display="block">
@@ -180,7 +187,7 @@ MediaList.propTypes = {
   title: PropTypes.string.isRequired,
   apiEndpoint: PropTypes.string.isRequired,
   mediaType: PropTypes.string.isRequired,
-  viewAllRoute: PropTypes.string.isRequired
-}
+  viewAllRoute: PropTypes.string.isRequired,
+};
 
 export default MediaList;
