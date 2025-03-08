@@ -107,8 +107,8 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
           }}
         >
           {loading ? (
-            <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}>
-              <CircularProgress />
+            <Box sx={{ width: "100vw", display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}>
+              <CircularProgress color="secondary" />
             </Box>
           ) : (
             items.map((item) => (

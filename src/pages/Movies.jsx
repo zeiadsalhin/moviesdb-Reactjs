@@ -34,7 +34,7 @@ const MoviesPage = () => {
   ];
 
   return (
-    <Box sx={{ pb: 20, px: { md: 4 }, mx: "auto", overflow: "hidden" }}>
+    <Box sx={{ pb: 20, px: { md: 4 }, mx: "auto", overflow: "hidden", minHeight: "1200px" }}>
       {isLoading ? (
         <Box
           sx={{
