@@ -93,7 +93,7 @@ const ViewAll = () => {
   return (
     <Box sx={{ py: 3 }}>
       {/* Title and Sort Dropdown */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", px: { xs: 3.5, md: 5 }, mb: 2, mt: 10 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", px: { xs: 2.5, md: 5 }, mb: 2, mt: 10 }}>
         <Typography variant="h5">
           {category.replace("-", " ").charAt(0).toUpperCase() + category.slice(1)} {type === "movie" ? "Movies" : "TV Shows"}
         </Typography>
