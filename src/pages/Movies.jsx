@@ -7,7 +7,7 @@ const MoviesPage = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
-    document.title = "The Movies - Browse All Movies & TV Shows";
+    document.title = "Browse All Movies & TV Shows | The Movies";
 
     setTimeout(() => {
       setIsLoading(false);

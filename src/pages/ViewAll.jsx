@@ -53,7 +53,7 @@ const ViewAll = () => {
   };
 
   useEffect(() => {
-    document.title = `The Movies - ${category.replace("-", " ").charAt(0).toUpperCase() + category.slice(1) + (type === "movie" ? " Movies" : " TV Shows")}`;
+    document.title = `${category.replace("-", " ").charAt(0).toUpperCase() + category.slice(1) + (type === "movie" ? " Movies" : " TV Shows")} | The Movies`;
 
     setItems([]); // Reset items when category changes
     setPage(1);

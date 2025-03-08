@@ -15,7 +15,7 @@ const Search = () => {
   const debounceRef = useRef(null);
 
   useEffect(() => {
-    document.title = "The Movies - Search Movies & TV Shows";
+    document.title = "Search Movies & TV Shows | The Movies";
 
     const handleScroll = () => {
       if (

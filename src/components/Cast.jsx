@@ -61,7 +61,7 @@ const Cast = ({ id, type, display }) => {
   }
 
   return (
-    <Box sx={{ mt: 3, mx: 1, p: 2, bgcolor: "background.default", borderRadius: 2 }}>
+    <Box sx={{ mx: 1, p: 2, bgcolor: "background.default", borderRadius: 2 }}>
       <Typography variant="h5" sx={{ fontWeight: "bold", mb: 0 }}>
         Cast
       </Typography>

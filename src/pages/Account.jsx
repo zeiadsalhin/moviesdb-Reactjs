@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import CustomButton from "../components/useCustomButton";
 
 const Account = () => {
 
   useEffect(() => {
-    document.title = "The Movies - My Account";
+    document.title = "My Account | The Movies";
   }, []);
 
   return (
@@ -45,9 +44,13 @@ const Account = () => {
         API
       </Typography>
 
-      <Button component={Link} to="/about" variant="contained" sx={{ mt: 2, backgroundColor: "#999" }}>
-        About
-      </Button>
+      <CustomButton
+        text="About"
+        to="/about"
+        variant="contained"
+        sx={{ mt: 2, backgroundColor: "#999" }}
+      />
+
     </Box>
   );
 };

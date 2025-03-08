@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 const About = () => {
   useEffect(()=> {
-    document.title = 'The Movies - About Us';
+    document.title = 'About Us | The Movies';
   }, [])
   return (
     <Box className="about flex flex-col items-center text-center space-y-4" sx={{ paddingY: '6rem'}}>

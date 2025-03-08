@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { Box, CircularProgress, Typography, Rating, Grid, Button } from "@mui/material";
+import { Box, CircularProgress, Typography, Rating, Grid } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from "react-router-dom";
+import CustomButton from "./useCustomButton";
 import { useMediaQuery } from "@mui/material";
 
 const HomeBanner = () => {
@@ -145,22 +146,28 @@ const HomeBanner = () => {
                   {randomMovie.overview.slice(0, 300)}...
                 </Typography>
                 
-                {/* Watch Now and save Buttons */}
-                  <Box sx={{display: "flex", gap:2, mt: {xs: 2, md: 3}}}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    size={isMobile ? "small" : "normal"}
-                    startIcon={<PlayArrowIcon />}
-                    component={Link}
-                    to={`/details/movie/${randomMovie.id}`}
-                    >
-                    <Typography variant="body2" sx={{mt: 0.2}}>View</Typography>
-                  </Button>
-                  <Button onClick={undefined} size={isMobile ? "small" : "normal"} startIcon={isSaved ? <BookmarkIcon /> : <AddIcon />} variant="outlined" color="secondary">
-                  <Typography variant="body2" sx={{mt: 0.2}}>{isSaved ? " Saved" : " Save"}</Typography>
-                  </Button>
-                  </Box>
+                {/* Watch Now and Save Buttons */}
+                <Box sx={{ display: "flex", gap: 2, mt: { xs: 2, md: 3 } }}>
+                <CustomButton
+                  text="View"
+                  color="secondary"
+                  size={isMobile ? "small" : "medium"}
+                  icon={<PlayArrowIcon />}
+                  component={Link}
+                  to={`/details/movie/${randomMovie.id}`}
+                  sx={{ gap: 0 }}
+                />
+
+                <CustomButton
+                  text={isSaved ? "Saved" : "Save"}
+                  color="secondary"
+                  size={isMobile ? "small" : "medium"}
+                  variant="outlined"
+                  icon={isSaved ? <BookmarkIcon /> : <AddIcon />}
+                  sx={{ gap: 0 }}
+                />
+              </Box>
+
               </Box>
             </Box>
           </>

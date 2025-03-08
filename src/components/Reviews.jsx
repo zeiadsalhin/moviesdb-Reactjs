@@ -59,7 +59,7 @@ const Reviews = ({ mediaId, mediaType }) => {
 
   if (error) {
     return (
-      <Box sx={{ py: 2, px: 1 }}>
+      <Box sx={{ px: 1 }}>
         <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
           Reviews
         </Typography>
@@ -71,7 +71,7 @@ const Reviews = ({ mediaId, mediaType }) => {
   }
 
   return (
-    <Box sx={{ mt: 3, mx: 1, py: 2}}>
+    <Box sx={{ mx: 1}}>
       <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
         Reviews {reviews.length > 0 && `(${reviews.length})`}
       </Typography>

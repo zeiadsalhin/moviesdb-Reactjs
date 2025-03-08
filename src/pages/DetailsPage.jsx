@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Typography, Button, CircularProgress, Grid, Rating } from "@mui/material";
+import { Box, Typography, CircularProgress, Grid, Rating } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import AddIcon from '@mui/icons-material/Add';
@@ -10,6 +10,7 @@ import Cast from "../components/Cast";
 import Reviews from "../components/Reviews";
 import SimilarMedia from "../components/SimilarMedia";
 import ErrorComponent from "../components/ErrorShow";
+import CustomButton from "../components/useCustomButton";
 import { useMediaQuery } from "@mui/material"
 
 const DetailsPage = () => {
@@ -147,19 +148,29 @@ const DetailsPage = () => {
             
             {/* Watch Now and save Buttons */}
              <Box sx={{display: "flex", gap:2, mt: {xs: 2, md: 3}}}>
-             <Button
-              variant="contained"
+             <CustomButton
+              text="Watch"
+              component={CustomButton}
+              size={isMobile ? "small" : "medium"}
               color="error"
-              startIcon={<PlayArrowIcon />}
-              href={data.homepage ? data.homepage : `https://yts.mx/movies/${data.title?.toLowerCase().replace(/ /g, '-') + '-' + data.release_date?.slice(0, 4)}`}
+              icon={<PlayArrowIcon />}
+              href={data.homepage
+                ? data.homepage
+                : `https://yts.mx/movies/${data.title?.toLowerCase().replace(/ /g, "-") + "-" + data.release_date?.slice(0, 4)}`
+            }
               target="_blank"
               rel="noopener noreferrer"
-              >
-              <Typography variant="body2" sx={{mt: 0.2}}>Watch</Typography>
-            </Button>
-            <Button onClick={undefined} startIcon={isSaved ? <BookmarkIcon /> : <AddIcon />} variant="outlined" color="secondary">
-            <Typography variant="body2" sx={{mt: 0.2}}>{isSaved ? " Saved" : " Save"}</Typography>
-            </Button>
+              sx={{textTransform: "uppercase", gap: 0}}
+            />
+
+            <CustomButton
+              text={isSaved ? "Saved" : "Save"}
+              size={isMobile ? "small" : "medium"}
+              color="secondary"
+              variant="outlined"
+              icon={isSaved ? <BookmarkIcon /> : <AddIcon />}
+              sx={{textTransform: "uppercase", gap: 0}}
+            />
             </Box>
           </Box>
         </Box>
@@ -195,20 +206,29 @@ const DetailsPage = () => {
           </Typography>
 
           {/* Watch Now and save Buttons */}
-             <Box sx={{display: "flex", gap:2, mt: 2}}>
-             <Button
-              variant="contained"
+             <Box sx={{display: "flex", flexDirection: {xs: 'column', md: 'row'}, gap: 2, mt: 2}}>
+             <CustomButton
+              text="Watch"
               color="error"
-              startIcon={<PlayArrowIcon />}
-              href={data.homepage ? data.homepage : `https://yts.mx/movies/${data.title?.toLowerCase().replace(/ /g, '-') + '-' + data.release_date?.slice(0, 4)}`}
+              size={isMobile ? "large" : "medium"}
+              icon={<PlayArrowIcon />}
+              href={data.homepage
+                ? data.homepage
+                : `https://yts.mx/movies/${data.title?.toLowerCase().replace(/ /g, "-") + "-" + data.release_date?.slice(0, 4)}`
+              }
               target="_blank"
               rel="noopener noreferrer"
-              >
-              <Typography variant="body2" sx={{mt: 0.2}}>Watch</Typography>
-            </Button>
-            <Button onClick={undefined} startIcon={isSaved ? <BookmarkIcon /> : <AddIcon />} variant="outlined" color="secondary">
-            <Typography variant="body2" sx={{mt: 0.2}}>{isSaved ? " Saved" : " Save"}</Typography>
-            </Button>
+              sx={{gap: 0}}
+            />
+
+            <CustomButton
+              text={isSaved ? "Saved" : "Save"}
+              color="secondary"
+              size={isMobile ? "large" : "medium"}
+              variant="outlined"
+              icon={isSaved ? <BookmarkIcon /> : <AddIcon />}
+              sx={{gap: 0}}
+            />
             </Box>
 
           <div className="h-1 w-[10rem] rounded-2xl bg-gray-200 opacity-15 mx-auto my-8"></div>
@@ -218,7 +238,14 @@ const DetailsPage = () => {
           </Typography>
 
           <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-            Release Date: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.release_date || data.first_air_date || "N/A"}</span>
+            Release Date:{" "}
+            <span style={{ opacity: 0.7, fontWeight: 500 }}>
+              {data.release_date
+                ? new Date(data.release_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+                : data.first_air_date
+                ? new Date(data.first_air_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+                : "N/A"}
+            </span>
           </Typography>
 
           <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
@@ -230,8 +257,14 @@ const DetailsPage = () => {
           {type === "movie" && (
             <>
               <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
-                Duration: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.runtime ? `${data.runtime} min` : "N/A"}</span>
+                Duration:{" "}
+                <span style={{ opacity: 0.7, fontWeight: 500 }}>
+                  {data.runtime
+                    ? `${Math.floor(data.runtime / 60)}h${data.runtime % 60 ? ` ${data.runtime % 60}m` : ""}`
+                    : "N/A"}
+                </span>
               </Typography>
+
               <Typography variant="body1" sx={{ fontWeight: "bold", mt: 1 }}>
                 Budget: <span style={{ opacity: 0.7, fontWeight: 500  }}>{data.budget ? `$${data.budget.toLocaleString()}` : "N/A"}</span>
               </Typography>
@@ -260,7 +293,7 @@ const DetailsPage = () => {
           </Typography>  
         </Box>
       </Box> 
-      <Box sx={{px: { xs: 2, md: 12 }, pb:5}}>
+      <Box sx={{display: "flex", flexDirection: "column", gap: {xs: 5, md: 8}, px: { xs: 2, md: 12 }, pb: 8, pt: 5}}>
       <Trailers id={data.id} type={type}  /> 
       <Cast id={data.id} type={type} display={isMobile}  />
       <Reviews mediaId={data.id} mediaType={type} />
