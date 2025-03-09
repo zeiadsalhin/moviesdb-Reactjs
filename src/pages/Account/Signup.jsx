@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   TextField,
@@ -14,6 +14,11 @@ import { supabase } from "../../utils/authConfig";
 import CustomButton from "../../components/useCustomButton"; // Using your custom button
 
 const SignUp = () => {
+
+  useEffect(() => {
+    document.title = "Join Us | The Movies";
+  }, []);
+
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -95,7 +100,7 @@ const SignUp = () => {
           sx={{
             width: "100%",
             maxWidth: { xs: 350, sm: 350 },
-            minWidth: { xs: 350, sm: 250 },
+            minWidth: { xs: 300, sm: 250 },
           }}
         >
           <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", textAlign: "center", fontSize: { xs: "1.875rem", sm: "2rem", md: "2.25rem" } }}>
@@ -108,6 +113,7 @@ const SignUp = () => {
               variant="outlined"
               label="Email"
               name="email"
+              color="#e50914"
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -141,6 +147,7 @@ const SignUp = () => {
               variant="outlined"
               label="Password"
               name="password"
+              color="#e50914"
               type={showPassword ? "text" : "password"}
               value={formik.values.password}
               onChange={formik.handleChange}

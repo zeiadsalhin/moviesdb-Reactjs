@@ -144,7 +144,7 @@ const DetailsPage = () => {
               component={CustomButton}
               size={isMobile ? "small" : "medium"}
               color="error"
-              icon={<PlayArrowIcon />}
+              startIcon={<PlayArrowIcon />}
               href={data.homepage
                 ? data.homepage
                 : `https://yts.mx/movies/${data.title?.toLowerCase().replace(/ /g, "-") + "-" + data.release_date?.slice(0, 4)}`
@@ -159,7 +159,7 @@ const DetailsPage = () => {
               size={isMobile ? "small" : "medium"}
               color="secondary"
               variant="outlined"
-              icon={isSaved ? <BookmarkIcon /> : <AddIcon />}
+              startIcon={isSaved ? <BookmarkIcon /> : <AddIcon />}
               sx={{textTransform: "uppercase", gap: 0}}
             />
             </Box>
@@ -202,7 +202,7 @@ const DetailsPage = () => {
               text="Watch"
               color="error"
               size={isMobile ? "large" : "medium"}
-              icon={<PlayArrowIcon />}
+              startIcon={<PlayArrowIcon />}
               href={data.homepage
                 ? data.homepage
                 : `https://yts.mx/movies/${data.title?.toLowerCase().replace(/ /g, "-") + "-" + data.release_date?.slice(0, 4)}`
@@ -217,7 +217,7 @@ const DetailsPage = () => {
               color="secondary"
               size={isMobile ? "large" : "medium"}
               variant="outlined"
-              icon={isSaved ? <BookmarkIcon /> : <AddIcon />}
+              startIcon={isSaved ? <BookmarkIcon /> : <AddIcon />}
               sx={{gap: 0}}
             />
             </Box>

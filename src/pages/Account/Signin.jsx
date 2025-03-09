@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   TextField,
@@ -15,6 +15,11 @@ import { supabase } from "../../utils/authConfig";
 import CustomButton from "../../components/useCustomButton"; // Using your custom button
 
 const SignIn = () => {
+
+  useEffect(() => {
+    document.title = "Login | The Movies";
+  }, []);
+
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -38,7 +43,7 @@ const SignIn = () => {
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email").required("Required"),
-      password: Yup.string().min(6, "At least 6 characters").required("Required"),
+      password: Yup.string().min(8, "At least 8 characters").required("Required"),
     }),
     onSubmit: async (values) => {
       const { error } = await supabase.auth.signInWithPassword({
