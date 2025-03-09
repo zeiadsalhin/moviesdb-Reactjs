@@ -11,7 +11,7 @@ jobs:
       - name: Sign In to Supabase
         run: |
           curl -X POST "https://abbrzfjcqgwkcsrvtnrm.supabase.co/auth/v1/token?grant_type=password" \
-               -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+               -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
                -H "Content-Type: application/json" \
                -d '{
                      "email": "test@keepalive.com",
