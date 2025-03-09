@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import CustomButton from "../components/useCustomButton";
+import CustomButton from "../../components/useCustomButton";
 
 const Account = () => {
 

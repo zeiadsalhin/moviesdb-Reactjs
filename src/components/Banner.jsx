@@ -148,7 +148,7 @@ const HomeBanner = () => {
                     text="View"
                     color="secondary"
                     size={isMobile ? "small" : "medium"}
-                    icon={<PlayArrowIcon />}
+                    startIcon={<PlayArrowIcon />}
                     component={Link}
                     to={`/details/movie/${randomMovie.id}`}
                     sx={{ gap: 0 }}
@@ -159,7 +159,7 @@ const HomeBanner = () => {
                     color="secondary"
                     size={isMobile ? "small" : "medium"}
                     variant="outlined"
-                    icon={isSaved ? <BookmarkIcon /> : <AddIcon />}
+                    startIcon={isSaved ? <BookmarkIcon /> : <AddIcon />}
                     sx={{ gap: 0 }}
                   />
                 </Box>
