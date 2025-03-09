@@ -1,6 +1,8 @@
 name: Supabase Sign-In
 
 on:
+  schedule:
+    - cron: "0 0 * * 1"  # Runs every Monday at 00:00 UTC
   workflow_dispatch:  # Allows manual execution
 
 
