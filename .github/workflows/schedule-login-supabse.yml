@@ -1,14 +1,19 @@
-name: Weekly Supabase Login (Keep Alive Projects)
+name: Supabase Sign-In
 
 on:
   schedule:
-    - cron: "0 0 * * 1" # Runs every Monday at midnight UTC
+    - cron: "*/5 * * * *"  # Runs every 5 minutes
 
 jobs:
-  call-supabase-function:
+  sign-in:
     runs-on: ubuntu-latest
     steps:
-      - name: Call Supabase Edge Function
+      - name: Sign In to Supabase
         run: |
-          curl -X POST "https://your-project-ref.functions.supabase.co/weekly-login" \
-          -H "Authorization: Bearer YOUR_SUPABASE_ANON_KEY"
+          curl -X POST "https://abbrzfjcqgwkcsrvtnrm.supabase.co/auth/v1/token?grant_type=password" \
+               -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+               -H "Content-Type: application/json" \
+               -d '{
+                     "email": "test@keepalive.com",
+                     "password": "keepmyprojectalive"
+                   }'
