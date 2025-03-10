@@ -35,7 +35,7 @@ const SignUp = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: 'http://192.168.1.5/account',
+        redirectTo: 'http://192.168.1.5:5173/account',
       },
     });
 
@@ -66,7 +66,7 @@ const SignUp = () => {
         email: values.email,
         password: values.password,
         options: {
-          emailRedirectTo: 'http://192.168.1.5/account',
+          emailRedirectTo: 'http://192.168.1.5:5173/account',
         },
       });
     
