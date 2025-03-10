@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   TextField,
   Typography,
@@ -13,6 +13,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { supabase } from "../../utils/authConfig";
 import CustomButton from "../../components/useCustomButton"; // Using your custom button
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const SignIn = () => {
 
@@ -20,7 +23,10 @@ const SignIn = () => {
     document.title = "Login | The Movies";
   }, []);
 
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -46,18 +52,38 @@ const SignIn = () => {
       password: Yup.string().min(8, "At least 8 characters").required("Required"),
     }),
     onSubmit: async (values) => {
+      setLoading(true); // Show spinner
       const { error } = await supabase.auth.signInWithPassword({
         email: values.email,
         password: values.password,
       });
 
+      
       if (error) {
+        setLoading(false); // Hide spinner
         console.error("Sign-in Error:", error.message);
+        setError(error.message);
+        toast.error(error.message, { position: "top-center", autoClose: 2000, theme: "dark" });
+        return;
       }
+
+      toast.success("Signed In Successfully!", {
+        position: "top-center",
+        autoClose: 1000,
+        theme: "dark",
+      });
+      
+      setTimeout(() => {
+        setLoading(false); // Hide spinner
+        navigate("/account/");
+      }, 1000);
+
     },
   });
 
   return (
+    <>
+    <ToastContainer />
     <Box
       sx={{
         position: "relative",
@@ -104,7 +130,10 @@ const SignIn = () => {
             name="email"
             color="#e50914"
             value={formik.values.email}
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              setError(null); // Clear error on input change
+              formik.handleChange(e);
+            }}
             onBlur={formik.handleBlur}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
@@ -138,7 +167,10 @@ const SignIn = () => {
             color="#e50914"
             type={showPassword ? "text" : "password"}
             value={formik.values.password}
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              setError(null); // Clear error on input change
+              formik.handleChange(e);
+            }}
             onBlur={formik.handleBlur}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
@@ -173,20 +205,28 @@ const SignIn = () => {
             }}
           />
 
+          {/* Error Message */}
+          {error && (
+            <Typography variant="body2" sx={{ color: "#f44336", mt: 1, textAlign: "center" }}>
+              {error}
+            </Typography>
+            )}
+
           <CustomButton
-            type="submit"
+            text={loading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : "Sign in"}
             fullWidth
+            disabled={loading}
             sx={{
               mt: 2,
               backgroundColor: "#e50914",
               color: "#fff",
               "&:hover": { backgroundColor: "#b20710" },
             }}
-            text="Sign In"
+            type="submit"
           />
 
           <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
-            New to The Movies? <Link to="/account/signup" style={{ color: "#e50914" }}>Sign Up</Link>
+            New to The Movies? <Link to="/auth/signup" style={{ color: "#e50914" }}>Sign Up</Link>
           </Typography>
         </form>
 
@@ -218,6 +258,7 @@ const SignIn = () => {
         </Box>
       </Box>
     </Box>
+    </>
   );
 };
 

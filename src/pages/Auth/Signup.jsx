@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import {
   TextField,
   Typography,
@@ -12,6 +12,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { supabase } from "../../utils/authConfig";
 import CustomButton from "../../components/useCustomButton"; // Using your custom button
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const SignUp = () => {
 
@@ -19,7 +22,10 @@ const SignUp = () => {
     document.title = "Join Us | The Movies";
   }, []);
 
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -42,21 +48,48 @@ const SignUp = () => {
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email").required("Required"),
-      password: Yup.string().min(8, "At least 8 characters").required("Required"),
+      password: Yup.string()
+        .min(8, "At least 8 characters")
+        .matches(/[A-Z]/, "At least one uppercase letter")
+        .matches(/[a-z]/, "At least one lowercase letter")
+        .matches(/\d/, "At least one number")
+        .matches(/[@$!%*?&]/, "At least one special character (@$!%*?&)")
+        .required("Required"),
     }),
     onSubmit: async (values) => {
-      const { error } = await supabase.auth.signUp({
+      setLoading(true); // Show spinner
+    
+      const { data, error } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
       });
-
+    
+    
       if (error) {
-        console.error("Sign-up Error:", error.message);
+        setLoading(false); // Hide spinner
+        setError(error.message);
+        toast.error(error.message, { position: "top-center", autoClose: 2000, theme: "dark" });
+        return;
       }
+    
+      toast.success("Verification email sent! Please check your inbox.", {
+        position: "top-center",
+        autoClose: 2000,
+        theme: "dark",
+      });
+
+      console.log("Sign-up data:", data);
+
+      setTimeout(() => {
+        setLoading(false); // Hide spinner
+        navigate(`/auth/confirm-email/?email=${encodeURIComponent(values.email)}&device=${navigator.platform} - ${navigator.userAgent}`);
+      }, 2000);
     },
   });
 
   return (
+    <>
+    <ToastContainer />
     <Box
       sx={{
         display: "flex",
@@ -115,7 +148,10 @@ const SignUp = () => {
             name="email"
             color="primary"
             value={formik.values.email}
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              setError(null); // Clear error on input change
+              formik.handleChange(e);
+            }}
             onBlur={formik.handleBlur}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
@@ -151,7 +187,10 @@ const SignUp = () => {
               color="#e50914"
               type={showPassword ? "text" : "password"}
               value={formik.values.password}
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                setError(null); // Clear error on input change
+                formik.handleChange(e);
+              }}
               onBlur={formik.handleBlur}
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
@@ -187,9 +226,17 @@ const SignUp = () => {
               }}
             />
 
+            {/* Error Message */}
+            {error && (
+            <Typography variant="body2" sx={{ color: "#f44336", mt: 1, textAlign: "center" }}>
+              {error}
+              </Typography>
+              )}
+
             <CustomButton
-              text="Get Started"
+              text={loading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : "Get Started"}
               type="submit"
+              disabled={loading} // Disable button while loading
               sx={{
                 mt: 2,
                 width: "100%",
@@ -200,7 +247,7 @@ const SignUp = () => {
             />
 
             <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
-              Already have an account? <Link to="/account/login" style={{ color: "#e50914" }}>Sign In</Link>
+              Already have an account? <Link to="/auth/login" style={{ color: "#e50914" }}>Sign In</Link>
             </Typography>
           </form>
 
@@ -251,6 +298,7 @@ const SignUp = () => {
         </Box>
       </Box>
     </Box>
+    </>
   );
 };
 

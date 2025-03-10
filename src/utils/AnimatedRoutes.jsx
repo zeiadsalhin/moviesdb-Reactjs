@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Search from "../pages/Search";
 import Favorites from "../pages/Favorites";
 import Movies from "../pages/Movies";
+import Auth from "../pages/Auth/Index";
 import Account from "../pages/Account/Index";
 import About from "../pages/About";
 import ViewAll from "../pages/ViewAll";
@@ -27,6 +28,7 @@ const AnimatedRoutes = () => {
           { path: "/search", Component: Search },
           { path: "/favorites", Component: Favorites },
           { path: "/movies", Component: Movies },
+          { path: "/auth/*", Component: Auth },
           { path: "/account/*", Component: Account },
           { path: "/about", Component: About },
 

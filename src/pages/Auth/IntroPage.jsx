@@ -76,7 +76,7 @@ const IntroPage = () => {
               py: { xs: 1, sm: 1 },
               width: { xs: "100%", sm: "auto" }, // Full width on mobile
             }}
-            onClick={() => navigate("/account/signup")}
+            onClick={() => navigate("/auth/signup")}
           />
           <CustomButton
             text="Sign In"
@@ -89,7 +89,7 @@ const IntroPage = () => {
               py: { xs: 1, sm: 1 },
               width: { xs: "100%", sm: "auto" }, // Full width on mobile
             }}
-            onClick={() => navigate("/account/login")}
+            onClick={() => navigate("/auth/login")}
           />
         </Stack>
       </Box>
