@@ -50,6 +50,13 @@ const Dashboard = () => {
             console.error("Error updating display name:", error.message);
           } else {
             displayName = randomUsername;
+            
+            // Set the user displayName
+            setTimeout(() => {
+              setUser({
+                display_name: randomUsername,
+              });
+            }, 1000);
           }
         } catch (err) {
           console.error("Error generating username:", err.message);
@@ -60,7 +67,7 @@ const Dashboard = () => {
 
       // Set the user state
       setUser({
-        display_name: displayName || "Guest User",
+        display_name: authData?.user.user_metadata.display_name || "guest_user",
         email,
         avatar: profileData?.avatar_url || "/default-avatar.png",
       });

@@ -34,6 +34,9 @@ const SignUp = () => {
   const handleOAuthSignIn = async (provider) => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
+      options: {
+        redirectTo: 'http://192.168.1.5/account',
+      },
     });
 
     if (error) {
@@ -59,9 +62,12 @@ const SignUp = () => {
     onSubmit: async (values) => {
       setLoading(true); // Show spinner
     
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
+        options: {
+          emailRedirectTo: 'http://192.168.1.5/account',
+        },
       });
     
     
@@ -78,7 +84,7 @@ const SignUp = () => {
         theme: "dark",
       });
 
-      console.log("Sign-up data:", data);
+      // console.log("Sign-up data:", data);
 
       setTimeout(() => {
         setLoading(false); // Hide spinner
