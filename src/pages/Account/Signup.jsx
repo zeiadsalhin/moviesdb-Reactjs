@@ -108,39 +108,40 @@ const SignUp = () => {
           </Typography>
 
           <form onSubmit={formik.handleSubmit}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              label="Email"
-              name="email"
-              color="#e50914"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
-              margin="normal"
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  backgroundColor: "#222",
-                  color: "#fff",
-                  borderColor: "#e50914",
-                  borderRadius: 2,
-                },
-                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#e50914 !important",
-                },
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#e50914",
-                  borderRadius: 2,
-                  borderWidth: 2.25,
-                  outline: "none",
-                },
-                "& .MuiInputLabel-root": {
-                  color: "#aaa",
-                },
-              }}
-            />
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Email"
+            name="email"
+            color="primary"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+            margin="normal"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                backgroundColor: "#222",
+                color: "#fff",
+                borderColor: "#e50914",
+                borderRadius: 2,
+              },
+              "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#e50914 !important",
+              },
+              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#e50914",
+                borderRadius: 2,
+                borderWidth: 2.25,
+                outline: "none",
+              },
+              "& .MuiInputLabel-root": {
+                color: "#aaa",
+              },
+            }}
+          />
+
 
             <TextField
               fullWidth
