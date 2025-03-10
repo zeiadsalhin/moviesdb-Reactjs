@@ -124,24 +124,25 @@ const ProfileEdit = () => {
   };
 
   return (
-    <Box sx={{ textAlign: "center", mt: 3, p: 3, borderRadius: 2, backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
+    <Box sx={{ textAlign: "center", mt: 3, p: 3, borderRadius: 2, backgroundColor: "rgba(0, 0, 0, 0.7)", maxWidth: 500, marginInline: "auto" }}>
       <Box sx={{ position: "relative", display: "inline-block" }}>
-        <label htmlFor="upload-avatar">
+        
           {loading ? (
             <Skeleton variant="circular" width={100} height={100} sx={{ margin: "0 auto" }} />
           ) : (
             <Avatar
               src={previewImage || profile.avatar}
-              alt="Profile Picture"
-              sx={{ width: 100, height: 100, margin: "0 auto", mb: 2, cursor: "pointer" }}
+              alt={profile.name}
+              sx={{ width: 100, height: 100, margin: "0 auto", mb: 2 }}
             />
           )}
           {isEditing && !loading && (
+            <label htmlFor="upload-avatar">
             <IconButton
               sx={{
                 position: "absolute",
                 bottom: 10,
-                right: 10,
+                right: 0,
                 background: "rgba(0,0,0,0.6)",
                 color: "#fff",
                 "&:hover": { background: "rgba(0,0,0,0.8)" },
@@ -150,8 +151,9 @@ const ProfileEdit = () => {
             >
               <EditIcon />
             </IconButton>
+            </label>
           )}
-        </label>
+        
         <input type="file" accept="image/*" id="upload-avatar" onChange={handleFileChange} style={{ display: "none" }} />
       </Box>
 

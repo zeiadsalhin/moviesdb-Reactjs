@@ -53,9 +53,10 @@ const Dashboard = () => {
             
             // Set the user displayName
             setTimeout(() => {
-              setUser({
+              setUser(prev => ({
+                ...prev,
                 display_name: randomUsername,
-              });
+              }));
             }, 1000);
           }
         } catch (err) {

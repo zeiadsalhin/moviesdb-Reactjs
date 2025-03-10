@@ -35,7 +35,7 @@ const Sidebar = ({setActiveSection }) => {
   const handleToggle = () => setOpen(!open);
 
   const SidebarContent = (
-    <Box sx={{ width: 250, backgroundColor: "#141414", height: "100vh", p: 2, mt:2 }}>
+    <Box sx={{ width: 250, backgroundColor: "#141414", height: "100vh", p: 2 }}>
       <List>
         {sections.map((section) => {
           const isActive = location.pathname === section.path;
@@ -53,6 +53,7 @@ const Sidebar = ({setActiveSection }) => {
                 borderRadius: 2,
                 py: 1.2,
                 px: 2,
+                my: 1.5,
                 transition: "background 0.3s",
                 cursor: "pointer",
                 backgroundColor: isActive ? "rgba(255, 255, 255, 0.1)" : "transparent",
