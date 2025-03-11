@@ -138,7 +138,7 @@ const SignUp = () => {
           padding: 4,
           borderRadius: 2,
           width: "95%",
-          maxWidth: 1380,
+          maxWidth: 1280,
           color: "#fff",
         }}
       >
@@ -160,7 +160,7 @@ const SignUp = () => {
             variant="outlined"
             label="Email"
             name="email"
-            color="primary"
+            color="#e50914"
             value={formik.values.email}
             onChange={(e) => {
               setError(null); // Clear error on input change
@@ -301,15 +301,15 @@ const SignUp = () => {
             width: "100%",
             maxWidth: "100%",
             minWidth: {sm: 500, md: 500, lg: 500},
-            borderRadius: 2,
+            borderRadius: 1,
             marginLeft: 4,
             overflow: "hidden",
           }}
         >
           <img
-            src="/account_signup.webp"
+            src="/Sign_Up_Banner.webp"
             alt="Sign Up"
-            style={{ width: "100%", height: "100%", borderRadius: 10 }}
+            style={{ width: "100%", height: "100%" }}
           />
         </Box>
       </Box>

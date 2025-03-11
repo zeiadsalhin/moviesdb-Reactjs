@@ -83,7 +83,7 @@ const Dashboard = () => {
       <ProfileHeader user={user} />
 
       {/* Show Dashboard Navigation ONLY on mobile */}
-      {isMobile && <DashboardNavigation />}
+      {isMobile && <DashboardNavigation passAuth={supabase} passUseState={useState} />}
 
       {/* Display Sections */}
       <Watchlist />
