@@ -11,6 +11,7 @@ import { Visibility, VisibilityOff, Google, GitHub } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { supabase } from "../../utils/authConfig";
+import { BASE_URL } from "../../utils/BASE_URL_Config";
 import CustomButton from "../../components/useCustomButton"; // Using your custom button
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,22 +26,29 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [githubLoading, setGithubLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleOAuthSignIn = async (provider) => {
+  const handleOAuthSignUp = async (provider) => {
+    if (provider === "google") setGoogleLoading(true);
+    if (provider === "github") setGithubLoading(true);
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: 'http://192.168.1.5:5173/account',
+        redirectTo: `${BASE_URL}/account`,
       },
     });
 
     if (error) {
-      console.error("OAuth Sign-in Error:", error.message);
+      setGoogleLoading(false);
+      setGithubLoading(false);
+      console.error("OAuth Sign-up Error:", error.message);
     }
   };
 
@@ -66,7 +74,7 @@ const SignUp = () => {
         email: values.email,
         password: values.password,
         options: {
-          emailRedirectTo: 'http://192.168.1.5:5173/account',
+          emailRedirectTo: `${BASE_URL}/account`,
         },
       });
     
@@ -258,28 +266,30 @@ const SignUp = () => {
           </form>
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}>
-            <CustomButton
+          <CustomButton
               fullWidth
-              startIcon={<Google />}
+              startIcon={googleLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <Google />}
               sx={{
                 backgroundColor: "#4285F4",
                 color: "#fff",
                 "&:hover": { backgroundColor: "#357ae8" },
               }}
-              onClick={() => handleOAuthSignIn("google")}
-              text="Sign Up with Google"
+              onClick={() => handleOAuthSignUp("google")}
+              text={"Sign Up with Google"}
+              disabled={googleLoading || githubLoading} // Disable while loading
             />
 
             <CustomButton
               fullWidth
-              startIcon={<GitHub />}
+              startIcon={githubLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <GitHub />}
               sx={{
                 backgroundColor: "#333",
                 color: "#fff",
                 "&:hover": { backgroundColor: "#222" },
               }}
-              onClick={() => handleOAuthSignIn("github")}
-              text="Sign Up with GitHub"
+              onClick={() => handleOAuthSignUp("github")}
+              text={"Sign Up with GitHub"}
+              disabled={googleLoading || githubLoading} // Disable while loading
             />
           </Box>
         </Box>

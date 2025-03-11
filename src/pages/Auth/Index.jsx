@@ -3,6 +3,7 @@ import IntroPage from "./IntroPage";
 import SignUp from "./Signup";
 import SignIn from "./Signin";
 import ConfirmEmail from "./ConfirmEmail";
+import ForgotPassword from "./ForgotPassword";
 import ErrorPage from "../404Page";
 
 const Account = () => {
@@ -12,6 +13,7 @@ const Account = () => {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<SignIn />} />
       <Route path="/confirm-email" element={<ConfirmEmail />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

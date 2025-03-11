@@ -12,6 +12,7 @@ import { Google, GitHub } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { supabase } from "../../utils/authConfig";
+import { BASE_URL } from "../../utils/BASE_URL_Config";
 import CustomButton from "../../components/useCustomButton"; // Using your custom button
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,6 +27,8 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [githubLoading, setGithubLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const togglePasswordVisibility = () => {
@@ -33,14 +36,25 @@ const SignIn = () => {
   };
 
   const handleOAuthSignIn = async (provider) => {
+    if (provider === "google") setGoogleLoading(true);
+    if (provider === "github") setGithubLoading(true);
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
+      options: {
+        redirectTo: `${BASE_URL}/account`,
+      },
     });
 
     if (error) {
+      setGoogleLoading(false);
+      setGithubLoading(false);
       console.error("OAuth Sign-in Error:", error.message);
+      toast.error(error.message, { position: "top-center", autoClose: 2000, theme: "dark" });
     }
+
   };
+
 
   const formik = useFormik({
     initialValues: {
@@ -225,6 +239,10 @@ const SignIn = () => {
             type="submit"
           />
 
+          <Typography variant="body2" sx={{ textAlign: "center", mt: 2 }}>
+            <Link to="/auth/forgot-password" style={{ color: "#e50914" }}>Forgot Password?</Link>
+          </Typography>
+
           <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
             New to The Movies? <Link to="/auth/signup" style={{ color: "#e50914" }}>Sign Up</Link>
           </Typography>
@@ -233,26 +251,28 @@ const SignIn = () => {
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}>
         <CustomButton
           fullWidth
-          startIcon={<Google />}
+          startIcon={googleLoading ? <CircularProgress size={20} sx={{ color: "#fff" }} /> : <Google />}
           sx={{
             backgroundColor: "#4285F4",
             color: "#fff",
             "&:hover": { backgroundColor: "#357ae8" },
           }}
           onClick={() => handleOAuthSignIn("google")}
-          text="Sign In with Google"
+          text={"Sign In with Google"}
+          disabled={googleLoading || githubLoading} // Disable while loading
         />
 
         <CustomButton
           fullWidth
-          startIcon={<GitHub />}
+          startIcon={githubLoading ? <CircularProgress size={20} sx={{ color: "#fff" }} /> : <GitHub />}
           sx={{
             backgroundColor: "#333",
             color: "#fff",
             "&:hover": { backgroundColor: "#222" },
           }}
           onClick={() => handleOAuthSignIn("github")}
-          text="Sign In with GitHub"
+          text={"Sign In with GitHub"}
+          disabled={googleLoading || githubLoading} // Disable while loading
         />
 
         </Box>
