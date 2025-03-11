@@ -81,7 +81,7 @@ const ForgotPassword = () => {
 
           <Typography
             variant="body2"
-            sx={{ textAlign: "center", color: "#ccc", mb: 3 }}
+            sx={{ textAlign: "center", color: "#ccc", mb: 2 }}
           >
             Enter your email, and we&apos;ll send you a link to reset your password.
             If you don&apos;t see the email, check your spam folder.
