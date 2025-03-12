@@ -16,7 +16,7 @@ const DashboardLayout = () => {
       <Sidebar />
 
       {/* Content Area */}
-      <Box sx={{ flexGrow: 1, padding: 3, maxWidth: {xs: "100%", md: "calc(100% - 16rem)"}, justifyContent: "center", gap: 3 }}>
+      <Box sx={{ flexGrow: 1, padding: 2.5, maxWidth: {xs: "100%", md: "calc(100% - 16rem)"}, justifyContent: "center", gap: 3 }}>
         <Outlet /> {/* This will render the current route inside the layout */}
       </Box>
     </Box>

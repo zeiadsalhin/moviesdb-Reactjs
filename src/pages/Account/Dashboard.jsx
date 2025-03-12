@@ -78,7 +78,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Box sx={{ padding: 0, maxWidth: "100%", justifyContent: "center", gap: 3, display: "flex", flexDirection: "column", mt: 2 }}>
+    <Box sx={{ padding: 0, maxWidth: "100%", justifyContent: "center", gap: {xs: 0, md: 3}, display: "flex", flexDirection: "column", mt: 2 }}>
       {/* Profile */}
       <ProfileHeader user={user} />
 
