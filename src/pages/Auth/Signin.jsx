@@ -1,25 +1,24 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useNavigate, Link } from "react-router-dom";
 import {
   TextField,
   Typography,
   Box,
   IconButton,
   InputAdornment,
+  CircularProgress,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Google, GitHub } from "@mui/icons-material";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { Visibility, VisibilityOff, Google, GitHub } from "@mui/icons-material";
 import { supabase } from "../../utils/authConfig";
 import { BASE_URL } from "../../utils/BASE_URL_Config";
-import CustomButton from "../../components/useCustomButton"; // Using your custom button
+import CustomButton from "../../components/useCustomButton";
+import NetflixOtpInput from "../../components/Auth/otpLogin";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CircularProgress from "@mui/material/CircularProgress";
 
 const SignIn = () => {
-
   useEffect(() => {
     document.title = "Login | The Movies";
   }, []);
@@ -29,87 +28,99 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [githubLoading, setGithubLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [useOtp, setUseOtp] = useState(true);
+  const [otpSent, setOtpSent] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
+  const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
   const handleOAuthSignIn = async (provider) => {
-    if (provider === "google") setGoogleLoading(true);
-    if (provider === "github") setGithubLoading(true);
+    provider === "google" ? setGoogleLoading(true) : setGithubLoading(true);
 
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
-      options: {
-        redirectTo: `${BASE_URL}/account`,
-      },
+      options: { redirectTo: `${BASE_URL}/account` },
     });
 
     if (error) {
       setGoogleLoading(false);
       setGithubLoading(false);
-      console.error("OAuth Sign-in Error:", error.message);
       toast.error(error.message, { position: "top-center", autoClose: 2000, theme: "dark" });
     }
-
   };
 
-
   const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
+    initialValues: { email: "", password: "" },
+    validationSchema: Yup.object().shape({
       email: Yup.string().email("Invalid email").required("Required"),
-      password: Yup.string().min(8, "At least 8 characters").required("Required"),
+      password: Yup.string()
+        .min(8, "At least 8 characters")
+        .when("passwordRequired", {
+          is: false,
+          then: (schema) => schema.required("Password is required"),
+        }),
     }),
     onSubmit: async (values) => {
-      setLoading(true); // Show spinner
-      const { error } = await supabase.auth.signInWithPassword({
-        email: values.email,
-        password: values.password,
-      });
+      setLoading(true);
 
-      
-      if (error) {
-        setLoading(false); // Hide spinner
-        console.error("Sign-in Error:", error.message);
-        setError(error.message);
-        toast.error(error.message, { position: "top-center", autoClose: 2000, theme: "dark" });
-        return;
+      if (useOtp) {
+        const { error } = await supabase.auth.signInWithOtp({ email: values.email });
+        if (error) {
+          setLoading(false);
+          toast.error(error.message, { position: "top-center", autoClose: 2000, theme: "dark" });
+          return;
+        }
+        toast.success("OTP Sent Successfully!", { position: "top-center", autoClose: 1000, theme: "dark" });
+        setOtpSent(true);
+      } else {
+        if (!values.password) {
+          setLoading(false);
+          return;
+        }
+        const { error } = await supabase.auth.signInWithPassword({
+          email: values.email,
+          password: values.password,
+        });
+
+        if (error) {
+          setLoading(false);
+          toast.error(error.message, { position: "top-center", autoClose: 2000, theme: "dark" });
+          return;
+        }
+
+        toast.success("Signed In Successfully!", { position: "top-center", autoClose: 1000, theme: "dark" });
+
+        setTimeout(() => {
+          navigate("/account/");
+        }, 1000);
       }
 
-      toast.success("Signed In Successfully!", {
-        position: "top-center",
-        autoClose: 1000,
-        theme: "dark",
-      });
-      
-      setTimeout(() => {
-        setLoading(false); // Hide spinner
-        navigate("/account/");
-      }, 1000);
-
+      setLoading(false);
     },
   });
 
+  const toggleSignInMethod = () => {
+    setUseOtp((prev) => !prev);
+    formik.setFieldValue("password", ""); // Reset password field when switching
+    formik.setFieldTouched("password", false); // Reset error state
+    formik.setFieldValue("passwordRequired", !useOtp); // Toggle password validation
+  };
+
   return (
     <>
-    <ToastContainer />
-    <Box
-      sx={{
-        position: "relative",
-        width: "100%",
-        height: "calc(100vh - 9rem)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundImage: "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url('/account_signup.webp')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        "&::before": {
+      <ToastContainer />
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          height: "calc(100vh - 9rem)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundImage:
+            "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url('/account_signup.webp')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          "&::before": {
           content: '""',
           position: "absolute",
           top: 0,
@@ -118,166 +129,156 @@ const SignIn = () => {
           height: "100%",
           background: "linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent)",
         },
-      }}
-    >
-      <Box
-        sx={{
-          position: "relative", 
-          zIndex: 2,
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
-          padding: 4,
-          borderRadius: 2,
-          width: "100%",
-          maxWidth: { xs: 350, sm: 400 },
-          color: "#fff",
         }}
       >
-        <Typography gutterBottom sx={{ fontWeight: "bold", textAlign: "center", fontSize: {xs: "1.875rem", sm: "2rem", md: "2.25rem"} }}>
-          Welcome | Sign In
-        </Typography>
+        <Box
+          sx={{
+            position: "relative",
+            zIndex: 2,
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            padding: 4,
+            borderRadius: 2,
+            width: "100%",
+            maxWidth: { xs: 380, sm: 400 },
+            minWidth: { xs: 0, sm: 360 },
+            color: "#fff",
+          }}
+        >
+          <Typography gutterBottom sx={{ fontWeight: "bold", textAlign: "center", fontSize: {xs: "1.875rem", sm: "2rem"} }}>
+            {otpSent ? "OTP Verification" : "Welcome | Sign In"}
+          </Typography>
 
-        <form onSubmit={formik.handleSubmit}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            label="Email"
-            name="email"
-            color="#e50914"
-            value={formik.values.email}
-            onChange={(e) => {
-              setError(null); // Clear error on input change
-              formik.handleChange(e);
-            }}
-            onBlur={formik.handleBlur}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-            margin="normal"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "#222",
-                color: "#fff",
-                borderRadius: 2,
-              },
-              "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#e50914 !important", // Prevents white border on hover
-              },
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#e50914",
-                borderRadius: 2,
-                borderWidth: 2.25,
-                outline: "none",
-              },
-              "& .MuiInputLabel-root": {
-                color: "#aaa",
-              },
-            }}
-          />
+          {!otpSent ? (
+            <form onSubmit={formik.handleSubmit}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="Email"
+                name="email"
+                color="#e50914"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+                margin="normal"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    backgroundColor: "#222",
+                    color: "#fff",
+                    borderRadius: 2,
+                  },
+                  "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#e50914 !important", // Prevents white border on hover
+                  },
+                  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#e50914",
+                    borderRadius: 2,
+                    borderWidth: 2.25,
+                    outline: "none",
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#aaa",
+                  },
+                }}
+              />
 
-          <TextField
-            fullWidth
-            variant="outlined"
-            label="Password"
-            name="password"
-            color="#e50914"
-            type={showPassword ? "text" : "password"}
-            value={formik.values.password}
-            onChange={(e) => {
-              setError(null); // Clear error on input change
-              formik.handleChange(e);
-            }}
-            onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-            margin="normal"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "#222",
-                color: "#fff",
-                borderRadius: 2,
-              },
-              "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#e50914 !important", // Prevents white border on hover
-              },
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#e50914",
-                borderRadius: 2,
-                borderWidth: 2.25,
-                outline: "none",
-              },
-              "& .MuiInputLabel-root": {
-                color: "#aaa",
-              },
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={togglePasswordVisibility} edge="end">
-                    {showPassword ? <VisibilityOff sx={{ color: "#fff" }} /> : <Visibility sx={{ color: "#fff" }} />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-
-          {/* Error Message */}
-          {error && (
-            <Typography variant="body2" sx={{ color: "#f44336", mt: 1, textAlign: "center" }}>
-              {error}
-            </Typography>
-            )}
-
-          <CustomButton
-            text={loading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : "Sign in"}
-            fullWidth
-            disabled={loading}
-            sx={{
-              mt: 2,
-              backgroundColor: "#e50914",
-              color: "#fff",
-              "&:hover": { backgroundColor: "#b20710" },
-            }}
-            type="submit"
-          />
-
-          <Typography variant="body2" sx={{ textAlign: "center", mt: 2 }}>
+              {!useOtp && (
+                <>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  label="Password"
+                  name="password"
+                  color="#e50914"
+                  type={showPassword ? "text" : "password"}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
+                  margin="normal"
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      backgroundColor: "#222",
+                      color: "#fff",
+                      borderRadius: 2,
+                    },
+                    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#e50914 !important", // Prevents white border on hover
+                    },
+                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#e50914",
+                      borderRadius: 2,
+                      borderWidth: 2.25,
+                      outline: "none",
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: "#aaa",
+                    },
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton disableTouchRipple onClick={togglePasswordVisibility} edge="end">
+                          {showPassword ? <VisibilityOff sx={{ color: "#fff" }} /> : <Visibility sx={{ color: "#fff" }} />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <Typography variant="body2" sx={{ textAlign: "right", mt: 0.2 }}>
             <Link to="/auth/forgot-password" style={{ color: "#e50914" }}>Forgot Password?</Link>
           </Typography>
+          </>
+              )}
 
-          <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
+              <CustomButton text={loading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : useOtp ? "Continue" : "Sign in with Password"} fullWidth disabled={loading} sx={{ mt: 2, backgroundColor: "#e50914", color: "#fff", "&:hover": { backgroundColor: "#b20710" } }} type="submit" />
+
+              <CustomButton text={useOtp ? "Use Password Instead" : "Use OTP Instead"} fullWidth sx={{ mt: 2, backgroundColor: "black", color: "#fff", border: 1.5 }} type="button" onClick={toggleSignInMethod} />
+            </form>
+          ) : (
+            <NetflixOtpInput toggleMode={() => {setUseOtp(false);setOtpSent(false);}} email={formik.values.email} onSuccess={() => navigate("/account/")} />
+          )}
+
+          <Typography variant="body2" sx={{ mt: 3, textAlign: "center" }}>
             New to The Movies? <Link to="/auth/signup" style={{ color: "#e50914" }}>Sign Up</Link>
           </Typography>
-        </form>
 
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}>
-        <CustomButton
-          fullWidth
-          startIcon={googleLoading ? <CircularProgress size={20} sx={{ color: "#fff" }} /> : <Google />}
-          sx={{
-            backgroundColor: "#4285F4",
-            color: "#fff",
-            "&:hover": { backgroundColor: "#357ae8" },
-          }}
-          onClick={() => handleOAuthSignIn("google")}
-          text={"Sign In with Google"}
-          disabled={googleLoading || githubLoading} // Disable while loading
-        />
+      {!useOtp && (
+        <Box>                   
+         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}>
+          <CustomButton
+            fullWidth
+            startIcon={googleLoading ? <CircularProgress size={20} sx={{ color: "#fff" }} /> : <Google />}
+            sx={{
+              backgroundColor: "#4285F4",
+              color: "#fff",
+              "&:hover": { backgroundColor: "#357ae8" },
+            }}
+            onClick={() => handleOAuthSignIn("google")}
+            text={"Sign In with Google"}
+            disabled={googleLoading || githubLoading} // Disable while loading
+          />
 
-        <CustomButton
-          fullWidth
-          startIcon={githubLoading ? <CircularProgress size={20} sx={{ color: "#fff" }} /> : <GitHub />}
-          sx={{
-            backgroundColor: "#333",
-            color: "#fff",
-            "&:hover": { backgroundColor: "#222" },
-          }}
-          onClick={() => handleOAuthSignIn("github")}
-          text={"Sign In with GitHub"}
-          disabled={googleLoading || githubLoading} // Disable while loading
-        />
+          <CustomButton
+            fullWidth
+            startIcon={githubLoading ? <CircularProgress size={20} sx={{ color: "#fff" }} /> : <GitHub />}
+            sx={{
+              backgroundColor: "#333",
+              color: "#fff",
+              "&:hover": { backgroundColor: "#222" },
+            }}
+            onClick={() => handleOAuthSignIn("github")}
+            text={"Sign In with GitHub"}
+            disabled={googleLoading || githubLoading} // Disable while loading
+          />
 
         </Box>
+        </Box>
+        )}
+        </Box>
       </Box>
-    </Box>
     </>
   );
 };

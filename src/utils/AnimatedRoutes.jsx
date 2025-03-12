@@ -20,6 +20,13 @@ const pageVariants = {
 const AnimatedRoutes = () => {
   const location = useLocation();
 
+  // directories where animation disabled
+  const noAnimationRoutes = [];
+
+  // Check of the disabled directories
+  const disableAnimation = noAnimationRoutes.some((path) => location.pathname.startsWith(path));
+  
+
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
@@ -43,9 +50,13 @@ const AnimatedRoutes = () => {
             key={path}
             path={path}
             element={
-              <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
-                <Component />
-              </motion.div>
+              disableAnimation ? (
+                <Component /> // No animation for specified directories
+              ) : (
+                <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+                  <Component />
+                </motion.div>
+              )
             }
           />
         ))}

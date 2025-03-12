@@ -20,6 +20,7 @@
     "dompurify": "^3.2.4",
     "formik": "^2.4.6",
     "framer-motion": "^12.4.7",
+    "mui-one-time-password-input": "^4.0.1",
     "nprogress": "^0.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
