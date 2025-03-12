@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import { Avatar, Box, Button, TextField, Typography, IconButton, Skeleton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CloseIcon from "@mui/icons-material/Close";
-import { supabase } from "../../utils/authConfig";
 
-const ProfileEdit = () => {
+const ProfileEdit = ({ passAuth }) => {
   const [user, setUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ const ProfileEdit = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
+      const { data, error } = await passAuth.auth.getUser();
       if (data?.user) {
         setUser(data.user);
 
@@ -38,7 +38,7 @@ const ProfileEdit = () => {
     };
 
     const fetchUserProfile = async (userId) => {
-      const { data, error } = await supabase
+      const { data, error } = await passAuth
         .from("user_profiles")
         .select("avatar_url, bio")
         .eq("id", userId)
@@ -86,19 +86,19 @@ const ProfileEdit = () => {
     // Upload new avatar if selected
     if (selectedFile) {
       const filePath = `${user.id}/profile/${selectedFile.name}`;
-      const { error } = await supabase.storage
+      const { error } = await passAuth.storage
         .from("avatars")
         .upload(filePath, selectedFile, { upsert: true });
 
       if (error) {
         console.error("Error uploading image:", error.message);
       } else {
-        avatarUrl = supabase.storage.from("avatars").getPublicUrl(filePath).data.publicUrl;
+        avatarUrl = passAuth.storage.from("avatars").getPublicUrl(filePath).data.publicUrl;
       }
     }
 
-    // Update display name in Supabase Auth
-    const { error: updateUserError } = await supabase.auth.updateUser({
+    // Update display name in passAuth Auth
+    const { error: updateUserError } = await passAuth.auth.updateUser({
       data: { display_name: profile.name },
     });
 
@@ -107,7 +107,7 @@ const ProfileEdit = () => {
     }
 
     // Update bio and avatar in user_profiles table
-    const { error: updateProfileError } = await supabase
+    const { error: updateProfileError } = await passAuth
       .from("user_profiles")
       .update({ bio: profile.bio, avatar_url: avatarUrl })
       .eq("id", user.id);
@@ -168,7 +168,7 @@ const ProfileEdit = () => {
         <>
           <TextField name="name" label="Display Name" value={profile.name} onChange={handleChange} fullWidth sx={{ mb: 2 }} />
           <TextField name="bio" label="Bio" value={profile.bio} onChange={handleChange} fullWidth multiline rows={2} sx={{ mb: 2 }} />
-          <Button variant="contained" startIcon={<SaveIcon />} sx={{ mr: 2, backgroundColor: "#e50914" }} onClick={handleSave} disabled={uploading}>
+          <Button variant="contained" startIcon={<SaveIcon />} sx={{ mr: 2, backgroundColor: "#e50914", color: "#fff" }} onClick={handleSave} disabled={uploading}>
             {uploading ? "Uploading..." : "Save"}
           </Button>
           <Button variant="outlined" startIcon={<CloseIcon />} onClick={handleCancel}>
@@ -180,13 +180,17 @@ const ProfileEdit = () => {
           <Typography variant="h5">{profile.name}</Typography>
           <Typography variant="body2" sx={{ color: "#bbb", mb: 2 }}>{profile.email}</Typography>
           <Typography variant="body2" sx={{ color: "#fff", mb: 2 }}>{profile.bio}</Typography>
-          <Button variant="contained" startIcon={<EditIcon />} sx={{ backgroundColor: "#e50914" }} onClick={handleEditClick}>
+          <Button variant="contained" startIcon={<EditIcon />} sx={{ backgroundColor: "#e50914", color: "#fff" }} onClick={handleEditClick}>
             Edit Profile
           </Button>
         </>
       )}
     </Box>
   );
+};
+
+ProfileEdit.propTypes = {
+  passAuth: PropTypes.object.isRequired,
 };
 
 export default ProfileEdit;
