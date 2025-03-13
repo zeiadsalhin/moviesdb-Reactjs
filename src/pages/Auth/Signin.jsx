@@ -15,6 +15,7 @@ import { supabase } from "../../utils/authConfig";
 import { BASE_URL } from "../../utils/BASE_URL_Config";
 import CustomButton from "../../components/useCustomButton";
 import NetflixOtpInput from "../../components/Auth/otpLogin";
+import TwoFactorAuthInput from "../../components/Auth/TwoFactorAuthInput"; // Import the new 2FA component
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -30,7 +31,8 @@ const SignIn = () => {
   const [githubLoading, setGithubLoading] = useState(false);
   const [useOtp, setUseOtp] = useState(true);
   const [otpSent, setOtpSent] = useState(false);
-
+  const [is2FARequired, setIs2FARequired] = useState(false)
+  const [userSession, setUserSession] = useState(null)
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
   const handleOAuthSignIn = async (provider) => {
@@ -61,7 +63,7 @@ const SignIn = () => {
     }),
     onSubmit: async (values) => {
       setLoading(true);
-
+    
       if (useOtp) {
         const { error } = await supabase.auth.signInWithOtp({ email: values.email });
         if (error) {
@@ -76,26 +78,48 @@ const SignIn = () => {
           setLoading(false);
           return;
         }
-        const { error } = await supabase.auth.signInWithPassword({
+        
+        const { data, error } = await supabase.auth.signInWithPassword({
           email: values.email,
           password: values.password,
         });
-
+    
         if (error) {
           setLoading(false);
           toast.error(error.message, { position: "top-center", autoClose: 2000, theme: "dark" });
           return;
         }
-
+    
+        // 🔹 Check if 2FA is required (AAL1 Check)
+        const { data: mfaData, error: mfaError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+        
+        if (mfaError) {
+          setLoading(false);
+          toast.error(mfaError.message, { position: "top-center", autoClose: 2000, theme: "dark" });
+          return;
+        }
+    
+        if (mfaData?.currentLevel === "aal1" && mfaData?.currentLevel != mfaData?.nextLevel) {
+          console.log('2fa required');
+          console.log(mfaData);
+          
+          
+          setIs2FARequired(true);
+          setUserSession(data.session);
+          setLoading(false);
+          return;
+        }
+    
+        // ✅ If no 2FA required, proceed to account page
         toast.success("Signed In Successfully!", { position: "top-center", autoClose: 1000, theme: "dark" });
-
         setTimeout(() => {
           navigate("/account/");
         }, 1000);
       }
-
+    
       setLoading(false);
-    },
+    }
+      
   });
 
   const toggleSignInMethod = () => {
@@ -145,22 +169,58 @@ const SignIn = () => {
           }}
         >
           <Typography gutterBottom sx={{ fontWeight: "bold", textAlign: "center", fontSize: {xs: "1.875rem", sm: "2rem"} }}>
-            {otpSent ? "OTP Verification" : "Welcome | Sign In"}
+            {otpSent ? "OTP Verification" : is2FARequired ? "2-Step Verification" : "Welcome | Sign In"}
           </Typography>
 
-          {!otpSent ? (
-            <form onSubmit={formik.handleSubmit}>
+          {!otpSent && !is2FARequired ? (
+        <form onSubmit={formik.handleSubmit}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Email"
+            name="email"
+            color="#e50914"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+            margin="normal"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                backgroundColor: "#222",
+                color: "#fff",
+                borderRadius: 2,
+              },
+              "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#e50914 !important",
+              },
+              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#e50914",
+                borderRadius: 2,
+                borderWidth: 2.25,
+                outline: "none",
+              },
+              "& .MuiInputLabel-root": {
+                color: "#aaa",
+              },
+            }}
+          />
+
+          {!useOtp && (
+            <>
               <TextField
                 fullWidth
                 variant="outlined"
-                label="Email"
-                name="email"
+                label="Password"
+                name="password"
                 color="#e50914"
-                value={formik.values.email}
+                type={showPassword ? "text" : "password"}
+                value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}
                 margin="normal"
                 sx={{
                   "& .MuiOutlinedInput-root": {
@@ -169,7 +229,7 @@ const SignIn = () => {
                     borderRadius: 2,
                   },
                   "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#e50914 !important", // Prevents white border on hover
+                    borderColor: "#e50914 !important",
                   },
                   "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#e50914",
@@ -181,65 +241,55 @@ const SignIn = () => {
                     color: "#aaa",
                   },
                 }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton disableTouchRipple onClick={togglePasswordVisibility} edge="end">
+                        {showPassword ? <VisibilityOff sx={{ color: "#fff" }} /> : <Visibility sx={{ color: "#fff" }} />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
-
-              {!useOtp && (
-                <>
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  label="Password"
-                  name="password"
-                  color="#e50914"
-                  type={showPassword ? "text" : "password"}
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.password && Boolean(formik.errors.password)}
-                  helperText={formik.touched.password && formik.errors.password}
-                  margin="normal"
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      backgroundColor: "#222",
-                      color: "#fff",
-                      borderRadius: 2,
-                    },
-                    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#e50914 !important", // Prevents white border on hover
-                    },
-                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#e50914",
-                      borderRadius: 2,
-                      borderWidth: 2.25,
-                      outline: "none",
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: "#aaa",
-                    },
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton disableTouchRipple onClick={togglePasswordVisibility} edge="end">
-                          {showPassword ? <VisibilityOff sx={{ color: "#fff" }} /> : <Visibility sx={{ color: "#fff" }} />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <Typography variant="body2" sx={{ textAlign: "right", mt: 0.2 }}>
-            <Link to="/auth/forgot-password" style={{ color: "#e50914" }}>Forgot Password?</Link>
-          </Typography>
-          </>
+                  <Typography variant="body2" sx={{ textAlign: "right", mt: 0.2 }}>
+                    <Link to="/auth/forgot-password" style={{ color: "#e50914" }}>
+                      Forgot Password?
+                    </Link>
+                  </Typography>
+                </>
               )}
 
-              <CustomButton text={loading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : useOtp ? "Continue" : "Sign in with Password"} fullWidth disabled={loading} sx={{ mt: 2, backgroundColor: "#e50914", color: "#fff", "&:hover": { backgroundColor: "#b20710" } }} type="submit" />
+              <CustomButton
+                text={loading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : useOtp ? "Continue" : "Sign in with Password"}
+                fullWidth
+                disabled={loading}
+                sx={{
+                  mt: 2,
+                  backgroundColor: "#e50914",
+                  color: "#fff",
+                  "&:hover": { backgroundColor: "#b20710" },
+                }}
+                type="submit"
+              />
 
-              <CustomButton text={useOtp ? "Use Password Instead" : "Use OTP Instead"} fullWidth sx={{ mt: 2, backgroundColor: "black", color: "#fff", border: 1.5 }} type="button" onClick={toggleSignInMethod} />
+              <CustomButton
+                text={useOtp ? "Use Password Instead" : "Use OTP Instead"}
+                fullWidth
+                sx={{ mt: 2, backgroundColor: "black", color: "#fff", border: 1.5 }}
+                type="button"
+                onClick={toggleSignInMethod}
+              />
             </form>
-          ) : (
-            <NetflixOtpInput toggleMode={() => {setUseOtp(false);setOtpSent(false);}} email={formik.values.email} onSuccess={() => navigate("/account/")} />
-          )}
+          ) : is2FARequired ? (
+            // Show TwoFactorAuthInput ONLY if 2FA is required
+            <TwoFactorAuthInput userSession={userSession} onSuccess={() => navigate("/account/")} />
+          ) : useOtp  ? (
+            // Show NetflixOtpInput only if OTP login is active
+            <NetflixOtpInput toggleMode={() => { setUseOtp(false); setOtpSent(false); }} email={formik.values.email} onSuccess={() => navigate("/account/")} />
+          ) : null}
+
+          
+          
 
           <Typography variant="body2" sx={{ mt: 3, textAlign: "center" }}>
             New to The Movies? <Link to="/auth/signup" style={{ color: "#e50914" }}>Sign Up</Link>
