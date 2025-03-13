@@ -14,7 +14,7 @@ import {
   CircularProgress,
   useMediaQuery,
 } from "@mui/material";
-// import MenuIcon from "@mui/icons-material/Menu";
+import BackIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -23,7 +23,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const sections = [
-  { icon: <HomeIcon />, text: "Home", path: "/account/" },
+  { icon: <BackIcon />, text: "Home Page", path: "/" },
+  { icon: <HomeIcon />, text: "Home", path: "/account" },
   { icon: <PersonIcon />, text: "Profile", path: "/account/profile" },
   { icon: <BookmarkIcon />, text: "My Movies", path: "/account/watchlist" },
   { icon: <ThumbUpIcon />, text: "Recommendations", path: "/account/recommendations" },
@@ -33,7 +34,7 @@ const sections = [
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isMobile = useMediaQuery("(max-width: 900px)"); // Hide sidebar on mobile
+  const isMobile = useMediaQuery("(max-width: 899px)"); // Hide sidebar on mobile
   const [open, setOpen] = useState(false); // Controls mobile sidebar visibility
   const [loading, setLoading] = useState(false);
 

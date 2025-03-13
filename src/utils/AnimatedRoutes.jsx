@@ -21,7 +21,7 @@ const AnimatedRoutes = () => {
   const location = useLocation();
 
   // directories where animation disabled
-  const noAnimationRoutes = [];
+  const noAnimationRoutes = ["/account"];
 
   // Check of the disabled directories
   const disableAnimation = noAnimationRoutes.some((path) => location.pathname.startsWith(path));
