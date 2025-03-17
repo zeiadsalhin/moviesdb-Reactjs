@@ -57,7 +57,7 @@ const Sidebar = () => {
   };
 
   const SidebarContent = (
-    <Box sx={{ width: 250, backgroundColor: "#141414", height: "100vh", p: 2 }}>
+    <Box sx={{ width: 250, backgroundColor: "#141414", height: "100vh", p: 2, position: "fixed" }}>
       <List>
         {sections.map((section) => {
           const isActive = location.pathname === section.path;

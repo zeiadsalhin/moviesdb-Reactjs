@@ -16,7 +16,7 @@ const ProfileHeader = ({ user }) => {
             width: 80,
             height: 80,
             margin: "0 auto",
-            border: "3px solid #e50914",
+            border: "3px solid #99050d",
           }}
         />
       )}

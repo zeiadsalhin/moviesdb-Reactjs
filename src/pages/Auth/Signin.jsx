@@ -113,7 +113,7 @@ const SignIn = () => {
         // ✅ If no 2FA required, proceed to account page
         toast.success("Signed In Successfully!", { position: "top-center", autoClose: 1000, theme: "dark" });
         setTimeout(() => {
-          navigate("/account/");
+          navigate("/account");
         }, 1000);
       }
     
@@ -265,7 +265,7 @@ const SignIn = () => {
                 disabled={loading}
                 sx={{
                   mt: 2,
-                  backgroundColor: "#e50914",
+                  backgroundColor: "#99050d",
                   color: "#fff",
                   "&:hover": { backgroundColor: "#b20710" },
                 }}
@@ -282,10 +282,10 @@ const SignIn = () => {
             </form>
           ) : is2FARequired ? (
             // Show TwoFactorAuthInput ONLY if 2FA is required
-            <TwoFactorAuthInput userSession={userSession} onSuccess={() => navigate("/account/")} />
+            <TwoFactorAuthInput userSession={userSession} onSuccess={() => navigate("/account")} />
           ) : useOtp  ? (
             // Show NetflixOtpInput only if OTP login is active
-            <NetflixOtpInput toggleMode={() => { setUseOtp(false); setOtpSent(false); }} email={formik.values.email} onSuccess={() => navigate("/account/")} />
+            <NetflixOtpInput toggleMode={() => { setUseOtp(false); setOtpSent(false); }} email={formik.values.email} onSuccess={() => navigate("/account")} />
           ) : null}
 
           

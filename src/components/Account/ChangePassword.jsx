@@ -78,7 +78,7 @@ const ChangePassword = ({ supabase }) => {
                 color="primary"
                 type="submit"
                 disabled={isSubmitting}
-                sx={{ backgroundColor: "#e50914", color: "#fff", "&:hover": { backgroundColor: "#b20710" } }}
+                sx={{ backgroundColor: "#99050d", color: "#fff", "&:hover": { backgroundColor: "#b20710" } }}
               >
                 {isSubmitting ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : "Change Password"}
               </Button>

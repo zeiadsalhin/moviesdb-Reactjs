@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import CustomButton from "./useCustomButton";
 import { useMediaQuery } from "@mui/material";
+import { color } from "framer-motion";
 
 const HomeBanner = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -146,12 +147,12 @@ const HomeBanner = () => {
                 <Box sx={{ display: "flex", gap: 2, mt: { xs: 2, md: 3 } }}>
                   <CustomButton
                     text="View"
-                    color="secondary"
+                    // color="#99050d"
                     size={isMobile ? "small" : "medium"}
                     startIcon={<PlayArrowIcon />}
                     component={Link}
                     to={`/details/movie/${randomMovie.id}`}
-                    sx={{ gap: 0 }}
+                    sx={{ gap: 0, backgroundColor: "#99050d", color: "#fff"}}
                   />
 
                   <CustomButton

@@ -151,7 +151,7 @@ const DetailsPage = () => {
             }
               target="_blank"
               rel="noopener noreferrer"
-              sx={{textTransform: "uppercase", gap: 0}}
+              sx={{textTransform: "uppercase", gap: 0, backgroundColor: "#99050d", color: "#fff"}}
             />
 
             <CustomButton
@@ -200,7 +200,6 @@ const DetailsPage = () => {
              <Box sx={{display: "flex", flexDirection: {xs: 'column', md: 'row'}, gap: 2, mt: 2}}>
              <CustomButton
               text="Watch"
-              color="error"
               size={isMobile ? "large" : "medium"}
               startIcon={<PlayArrowIcon />}
               href={data.homepage
@@ -209,7 +208,7 @@ const DetailsPage = () => {
               }
               target="_blank"
               rel="noopener noreferrer"
-              sx={{gap: 0}}
+              sx={{gap: 0, backgroundColor: "#99050d", color: "#fff"}}
             />
 
             <CustomButton

@@ -168,7 +168,7 @@ const ProfileEdit = ({ passAuth }) => {
         <>
           <TextField name="name" label="Display Name" value={profile.name} onChange={handleChange} fullWidth sx={{ mb: 2 }} />
           <TextField name="bio" label="Bio" value={profile.bio} onChange={handleChange} fullWidth multiline rows={2} sx={{ mb: 2 }} />
-          <Button variant="contained" startIcon={<SaveIcon />} sx={{ mr: 2, backgroundColor: "#e50914", color: "#fff" }} onClick={handleSave} disabled={uploading}>
+          <Button variant="contained" startIcon={<SaveIcon />} sx={{ mr: 2, backgroundColor: "#99050d", color: "#fff" }} onClick={handleSave} disabled={uploading}>
             {uploading ? "Uploading..." : "Save"}
           </Button>
           <Button variant="outlined" startIcon={<CloseIcon />} onClick={handleCancel}>
@@ -180,7 +180,7 @@ const ProfileEdit = ({ passAuth }) => {
           <Typography variant="h5">{profile.name}</Typography>
           <Typography variant="body2" sx={{ color: "#bbb", mb: 2 }}>{profile.email}</Typography>
           <Typography variant="body2" sx={{ color: "#fff", mb: 2 }}>{profile.bio}</Typography>
-          <Button variant="contained" startIcon={<EditIcon />} sx={{ backgroundColor: "#e50914", color: "#fff" }} onClick={handleEditClick}>
+          <Button variant="contained" startIcon={<EditIcon />} sx={{ backgroundColor: "#99050d", color: "#fff" }} onClick={handleEditClick}>
             Edit Profile
           </Button>
         </>

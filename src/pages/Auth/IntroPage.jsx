@@ -69,7 +69,7 @@ const IntroPage = () => {
             size="medium"
             sx={{
               color: "white",
-              backgroundColor: "#e50914", // Netflix Red
+              backgroundColor: "#99050d", // Netflix Red
               "&:hover": { backgroundColor: "#b20710" },
               fontSize: { xs: "0.9rem", sm: "1.1rem" },
               px: { xs: 3, sm: 4 },

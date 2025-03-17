@@ -254,7 +254,7 @@ const SignUp = () => {
               sx={{
                 mt: 2,
                 width: "100%",
-                backgroundColor: "#e50914",
+                backgroundColor: "#99050d",
                 color: "#fff",
                 "&:hover": { backgroundColor: "#b20710" },
               }}

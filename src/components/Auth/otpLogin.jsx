@@ -82,7 +82,7 @@ const NetflixOtpInput = ({ toggleMode, email, onSuccess }) => {
         text={loading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : "Verify OTP"}
         fullWidth
         disabled={loading || otp.length < 6}
-        sx={{ mt: 2, backgroundColor: "#e50914", color: "#fff", "&:hover": { backgroundColor: "#b20710" } }}
+        sx={{ mt: 2, backgroundColor: "#99050d", color: "#fff", "&:hover": { backgroundColor: "#b20710" } }}
         onClick={handleOtpSubmit}
       />
 

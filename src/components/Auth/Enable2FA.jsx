@@ -219,7 +219,7 @@ const Enable2FA = () => {
               disabled={loading}
               sx={{
                 flexGrow: 1,
-                backgroundColor: "#E50914",
+                backgroundColor: "#99050d",
                 "&:hover": { backgroundColor: "#B20710" },
                 color: "#fff",
                 fontWeight: "bold",

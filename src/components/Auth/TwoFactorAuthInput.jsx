@@ -84,7 +84,7 @@ const TwoFactorAuthInput = ({ userSession, onSuccess }) => {
         text={loading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : "Verify"}
         fullWidth
         disabled={loading}
-        sx={{ mt: 2, backgroundColor: "#e50914", color: "#fff", "&:hover": { backgroundColor: "#b20710" } }}
+        sx={{ mt: 2, backgroundColor: "#99050d", color: "#fff", "&:hover": { backgroundColor: "#b20710" } }}
         onClick={handleVerify2FA}
       />
     </Box>
