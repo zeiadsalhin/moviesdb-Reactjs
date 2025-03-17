@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { supabase } from "../utils/authConfig";
+import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress, Typography, Rating, Grid } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -8,9 +9,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import CustomButton from "./useCustomButton";
 import { useMediaQuery } from "@mui/material";
-import { toggleFavorite } from "../utils/favoritesUtils"; // Adjust path as needed
+import { fetchFavorites, toggleFavorite } from "../utils/favoritesUtils"; // Adjust path as needed
 
 const HomeBanner = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [randomMovie, setRandomMovie] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -61,6 +63,23 @@ const HomeBanner = () => {
       setRandomMovie(selectedMovie);
       setRating((selectedMovie.vote_average / 2).toFixed(1));
 
+      // If user is logged in, check if this media is already saved
+      const { data: { session } } = await supabase.auth.getSession();
+      const user = session?.user;
+
+      if (user) {
+        const { success, favorites, error } = await fetchFavorites(user?.id, "movie");
+
+        if (success) {
+          const isInFavorites = favorites.includes(Number(selectedMovie?.id)); // 👈 Check if current ID is in the list
+          setIsSaved(isInFavorites);
+          // console.log("Favorite Movies:", favorites);
+        }
+         else {
+          console.error("Fetch movie ID error:", error);
+        }
+      }
+
       // Preload the image
       const imageSrc = `https://image.tmdb.org/t/p/${isMobile ? "w1280" : "original"}${selectedMovie.backdrop_path}`;
       const img = new Image();
@@ -82,6 +101,7 @@ const HomeBanner = () => {
     const user = session?.user;
   
     if (!user) {
+      navigate('/auth')
       console.error("User not logged in");
       return;
     }
@@ -90,7 +110,7 @@ const HomeBanner = () => {
   
     if (success) {
       setIsSaved(updatedList.includes(randomMovie.id));
-      console.log("Favorite updated!");
+      // console.log("Favorite updated!");
     } else {
       console.error("Failed to update favorite");
     }

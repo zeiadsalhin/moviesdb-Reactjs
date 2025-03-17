@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Box, Typography, CircularProgress, Grid, Rating } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -17,6 +17,7 @@ import { supabase } from "../utils/authConfig";
 import { fetchFavorites, toggleFavorite } from "../utils/favoritesUtils"; // Adjust path as needed
 
 const DetailsPage = () => {
+  const navigate = useNavigate();
   const { type, id } = useParams();
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null)
@@ -73,6 +74,7 @@ const DetailsPage = () => {
 
   const handleSave = async () => {
     if (!user) {
+      navigate('/auth')
       console.error("User not logged in");
       return;
     }
