@@ -40,7 +40,7 @@ const SignIn = () => {
 
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
-      options: { redirectTo: `${BASE_URL}/account` },
+      options: { redirectTo: `${BASE_URL}/account`, shouldCreateUser: false },
     });
 
     if (error) {
@@ -65,7 +65,13 @@ const SignIn = () => {
       setLoading(true);
     
       if (useOtp) {
-        const { error } = await supabase.auth.signInWithOtp({ email: values.email });
+        const { error } = await supabase.auth.signInWithOtp({ 
+          email: values.email, 
+          options: {
+            shouldCreateUser: false
+          }
+        });
+
         if (error) {
           setLoading(false);
           toast.error(error.message, { position: "top-center", autoClose: 2000, theme: "dark" });
@@ -82,6 +88,9 @@ const SignIn = () => {
         const { data, error } = await supabase.auth.signInWithPassword({
           email: values.email,
           password: values.password,
+          options: {
+            shouldCreateUser: false
+          }
         });
     
         if (error) {
