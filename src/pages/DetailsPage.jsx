@@ -13,10 +13,13 @@ import SimilarMedia from "../components/SimilarMedia";
 import ErrorComponent from "../components/ErrorShow";
 import CustomButton from "../components/useCustomButton";
 import { useMediaQuery } from "@mui/material"
+import { supabase } from "../utils/authConfig";
+import { fetchFavorites, toggleFavorite } from "../utils/favoritesUtils"; // Adjust path as needed
 
 const DetailsPage = () => {
   const { type, id } = useParams();
   const [data, setData] = useState(null);
+  const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -39,6 +42,24 @@ const DetailsPage = () => {
         setRating((result.vote_average / 2).toFixed(1));
 
         document.title = `${result?.title || result?.name} (${(result?.release_date || result.first_air_date)?.slice(0, 4)}) | The Movies`;
+
+        // If user is logged in, check if this media is already saved
+        const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user;
+
+        if (user) {
+          setUser(user)
+          const { success, favorites, error } = await fetchFavorites(user?.id, type);
+
+          if (success) {
+            const isInFavorites = favorites.includes(Number(id)); // 👈 Check if current ID is in the list
+            setIsSaved(isInFavorites);
+            // console.log("Favorite Movies:", favorites);
+          }
+           else {
+            console.error("Fetch error:", error);
+          }
+        }
       } catch (error) {
         console.error("Error fetching details:", error);
         setError(error.response?.data?.status_message || "Failed to fetch data");
@@ -49,6 +70,23 @@ const DetailsPage = () => {
 
     fetchDetails();
   }, [type, id]);
+
+  const handleSave = async () => {
+    if (!user) {
+      console.error("User not logged in");
+      return;
+    }
+  
+    const { success, updatedList } = await toggleFavorite(user.id, type, Number(id));
+  
+    if (success) {
+      setIsSaved(updatedList.includes(Number(id)));
+      // console.log("Favorite updated!");
+    } else {
+      console.error("Failed to update favorite");
+    }
+  };
+  
 
   if (loading) {
     return (
@@ -161,6 +199,7 @@ const DetailsPage = () => {
               variant="outlined"
               startIcon={isSaved ? <BookmarkIcon /> : <AddIcon />}
               sx={{textTransform: "uppercase", gap: 0}}
+              onClick={handleSave}
             />
             </Box>
           </Box>
@@ -218,6 +257,7 @@ const DetailsPage = () => {
               variant="outlined"
               startIcon={isSaved ? <BookmarkIcon /> : <AddIcon />}
               sx={{gap: 0}}
+              onClick={handleSave}
             />
             </Box>
 

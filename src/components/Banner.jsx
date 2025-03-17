@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { supabase } from "../utils/authConfig";
 import { Box, CircularProgress, Typography, Rating, Grid } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -7,7 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import CustomButton from "./useCustomButton";
 import { useMediaQuery } from "@mui/material";
-import { color } from "framer-motion";
+import { toggleFavorite } from "../utils/favoritesUtils"; // Adjust path as needed
 
 const HomeBanner = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +16,7 @@ const HomeBanner = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [rating, setRating] = useState(null);
   const scrollY = useRef(0);
-  const isSaved = false;
+  const [isSaved, setIsSaved] = useState(false);
   const isMobile = useMediaQuery("(max-width: 899px)");
 
   useEffect(() => {
@@ -74,6 +75,28 @@ const HomeBanner = () => {
     }
   };
 
+  const handleSave = async () => {
+    if (!randomMovie) return;
+  
+    const { data: { session } } = await supabase.auth.getSession();
+    const user = session?.user;
+  
+    if (!user) {
+      console.error("User not logged in");
+      return;
+    }
+  
+    const { success, updatedList } = await toggleFavorite(user.id, "movie", randomMovie.id);
+  
+    if (success) {
+      setIsSaved(updatedList.includes(randomMovie.id));
+      console.log("Favorite updated!");
+    } else {
+      console.error("Failed to update favorite");
+    }
+  };
+
+  
   return (
     <Box
       sx={{
@@ -162,6 +185,7 @@ const HomeBanner = () => {
                     variant="outlined"
                     startIcon={isSaved ? <BookmarkIcon /> : <AddIcon />}
                     sx={{ gap: 0 }}
+                    onClick={handleSave}
                   />
                 </Box>
               </Box>

@@ -54,7 +54,7 @@ const Profile = () => {
       </Modal>
 
       {/* Profile Page Content */}
-      <Box sx={{ opacity: open ? 0.4 : 1, pointerEvents: open ? "none" : "auto" }}>
+      <Box sx={{ opacity: open ? 0.4 : 1, pointerEvents: open ? "none" : "auto", m: {xs: 0, md: 4} }}>
         <Typography variant="h5" sx={{ color: "#e50914", fontWeight: "bold" }}>
           Edit Profile
         </Typography>

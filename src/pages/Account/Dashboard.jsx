@@ -7,6 +7,7 @@ import Recommendations from "../../components/Account/Recommendations";
 import { supabase } from "../../utils/authConfig";
 import { generateRandomUsername } from "../../utils/generateUsername";
 import { getUserProfile } from "../../utils/getUserProfile";
+import UserStats from "../../components/Account/UserStats";
 
 const Dashboard = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -81,6 +82,7 @@ const Dashboard = () => {
       }}
     >
       <ProfileHeader user={user} />
+      <UserStats />
       {isMobile && <DashboardNavigation passAuth={supabase} passUseState={useState} />}
       <Watchlist />
       <Recommendations />

@@ -6,7 +6,7 @@ const Recommendations = () => {
 
   return (
     <Box>
-        <MediaList title="Recommended Movies" apiEndpoint={endPoint} mediaType="movie" />   
+        <MediaList title="Recommended Movies" apiEndpoint={endPoint} mediaType="movie" viewAllRoute="/all/toprated/movie" />   
     </Box>
   );
 };
