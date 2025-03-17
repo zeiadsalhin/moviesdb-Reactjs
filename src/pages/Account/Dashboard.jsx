@@ -6,11 +6,12 @@ import Watchlist from "../../components/Account/MyMovies";
 import Recommendations from "../../components/Account/Recommendations";
 import { supabase } from "../../utils/authConfig";
 import { generateRandomUsername } from "../../utils/generateUsername";
+import { getUserProfile } from "../../utils/getUserProfile";
 
 const Dashboard = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [user, setUser] = useState(null);
-  const [isUpdating, setIsUpdating] = useState(false); // Prevents infinite loop
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -21,27 +22,18 @@ const Dashboard = () => {
       }
 
       const userId = authData.user.id;
-      let displayName = authData.user.user_metadata?.display_name;
       const email = authData.user.email;
 
-      // Fetch avatar from user_profiles
-      const { data: profileData, error: profileError } = await supabase
-        .from("user_profiles")
-        .select("avatar_url")
-        .eq("id", userId)
-        .single();
+      // Fetch from custom profile table via util
+      const profileData = await getUserProfile(userId);
 
-      if (profileError) {
-        console.error("Error fetching profile:", profileError.message);
-      }
+      let displayName = authData.user.user_metadata?.display_name;
 
-      // If display_name is missing, generate one
+      // Auto-generate display name if missing
       if (!displayName && !isUpdating) {
         setIsUpdating(true);
         try {
           const randomUsername = await generateRandomUsername();
-
-          // Update Supabase Auth with new display name
           const { error } = await supabase.auth.updateUser({
             data: { display_name: randomUsername },
           });
@@ -50,10 +42,8 @@ const Dashboard = () => {
             console.error("Error updating display name:", error.message);
           } else {
             displayName = randomUsername;
-            
-            // Set the user displayName
             setTimeout(() => {
-              setUser(prev => ({
+              setUser((prev) => ({
                 ...prev,
                 display_name: randomUsername,
               }));
@@ -66,11 +56,12 @@ const Dashboard = () => {
         }
       }
 
-      // Set the user state
+      // Set user state using profileData
       setUser({
-        display_name: authData?.user.user_metadata.display_name || "guest_user",
+        display_name: displayName || "guest_user",
         email,
         avatar: profileData?.avatar_url || "/default-avatar.png",
+        ...profileData, // add other fields if you have them (e.g., role, bio, etc.)
       });
     };
 
@@ -78,14 +69,19 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Box sx={{ padding: 0, maxWidth: "100%", justifyContent: "center", gap: {xs: 0, md: 3}, display: "flex", flexDirection: "column", mt: 2 }}>
-      {/* Profile */}
+    <Box
+      sx={{
+        padding: 0,
+        maxWidth: "100%",
+        justifyContent: "center",
+        gap: { xs: 0, md: 3 },
+        display: "flex",
+        flexDirection: "column",
+        mt: 2,
+      }}
+    >
       <ProfileHeader user={user} />
-
-      {/* Show Dashboard Navigation ONLY on mobile */}
       {isMobile && <DashboardNavigation passAuth={supabase} passUseState={useState} />}
-
-      {/* Display Sections */}
       <Watchlist />
       <Recommendations />
     </Box>

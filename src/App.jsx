@@ -2,7 +2,7 @@ import { useState, useLayoutEffect } from "react";
 import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { Box, useMediaQuery } from "@mui/material";
-import AnimatedRoutes from "./utils/AnimatedRoutes";
+import AnimatedRoutes from "./routes/AnimatedRoutes";
 import Sidebar from "./layouts/sideBar";
 import Navbar from "./layouts/navBar";
 import MobileNav from "./layouts/mobileNav";

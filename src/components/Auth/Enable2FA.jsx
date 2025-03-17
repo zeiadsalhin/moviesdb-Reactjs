@@ -4,7 +4,7 @@ import { supabase } from "../../utils/authConfig";
 import { Box, TextField, Typography, Stack } from "@mui/material";
 import CustomButton from "../useCustomButton"
 import { QRCodeSVG } from "qrcode.react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { getFactorInfo, start2FAChallenge, verifyTOTPCode } from "../../utils/2FAUtils"; // ✅ Import utils
 import { fixOtpAuthUri } from "../../utils/fixAuthURI";
 
@@ -184,6 +184,7 @@ const Enable2FA = () => {
 
   return (
     <>
+    <ToastContainer />
       <Box
         sx={{
           mt: 3,

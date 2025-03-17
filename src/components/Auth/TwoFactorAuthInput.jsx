@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import CustomButton from "../../components/useCustomButton";
 import { supabase } from "../../utils/authConfig";
 import { MuiOtpInput } from "mui-one-time-password-input";
@@ -22,14 +22,14 @@ const TwoFactorAuthInput = ({ userSession, onSuccess }) => {
     setLoading(true);
 
     const { error } = await supabase.auth.mfa.challengeAndVerify({ 
-      factorId: userSession?.user?.factors[0].id, 
+      factorId: userSession?.user?.factors[0].id || userSession?.factors[0]?.id, 
       code: otp 
     });
 
     if (error) {
         console.log(otp);
         console.log(error);
-        
+          
       setLoading(false);
       toast.error(error.message, { position: "top-center", autoClose: 2000, theme: "dark" });
       return;
@@ -54,8 +54,10 @@ const TwoFactorAuthInput = ({ userSession, onSuccess }) => {
         borderRadius: 2,
         width: "100%",
         color: "#fff",
+        zIndex: 999
       }}
     >
+      <ToastContainer />
       <Typography variant="body1" sx={{ mt: 2, color: "#aaa" }}>
         Enter google Authenticator Code
       </Typography>

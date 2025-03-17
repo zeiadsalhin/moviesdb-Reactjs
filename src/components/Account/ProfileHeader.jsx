@@ -33,7 +33,7 @@ const ProfileHeader = ({ user }) => {
         {["Movies", "Followers", "Following"].map((label, index) => (
           <Grid item key={index}>
             <Typography variant="h6" sx={{ fontWeight: "bold", color: "#e50914" }}>
-              {isLoading ? <Skeleton width={40} sx={{ marginInline: "auto" }} /> : [196, 151, 204][index]}
+              {isLoading ? <Skeleton width={40} sx={{ marginInline: "auto" }} /> : [user?.favorite_movies?.length, 151, 204][index]}
             </Typography>
             <Typography variant="body2" sx={{ color: "#aaa" }}>{label}</Typography>
           </Grid>
@@ -49,6 +49,7 @@ ProfileHeader.propTypes = {
     avatar: PropTypes.string,
     display_name: PropTypes.string,
     email: PropTypes.string,
+    favorite_movies: PropTypes.array
   }),
 };
 
