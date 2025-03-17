@@ -37,7 +37,7 @@ const UserStats = () => {
 
   return (
     <Box sx={{ mt: { xs: 3, md: 0 }, p: 0.175 }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
         {statsArray.map((stat, index) => (
           <Grid item xs={6} md={3} key={index}>
             <Paper elevation={3} sx={{ p: 2, bgcolor: "#111", color: "#fff", display: 'flex', alignItems: 'center' }}>

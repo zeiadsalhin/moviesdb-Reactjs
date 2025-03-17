@@ -38,6 +38,7 @@ const Recommendations = () => {
             console.error("TMDB recommendations error:", err);
           }
         }
+        setLoading(false);
       }
   
     };
