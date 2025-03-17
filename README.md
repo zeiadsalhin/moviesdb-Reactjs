@@ -41,7 +41,7 @@ A Netflix-inspired movie and TV show web app built with **React**, **Supabase**,
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/the-movies.git
+git clone https://github.com/zeiadsalhin/the-movies.git
 cd the-movies
 npm install
 ```
@@ -96,7 +96,7 @@ npm install
 
 ## 🌍 Live Demo
 
-[🔗 Live Demo](#) <!-- Replace # with your actual live demo URL -->
+[🔗 Live Demo](https://moviesreactalfa.netlify.app) <!-- Replace # with your actual live demo URL -->
 
 ---
 
