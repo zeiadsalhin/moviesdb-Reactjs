@@ -41,7 +41,7 @@ A Netflix-inspired movie and TV show web app built with **React**, **Supabase**,
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/zeiadsalhin/the-movies.git
+git clone https://github.com/zeiadsalhin/moviesdb-Reactjs.git
 cd the-movies
 npm install
 ```
@@ -50,24 +50,33 @@ npm install
 ## 🧩 Folder Structure
 
 ```bash
-/src
- ┣ /components
- ┃ ┣ MediaCard.jsx
- ┃ ┣ NetflixOtpInput.jsx
- ┃ ┗ TwoFactorAuthInput.jsx
- ┣ /pages
- ┃ ┣ Home.jsx
- ┃ ┣ Profile.jsx
- ┃ ┣ Recommendations.jsx
- ┃ ┗ Watchlist.jsx
- ┣ /utils
- ┃ ┣ authConfig.js
- ┃ ┣ favoritesUtils.js
- ┃ ┗ tmdbUtils.js
- ┗ /auth
-    ┣ SignIn.jsx
-    ┣ SignUp.jsx
-    ┗ ForgotPassword.jsx
+.
+├── .github
+├── node_modules
+├── public
+├── src
+│   ├── assets
+│   ├── components
+│   ├── hooks
+│   ├── layouts
+│   ├── middleware
+│   ├── pages
+│   ├── routes
+│   ├── styles
+│   ├── utils
+│   ├── App.jsx
+│   └── main.jsx
+├── .env
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── LICENSE
+├── moviesdb.code-workspace
+├── package-lock.json
+├── package.json
+├── README.md
+└── vite.config.js
+
 ```
 ---
 
@@ -87,8 +96,6 @@ npm install
 
 ## ⚙️ Features In Progress
 
-- 🎞 **Upcoming Releases Section**
-- 🗂 **Categories & Filters for Watchlist**
 - 🧠 **AI-Powered Recommendations** (optional)
 - 💬 **Community Features** (Comments, Discussions)
 
