@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { supabase } from "../../utils/authConfig";
-import { Box, TextField, Typography, Stack } from "@mui/material";
+import { Box, TextField, IconButton, Typography, Stack } from "@mui/material";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CustomButton from "../useCustomButton"
 import { QRCodeSVG } from "qrcode.react";
 import { toast, ToastContainer } from "react-toastify";
@@ -182,6 +183,27 @@ const Enable2FA = () => {
     toast.success("2FA has been disabled.", { position: "top-center", autoClose: 2000, theme: "dark" });
   };
 
+  // handle copy
+  const handleCopy = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(totpSecret).then(() => {
+      });
+    } else {
+      // Fallback for older browsers and http
+      const textArea = document.createElement("textarea");
+      textArea.value = totpSecret;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        console.error("Fallback copy failed", err);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
+  
+  
   return (
     <>
     <ToastContainer />
@@ -213,7 +235,7 @@ const Enable2FA = () => {
         >
           {is2FAEnabled ? (
             <CustomButton
-             text="Disable 2FA"
+              text="Disable 2FA"
               variant="contained"
               onClick={disable2FA}
               disabled={loading}
@@ -228,22 +250,22 @@ const Enable2FA = () => {
                 borderRadius: "8px",
               }}
             />
-              
           ) : (
-            <CustomButton 
-             text="Enable 2FA" 
-             onClick={enroll2FA} 
-             sx={{ 
-              flexGrow: 1,
-              backgroundColor: "#444",
-              // "&:hover": { backgroundColor: "#B20710" },
-              outline: 1,
-              color: "#fff",
-              fontWeight: "bold",
-              textTransform: "none",
-              py: 1.2,
-              borderRadius: "8px", 
-             }} />
+            <CustomButton
+              text="Enable 2FA"
+              onClick={enroll2FA}
+              disabled={!!totpSecret || loading}
+              sx={{
+                flexGrow: 1,
+                backgroundColor: "#444",
+                outline: 1,
+                color: "#fff",
+                fontWeight: "bold",
+                textTransform: "none",
+                py: 1.2,
+                borderRadius: "8px",
+              }}
+            />
           )}
         </Stack>
 
@@ -254,22 +276,49 @@ const Enable2FA = () => {
             </Typography>
             <QRCodeSVG value={qrCode} alt="QR Code" style={{ width: 180, height: 180, marginInline: "auto",paddingBlock: 5 }} />
 
+            <Typography variant="body1" sx={{ color: "#ccc", mt: 1, mb: 1 }}>
+              QR code is generated every 30 seconds
+            </Typography>
+
             <Typography variant="body2" sx={{ color: "#aaa", mt: 2, mb: 1 }}>
               Or manually enter this code:
             </Typography>
-            <Typography variant="body2" sx={{ color: "#fff", fontWeight: "bold", wordBreak: "break-word" }}>
-              {totpSecret}
-            </Typography>
+
+            <Box sx={{ display: "flex", justifyContent: "center", gap: 1 }}>
+              <Typography
+                variant="body2"
+                sx={{ color: "#fff", fontWeight: "bold", wordBreak: "break-word", marginBlock: "auto" }}
+              >
+                {totpSecret}
+              </Typography>
+                <IconButton onClick={handleCopy} size="small" sx={{ color: "#fff" }}>
+                  <ContentCopyIcon fontSize="small" onClick={handleCopy} />
+                </IconButton>
+            </Box>
 
             {challengeId && (
-              <Box sx={{ mt: 2, display: "flex", gap: 1 }}>
+              <Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 1 }}>
                 <TextField
                   type="text"
                   placeholder="Enter 6-digit Code"
-                  focused
+                  // focused
                   value={verificationCode}
                   onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, "").slice(0,6))}
-                  sx={{ outline: 0}}
+                  sx={{ outline: 0, 
+                    "& .MuiOutlinedInput-root": {
+                backgroundColor: "#222",
+                color: "#fff",
+                borderRadius: 2,
+              },
+              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#fff",
+                borderRadius: 2,
+                borderWidth: 2.25,
+                outline: "none",
+              },
+              "& .MuiInputLabel-root": {
+                color: "#aaa",
+              },}}
                 />
 
                 <CustomButton
@@ -283,7 +332,7 @@ const Enable2FA = () => {
                     "&:hover": { backgroundColor: "#B20710" },
                     color: "#fff",
                     textTransform: "none",
-                    py: 2,
+                    py: 1,
                     borderRadius: "8px",
                   }}
                 />
