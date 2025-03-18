@@ -9,6 +9,10 @@ import { useRequireAAL2 } from "../../hooks/useRequireAAL2";
 import TwoFactorAuthInput from "../../components/Auth/TwoFactorAuthInput";
 
 const SettingsPage = () => {
+  useEffect(() => {
+    document.title = "Account Settings | The Movies";
+  }, []);
+
   const { isAAL1, checking } = useRequireAAL2();
   const [tabIndex, setTabIndex] = useState(0);
   const [open, setOpen] = useState(false);

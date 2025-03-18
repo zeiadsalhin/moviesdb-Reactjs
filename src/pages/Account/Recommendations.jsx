@@ -7,6 +7,10 @@ import axios from "axios";
 import MediaCard from "../../components/movieCard";
 
 const Recommendations = () => {
+  useEffect(() => {
+    document.title = "My Recommendation | The Movies";
+  }, []);
+
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
 

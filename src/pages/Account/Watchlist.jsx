@@ -10,6 +10,10 @@ import axios from "axios";
 
 
 const Watchlist = () => {
+  useEffect(() => {
+    document.title = "My Watchlist | The Movies";
+  }, []);
+  
   const [movies, setMovies] = useState([]);
   const [tvShows, setTvShows] = useState([]);
   const [loading, setLoading] = useState(true);

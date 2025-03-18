@@ -10,6 +10,10 @@ import { getUserProfile } from "../../utils/getUserProfile";
 import UserStats from "../../components/Account/UserStats";
 
 const Dashboard = () => {
+  useEffect(() => {
+    document.title = "My Account | The Movies";
+  }, []);
+
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [user, setUser] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -74,6 +78,7 @@ const Dashboard = () => {
       sx={{
         padding: 0,
         maxWidth: "100%",
+        minHeight: "600px",
         justifyContent: "center",
         gap: { xs: 0, md: 3 },
         display: "flex",

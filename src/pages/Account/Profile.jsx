@@ -8,6 +8,10 @@ import { useRequireAAL2 } from "../../hooks/useRequireAAL2";
 import TwoFactorAuthInput from "../../components/Auth/TwoFactorAuthInput";
 
 const Profile = () => {
+  useEffect(() => {
+    document.title = "Edit Profile | The Movies";
+  }, []);
+
   const { isAAL1, checking } = useRequireAAL2();
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
