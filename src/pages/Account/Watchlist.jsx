@@ -3,6 +3,9 @@ import { Box, Typography, Grid, CircularProgress } from "@mui/material";
 import { fetchFavorites } from "../../utils/favoritesUtils";
 import { supabase } from "../../utils/authConfig";
 import MediaCard from "../../components/movieCard";
+import MovieIcon from '@mui/icons-material/Movie';
+import LiveTvIcon from '@mui/icons-material/LiveTv';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import axios from "axios";
 
 
@@ -65,21 +68,27 @@ const Watchlist = () => {
   }
 
   return (
-    <Box sx={{m: {xs: 0, md: 4}}}>
-      <Typography variant="h4" sx={{ color: "#e50914", fontWeight: "bold" }}>
-        Watchlist
-      </Typography>
-      <Typography sx={{ mt: 2, mb: 4 }}>
+    <Box sx={{ m: { xs: 1, md: 3 } }}>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+        <BookmarkBorderIcon sx={{ color: "#e50914", mr: 1 }} />
+        <Typography variant="h4" sx={{ color: "#e50914", fontWeight: "bold" }}>
+          Watchlist
+        </Typography>
+      </Box>
+      <Typography sx={{ mb: 4, color: "#aaa" }}>
         Your saved movies and shows.
       </Typography>
 
-      <Typography variant="h5" sx={{ mb: 2 }}>
-        Movies
-      </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+        <MovieIcon sx={{ color: "#e50914", mr: 1 }} />
+        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+          Movies
+        </Typography>
+      </Box>
       {movies.length === 0 ? (
-        <Typography>No saved movies.</Typography>
+        <Typography sx={{ color: "#aaa", mb: 4 }}>No saved movies.</Typography>
       ) : (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ mb: 4 }}>
           {movies.map((movie) => (
             <Grid item xs={6} md={3} key={movie.id}>
               <MediaCard result={movie} type="movie" />
@@ -88,11 +97,14 @@ const Watchlist = () => {
         </Grid>
       )}
 
-      <Typography variant="h5" sx={{ mt: 5, mb: 2 }}>
-        TV Shows
-      </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+        <LiveTvIcon sx={{ color: "#e50914", mr: 1 }} />
+        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+          TV Shows
+        </Typography>
+      </Box>
       {tvShows.length === 0 ? (
-        <Typography>No saved TV shows.</Typography>
+        <Typography sx={{ color: "#aaa" }}>No saved TV shows.</Typography>
       ) : (
         <Grid container spacing={2}>
           {tvShows.map((tv) => (
