@@ -49,9 +49,25 @@ const ChangeEmail = ({ supabase, BASE_URL }) => {
               as={TextField}
               label="New Email"
               type="email"
+              color="fff"
               fullWidth
               error={touched.email && Boolean(errors.email)}
               helperText={touched.email && errors.email}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                      backgroundColor: "#222",
+                      color: "#fff",
+                      borderRadius: 2,
+                    },
+                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#fff",
+                      borderRadius: 2,
+                      borderWidth: 1,
+                      outline: "none",
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: "#aaa",
+              },}}
             />
 
             <Field
@@ -59,9 +75,25 @@ const ChangeEmail = ({ supabase, BASE_URL }) => {
               as={TextField}
               label="Confirm Email"
               type="email"
+              color="fff"
               fullWidth
               error={touched.confirmEmail && Boolean(errors.confirmEmail)}
               helperText={touched.confirmEmail && errors.confirmEmail}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                      backgroundColor: "#222",
+                      color: "#fff",
+                      borderRadius: 2,
+                    },
+                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#fff",
+                      borderRadius: 2,
+                      borderWidth: 1,
+                      outline: "none",
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: "#aaa",
+              },}}
             />
 
             <Button

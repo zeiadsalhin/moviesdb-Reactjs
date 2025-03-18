@@ -58,9 +58,25 @@ const ChangePassword = ({ supabase }) => {
                 as={TextField}
                 label="New Password"
                 type="password"
+                color="fff"
                 fullWidth
                 error={touched.password && Boolean(errors.password)}
                 helperText={touched.password && errors.password}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                        backgroundColor: "#222",
+                        color: "#fff",
+                        borderRadius: 2,
+                      },
+                      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#fff",
+                        borderRadius: 2,
+                        borderWidth: 1,
+                        outline: "none",
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#aaa",
+                },}}
               />
 
               <Field
@@ -68,9 +84,25 @@ const ChangePassword = ({ supabase }) => {
                 as={TextField}
                 label="Confirm Password"
                 type="password"
+                color="fff"
                 fullWidth
                 error={touched.confirmPassword && Boolean(errors.confirmPassword)}
                 helperText={touched.confirmPassword && errors.confirmPassword}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                        backgroundColor: "#222",
+                        color: "#fff",
+                        borderRadius: 2,
+                      },
+                      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#fff",
+                        borderRadius: 2,
+                        borderWidth: 1,
+                        outline: "none",
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#aaa",
+                },}}
               />
 
               <Button

@@ -89,6 +89,15 @@ const SettingsPage = () => {
           {tabIndex === 0 && <ChangeEmailSection supabase={supabase} BASE_URL={BASE_URL} />}
           {tabIndex === 1 && <ChangePasswordSection supabase={supabase} BASE_URL={BASE_URL} />}
         </Box>
+
+        <Box sx={{ mt: 5, textAlign: 'center' }}>
+          <Typography variant="body2" sx={{ color: "#aaa", mb: 0.5 }}>
+            Forgot your 2FA code?
+          </Typography>
+          <Typography variant="body2" sx={{ color: "#fff", fontWeight: "bold" }}>
+            Contact support @themovies
+          </Typography>
+        </Box>
       </Box>
     </>
   );

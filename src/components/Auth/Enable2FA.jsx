@@ -306,19 +306,19 @@ const Enable2FA = () => {
                   onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, "").slice(0,6))}
                   sx={{ outline: 0, 
                     "& .MuiOutlinedInput-root": {
-                backgroundColor: "#222",
-                color: "#fff",
-                borderRadius: 2,
-              },
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#fff",
-                borderRadius: 2,
-                borderWidth: 2.25,
-                outline: "none",
-              },
-              "& .MuiInputLabel-root": {
-                color: "#aaa",
-              },}}
+                      backgroundColor: "#222",
+                      color: "#fff",
+                      borderRadius: 2,
+                    },
+                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#fff",
+                      borderRadius: 2,
+                      borderWidth: 2.25,
+                      outline: "none",
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: "#aaa",
+                    },}}
                 />
 
                 <CustomButton
