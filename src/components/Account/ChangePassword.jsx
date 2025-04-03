@@ -5,6 +5,9 @@ import { Box, TextField, Button, CircularProgress } from "@mui/material";
 import PropTypes from "prop-types";
 
 const ChangePassword = ({ supabase }) => {
+  
+  // Validation schema for password change form
+  // This schema will validate the password and confirm password fields
   const passwordSchema = Yup.object().shape({
     password: Yup.string()
       .min(8, "Password must be at least 8 characters long")
@@ -17,6 +20,8 @@ const ChangePassword = ({ supabase }) => {
       .required("Confirm Password is required"),
   });
 
+  // Function to handle password change
+  // This function will be called when the form is submitted
   const handleChangePassword = async (values, { setSubmitting, resetForm }) => {
     const { password } = values;
 

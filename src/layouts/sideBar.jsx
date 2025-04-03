@@ -21,6 +21,8 @@ import InfoIcon from "@mui/icons-material/Info";
 // Set Axios Authorization header globally
 axios.defaults.headers.common["Authorization"] = import.meta.env.VITE_API_KEY;
 
+// Sidebar component
+// This component renders a sidebar with navigation links and user avatar 
 const Sidebar = ({ setSidebarVisible, passAuth }) => {
   const location = useLocation();
   const [userAvatar, setUserAvatar] = useState("/default-avatar.png");

@@ -2,6 +2,10 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
 const MediaList = lazy(() => import("../components/MediaList")); // Lazy load MediaList
 
+// 🔹 MoviesPage Component
+// This component fetches and displays a list of movies and TV shows from the TMDB API.
+// It includes a banner with a background image and a title, and it uses lazy loading for the MediaList component.
+// It also handles loading states and preloads the banner image for a smoother user experience.
 const MoviesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -14,6 +18,7 @@ const MoviesPage = () => {
     }, 200);
   }, []);
 
+  // 🔹 Media Categories
   const mediaCategories = [
     { title: "Upcoming Movies", endpoint: "movie/upcoming", genre: "upcoming", type: "movie" },
     { title: "Top Rated Movies", endpoint: "movie/top_rated", genre: "toprated", type: "movie" },

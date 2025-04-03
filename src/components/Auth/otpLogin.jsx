@@ -6,6 +6,9 @@ import CustomButton from "../useCustomButton";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import { toast } from "react-toastify";
 
+// Custom component for OTP input and verification
+// This component handles OTP input, validation, and submission to the Supabase backend for authentication
+
 const NetflixOtpInput = ({ toggleMode, email, onSuccess }) => {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);

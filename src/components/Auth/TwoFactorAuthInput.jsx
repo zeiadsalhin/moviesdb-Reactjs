@@ -10,6 +10,8 @@ const TwoFactorAuthInput = ({ userSession, onSuccess }) => {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Check if userSession is available and has factors
+  
   // Validate OTP input (only allows digits)
   const validateChar = (char) => /^\d$/.test(char);
 

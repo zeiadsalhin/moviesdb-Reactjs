@@ -1,3 +1,5 @@
+// This function generates a random username by combining a random adjective, noun, and a random number.
+// It uses a predefined list of adjectives and nouns to create a unique username.
 export const generateRandomUsername = async () => {
     const adjectives = ["Cool", "Epic", "Fast", "Funky", "Brave", "Mysterious"];
     const nouns = ["Tiger", "Eagle", "Phoenix", "Ninja", "Shadow", "Voyager"];

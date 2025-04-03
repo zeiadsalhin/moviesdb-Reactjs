@@ -20,7 +20,7 @@ const Enable2FA = () => {
   const [is2FAEnabled, setIs2FAEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
+  
 
   // ✅ Fetch Factor ID & 2FA Status
   useEffect(() => {
@@ -207,7 +207,8 @@ const Enable2FA = () => {
   return (
     <>
     <ToastContainer />
-      <Box
+    {/*✅ Render 2FA UI*/}      
+    <Box
         sx={{
           mt: 3,
           textAlign: "center",

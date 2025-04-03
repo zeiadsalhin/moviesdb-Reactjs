@@ -10,6 +10,7 @@ const Cast = ({ id, type, display }) => {
   const [loading, setLoading] = useState(true);
   const scrollContainerRef = useRef(null);
 
+  // Fetch cast data from API
   useEffect(() => {
     const fetchCast = async () => {
       setLoading(true);
@@ -34,6 +35,7 @@ const Cast = ({ id, type, display }) => {
     fetchCast();
   }, [id, type]);
 
+  // Scroll function to handle left and right scrolling
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
       const scrollAmount = 300;

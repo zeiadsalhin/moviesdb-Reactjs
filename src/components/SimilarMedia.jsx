@@ -5,11 +5,17 @@ import { ChevronLeft, ChevronRight, Whatshot as WhatshotIcon } from "@mui/icons-
 import MovieCard from "./movieCard";
 import axios from "axios";
 
+// This component fetches and displays similar movies or TV shows based on the provided media type and ID.
+// It uses the TMDB API to get the similar media data and displays it in a horizontally scrollable list.
+// The component also includes left and right arrow buttons to navigate through the list of similar media.
+// It shows a loading spinner while fetching data and a message if no similar media is found.
 const SimilarMedia = ({ mediaType, mediaId }) => {
     const [media, setMedia] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const scrollRef = React.useRef(null);
 
+    // Fetch similar media when the component mounts or when mediaType or mediaId changes
+    // The useEffect hook is used to perform side effects in function components.
     React.useEffect(() => {
         const fetchSimilarMedia = async () => {
             setLoading(true);
@@ -33,6 +39,8 @@ const SimilarMedia = ({ mediaType, mediaId }) => {
         fetchSimilarMedia();
     }, [mediaType, mediaId]);
 
+    // Function to handle scrolling left or right
+    // The scroll function takes a direction parameter to determine the scroll direction.
     const scroll = (direction) => {
         if (scrollRef.current) {
             const scrollAmount = 300;

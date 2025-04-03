@@ -14,6 +14,7 @@ const AuthProviders = ({ passAuth }) => {
   const [linkedProviders, setLinkedProviders] = useState([]);
   const [loading, setLoading] = useState(false);
 
+// fetch linked providers on component mount
   useEffect(() => {
     fetchLinkedProviders();
   }, []);
@@ -26,7 +27,8 @@ const AuthProviders = ({ passAuth }) => {
     }
     setLinkedProviders(data?.identities?.map((id) => id.provider) || []);
   };
-
+  
+// handle linking and unlinking of providers
   const handleProviderAction = async (provider, isLinked) => {
     setLoading(true);
 

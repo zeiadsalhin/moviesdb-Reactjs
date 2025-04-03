@@ -7,6 +7,10 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link, useLocation } from "react-router-dom";
 import { alpha } from "@mui/material/styles";
 
+// This component is used for the mobile navigation bar at the bottom of the screen
+// It uses Material UI's BottomNavigation and BottomNavigationAction components
+// The navigation bar contains four icons: Home, Movies, Favorites, and Account
+// Each icon is linked to a different route in the application
 const MobileNav = () => {
   const location = useLocation();
 

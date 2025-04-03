@@ -5,6 +5,8 @@ import NProgress from "nprogress";
 const NProgressHandler = () => {
   const location = useLocation();
 
+  // Initialize NProgress settings
+  // Handle the progress bar
   useEffect(() => {
     NProgress.start(); // Start loading bar
     const timer = setTimeout(() => NProgress.done(), 200); // Prevent flickering

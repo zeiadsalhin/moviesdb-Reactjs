@@ -40,6 +40,8 @@ const Sidebar = () => {
 
   const handleToggle = () => setOpen(!open);
 
+  // signOutUser function to handle user sign-out
+  // It sets loading state to true, waits for 1.5 seconds, then signs out the user and redirects to login page
   const signOutUser = async () => {
     setLoading(true);
 

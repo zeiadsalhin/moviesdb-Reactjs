@@ -4,6 +4,9 @@ import { Box, Typography, CircularProgress, Avatar, Button } from "@mui/material
 import DOMPurify from "dompurify";
 import axios from "axios";
 
+// This component fetches and displays reviews for a given media item (movie or TV show) using the TMDB API.
+// It allows users to expand/collapse long reviews and load more reviews on demand.
+// The reviews are displayed with the author's name, avatar, rating (if available), and the review content itself.
 const Reviews = ({ mediaId, mediaType }) => {
   const [reviews, setReviews] = useState([]);
   const [displayedCount, setDisplayedCount] = useState(3);
@@ -11,6 +14,8 @@ const Reviews = ({ mediaId, mediaType }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch reviews from the TMDB API when the component mounts or when mediaId/mediaType changes
+  // The reviews are stored in the state, and the loading state is managed to show a loading spinner while fetching data.
   useEffect(() => {
     const fetchReviews = async () => {
       setLoading(true);
@@ -39,6 +44,8 @@ const Reviews = ({ mediaId, mediaType }) => {
     fetchReviews();
   }, [mediaId, mediaType]);
 
+  // Function to toggle the expanded state of a review
+  // This allows users to see more or less of the review content when they click the "See More" or "See Less" button.
   const toggleExpand = (id) => {
     setExpandedReviews((prev) => ({
       ...prev,
@@ -46,6 +53,8 @@ const Reviews = ({ mediaId, mediaType }) => {
     }));
   };
 
+  // Function to load more reviews when the "Load More" button is clicked
+  // It increases the displayedCount state by 4, allowing more reviews to be shown.
   const handleLoadMore = () => {
     setDisplayedCount((prev) => prev + 4);
   };

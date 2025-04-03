@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 const ProfileHeader = ({ user }) => {
   const isLoading = !user; // Check if user data is still loading
 
+  // If user data is not available, show a loading state
   return (
     <Box sx={{ textAlign: "center", py: 4, background: "rgba(0,0,0,0.3)", borderRadius: 2 }}>
       {isLoading ? (

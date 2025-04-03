@@ -1,5 +1,10 @@
 import { supabase } from "./authConfig";
 
+// This file contains utility functions for managing user favorites in a Supabase database.
+// It includes functions to add, remove, toggle, and fetch favorites for movies and TV shows.
+// The functions are designed to be generic and reusable for different types of favorites.
+// The functions use Supabase's JavaScript client to interact with the database and handle errors gracefully.
+
 // Generic updateFavorites function
 export const updateFavorites = async ({
     userId,

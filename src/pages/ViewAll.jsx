@@ -4,6 +4,8 @@ import MovieCard from "../components/movieCard";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
+// Displays a list of movies or TV shows based on the selected category and type.
+// Fetches data from the TMDB API and implements infinite scrolling and sorting functionality.
 const ViewAll = () => {
   const { category, type } = useParams();
   const [items, setItems] = useState([]);
@@ -12,6 +14,8 @@ const ViewAll = () => {
   const [sortBy, setSortBy] = useState(""); // Default sorting is determined dynamically
   const observer = useRef();
 
+  // **Dynamic API Endpoints based on category and type**
+  // The API endpoints are constructed based on the type (movie or tv) and the selected category.
   const apiEndpoints = {
     latest: `https://api.themoviedb.org/3/${type === "movie" ? "movie/now_playing" : "tv/on_the_air"}?language=en-US`,
     trending: `https://api.themoviedb.org/3/trending/${type}/week?language=en-US`,
@@ -28,6 +32,11 @@ const ViewAll = () => {
     war: `https://api.themoviedb.org/3/discover/${type}?with_genres=10752&language=en-US`,
   };
 
+  // **Dynamic Fetching Logic**
+  // The fetchItems function is responsible for fetching data from the TMDB API based on the selected category and type.
+  // It handles pagination and ensures that duplicate items are not added to the state.
+  // The function is called when the component mounts and whenever the category or type changes.
+  // It also implements infinite scrolling by using the Intersection Observer API to detect when the user has scrolled to the bottom of the page.
   const fetchItems = async () => {
     if (loading || !apiEndpoints[category]) return;
     setLoading(true);
@@ -51,6 +60,8 @@ const ViewAll = () => {
     setLoading(false);
   };
 
+  // **Dynamic Title Logic**
+  // The document title is updated based on the selected category and type.
   useEffect(() => {
     document.title = `${category.replace("-", " ").charAt(0).toUpperCase() + category.slice(1) + (type === "movie" ? " Movies" : " TV Shows")} | The Movies`;
 
@@ -59,6 +70,8 @@ const ViewAll = () => {
     fetchItems();
   }, [category, type]);
 
+  // **Dynamic Infinite Scrolling Logic**
+  // The Intersection Observer API is used to detect when the user has scrolled to the bottom of the page.
   useEffect(() => {
     const handleObserver = (entries) => {
       if (entries[0].isIntersecting) fetchItems();

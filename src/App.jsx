@@ -11,6 +11,8 @@ import NProgressHandler from "./utils/NProgressHandler"; // Import the handler
 import darkTheme from "./styles/theme";
 import { supabase } from "./utils/authConfig";
 
+// This component handles the scroll restoration when the route changes
+// It scrolls to the top of the page whenever the route changes
 const Wrapper = ({ children }) => {
   const location = useLocation();
 
@@ -22,6 +24,8 @@ const Wrapper = ({ children }) => {
   return children;
 };
 
+// This is the main App component that sets up the theme, routing, and layout of the application
+// It uses Material UI for styling and layout, and React Router for navigation
 const App = () => {
   const isMobile = useMediaQuery("(max-width: 900px)"); // Check if screen width is 900px or smaller
   const [sidebarVisible, setSidebarVisible] = useState(true);

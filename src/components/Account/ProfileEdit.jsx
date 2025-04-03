@@ -19,6 +19,8 @@ const ProfileEdit = ({ passAuth }) => {
   const [previewImage, setPreviewImage] = useState(null);
   const [uploading, setUploading] = useState(false);
 
+  // Fetch user data and profile on component mount
+  // useEffect to fetch user data and profile from passAuth
   useEffect(() => {
     const fetchUser = async () => {
       const { data, error } = await passAuth.auth.getUser();
@@ -37,6 +39,8 @@ const ProfileEdit = ({ passAuth }) => {
       }
     };
 
+    // Fetch user profile data
+    // useEffect to fetch user profile data from user_profiles table
     const fetchUserProfile = async (userId) => {
       const { data, error } = await passAuth
         .from("user_profiles")
@@ -59,6 +63,7 @@ const ProfileEdit = ({ passAuth }) => {
     fetchUser();
   }, []);
 
+  // Handle file upload and preview
   const handleEditClick = () => setIsEditing(true);
   const handleCancel = () => {
     setIsEditing(false);
@@ -78,6 +83,7 @@ const ProfileEdit = ({ passAuth }) => {
     }
   };
 
+  // Handle save action
   const handleSave = async () => {
     if (!user?.id) return;
     setUploading(true);

@@ -35,6 +35,8 @@ const SignIn = () => {
   const [userSession, setUserSession] = useState(null)
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
+  // Handle OAuth Sign-In
+  // This function will be called when the user clicks on the Google or GitHub button
   const handleOAuthSignIn = async (provider) => {
     provider === "google" ? setGoogleLoading(true) : setGithubLoading(true);
 
@@ -50,6 +52,8 @@ const SignIn = () => {
     }
   };
 
+  // Handle Sign-In with Password or OTP
+  // This function will be called when the user submits the form
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: Yup.object().shape({
@@ -85,6 +89,8 @@ const SignIn = () => {
           return;
         }
         
+        // Sign in with email and password
+        // This will be used for both password and 2FA login
         const { data, error } = await supabase.auth.signInWithPassword({
           email: values.email,
           password: values.password,
@@ -131,6 +137,8 @@ const SignIn = () => {
       
   });
 
+  // toggle between password and OTP login
+  // This function will be called when the user clicks on the "Use Password Instead" or "Use OTP Instead" button
   const toggleSignInMethod = () => {
     setUseOtp((prev) => !prev);
     formik.setFieldValue("password", ""); // Reset password field when switching

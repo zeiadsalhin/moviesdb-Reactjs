@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"; // Go Back Icon
 
+// Custom styles for the error component
 const ErrorComponent = ({ message = "Oops! 🎬 The item you are looking for is not found." }) => {
     const navigate = useNavigate();
     const [fadeIn, setFadeIn] = useState(false);

@@ -14,6 +14,10 @@ const sections = [
   { icon: <SettingsIcon sx={{ color: "#e50914" }} />, text: "Settings", path: "/account/settings" },
 ];
 
+// DashboardNavigation component
+// This component is responsible for rendering the navigation menu in the dashboard
+// It includes links to different sections of the dashboard and a sign-out button
+
 const DashboardNavigation = ({ passAuth, passUseState }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = passUseState(false);

@@ -18,6 +18,8 @@ const MediaList = ({ title, apiEndpoint, mediaType, viewAllRoute }) => {
   const [loading, setLoading] = useState(true);
   const scrollContainerRef = useRef(null);
 
+  // Fetch media items when the component mounts
+  // and when the apiEndpoint changes
   useEffect(() => {
     fetchMedia();
   }, []);

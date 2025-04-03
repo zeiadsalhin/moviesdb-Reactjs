@@ -28,6 +28,9 @@ const DetailsPage = () => {
   const [isSaved, setIsSaved] = useState(false);
   const isMobile = useMediaQuery("(max-width: 899px)");
 
+  // fetch movie or TV show details
+  // Check if user is logged in and fetch favorites
+  // Check if the media is already saved in favorites
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -72,6 +75,8 @@ const DetailsPage = () => {
     fetchDetails();
   }, [type, id]);
 
+  // Handle saving to favorites
+  // Check if user is logged in to save the media in favorites
   const handleSave = async () => {
     if (!user) {
       navigate('/auth')

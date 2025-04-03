@@ -7,6 +7,8 @@ import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 import ErrorPage from "../404Page";
 
+// This component is used to define the routes for the authentication pages
+// and render the appropriate component based on the URL path.
 const Account = () => {
   return (
     <Routes>

@@ -9,6 +9,8 @@ import { generateRandomUsername } from "../../utils/generateUsername";
 import { getUserProfile } from "../../utils/getUserProfile";
 import UserStats from "../../components/Account/UserStats";
 
+// This component is the main dashboard for the user account page. It fetches user data, displays the profile header, watchlist, and recommendations.
+// It also handles the generation of a random username if the user does not have one set.
 const Dashboard = () => {
   useEffect(() => {
     document.title = "My Account | The Movies";
@@ -18,6 +20,10 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
+  // Fetch user data from Supabase and set the user state
+  // This includes the display name, email, and avatar URL.
+  // If the display name is missing, generate a random username and update the user state.
+  // The user state is then passed to the ProfileHeader component for display.
   useEffect(() => {
     const fetchUserData = async () => {
       const { data: authData, error: authError } = await supabase.auth.getUser();

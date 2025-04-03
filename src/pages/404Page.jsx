@@ -2,6 +2,8 @@ import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+// This is a 404 page component that displays when the user navigates to a non-existent route.
+// It shows a 404 error message, a brief description, and a button to navigate back to the home page.
 const NotFoundPage = () => {
   const navigate = useNavigate();
   useEffect(() => {

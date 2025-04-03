@@ -13,6 +13,9 @@ const ResetPassword = () => {
   const [sessionVerified, setSessionVerified] = useState(false);
   const token_hash = searchParams.get("token");
 
+  // Check if the token is present in the URL
+  // If not, show an error and redirect to login
+  // If present, verify the token with Supabase
   useEffect(() => {
     const verifyToken = async () => {
       if (!token_hash) {
@@ -57,6 +60,9 @@ const ResetPassword = () => {
     verifyToken();
   }, [token_hash, navigate]);
 
+  // Validation schema for the password reset form
+  // Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one special character
+  // Confirm password must match the password field
   const passwordSchema = Yup.object().shape({
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
@@ -69,6 +75,8 @@ const ResetPassword = () => {
       .required("Confirm Password is required"),
   });
 
+  // Function to handle password reset
+  // It takes the new password and confirms it with the user
   const handleResetPassword = async (values, { setSubmitting }) => {
     if (!sessionVerified) {
       toast.error("Session verification failed. Try again.");

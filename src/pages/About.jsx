@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { useEffect } from "react";
 
+/// About Component
+/// This component displays information about the website, including credits, license, and technologies used.
+/// It also includes a link to the author's GitHub profile.
 const About = () => {
   useEffect(()=> {
     document.title = 'About Us | The Movies';

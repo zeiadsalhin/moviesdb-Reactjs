@@ -30,10 +30,12 @@ const SignUp = () => {
   const [githubLoading, setGithubLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
+  // handle OAuth sign-up
   const handleOAuthSignUp = async (provider) => {
     if (provider === "google") setGoogleLoading(true);
     if (provider === "github") setGithubLoading(true);
@@ -52,6 +54,7 @@ const SignUp = () => {
     }
   };
 
+  // handle form submission
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -86,6 +89,7 @@ const SignUp = () => {
         return;
       }
     
+      // If sign-up is successful, show success message and redirect to confirmation page
       toast.success("Verification email sent! Please check your inbox.", {
         position: "top-center",
         autoClose: 2000,

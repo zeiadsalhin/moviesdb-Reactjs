@@ -6,6 +6,10 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import axios from "axios";
 
+// This component fetches and displays trailers and photos for a given movie or TV show.
+// It uses the TMDB API to get the data and displays it in a scrollable format.
+// The component also includes a modal to play the trailer video when clicked.
+// The component is responsive and adjusts its layout based on the screen size.
 const TrailerPhotos = ({ id, type }) => {
   const [images, setImages] = useState([]);
   const [videoKey, setVideoKey] = useState(null);
@@ -13,6 +17,8 @@ const TrailerPhotos = ({ id, type }) => {
   const [error, setError] = useState(null);
   const scrollRef = useRef(null);
 
+  // Fetch images and video key when the component mounts or when id/type changes
+  // The useEffect hook is used to perform side effects in functional components.
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -29,6 +35,8 @@ const TrailerPhotos = ({ id, type }) => {
       }
     };
 
+    // Fetch video key
+    // The video key is used to display the trailer video in a modal.
     const fetchVideos = async () => {
       try {
         const { data } = await axios.get(`https://api.themoviedb.org/3/${type}/${id}/videos`, {
@@ -51,6 +59,8 @@ const TrailerPhotos = ({ id, type }) => {
     fetchVideos();
   }, [id, type]);
 
+  // Function to handle scrolling left or right
+  // The handleScroll function is used to scroll the images left or right when the buttons are clicked.
   const handleScroll = (direction) => {
     if (scrollRef.current) {
       const scrollAmount = window.innerWidth < 768 ? 200 : 400;

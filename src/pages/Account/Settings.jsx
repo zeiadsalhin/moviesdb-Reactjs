@@ -8,6 +8,8 @@ import { BASE_URL } from "../../utils/BASE_URL_Config";
 import { useRequireAAL2 } from "../../hooks/useRequireAAL2";
 import TwoFactorAuthInput from "../../components/Auth/TwoFactorAuthInput";
 
+// This component is used to render the account settings page, which includes options to change email and password.
+// It also handles the 2FA re-authentication process if the user is required to do so.
 const SettingsPage = () => {
   useEffect(() => {
     document.title = "Account Settings | The Movies";
@@ -18,6 +20,8 @@ const SettingsPage = () => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
 
+  // Fetch the user session from Supabase
+  // and set the user state when the component mounts.
   useEffect(() => {
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -26,6 +30,8 @@ const SettingsPage = () => {
     getUser();
   }, []);
 
+  // Check if the user is required to re-authenticate with 2FA.
+  // If so, open the modal for 2FA input.
   useEffect(() => {
     if (!checking && isAAL1) {
       setOpen(true);

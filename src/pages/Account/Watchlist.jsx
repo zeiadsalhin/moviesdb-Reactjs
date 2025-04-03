@@ -8,7 +8,8 @@ import LiveTvIcon from '@mui/icons-material/LiveTv';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import axios from "axios";
 
-
+// This component displays the user's watchlist, including saved movies and TV shows.
+// It fetches the data from the Supabase database and TMDB API, and displays it in a grid format.
 const Watchlist = () => {
   useEffect(() => {
     document.title = "My Watchlist | The Movies";
@@ -19,6 +20,10 @@ const Watchlist = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
+  // Fetch the user's watchlist data from Supabase and TMDB API
+  // and set the state variables accordingly.
+  // The fetchFavorites function retrieves the user's saved movies and TV shows from the database.
+  // The TMDB API is used to fetch the details of each movie and TV show.
   useEffect(() => {
     const fetchData = async () => {
       const { data: { session } } = await supabase.auth.getSession();

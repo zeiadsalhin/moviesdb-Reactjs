@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/authConfig";
 
+// This hook checks if the user is authenticated with AAL2 (Authenticator Assurance Level 2)
+// If the user is not authenticated with AAL2, it returns a boolean value indicating the status
+// and a loading state. It does not redirect the user to the login page.
+// This is useful for components that need to check the authentication level without redirecting the user.
+
 // Instead of redirecting, return status
 export const useRequireAAL2 = () => {
     const [isAAL1, setIsAAL1] = useState(false);

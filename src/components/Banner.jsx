@@ -21,6 +21,9 @@ const HomeBanner = () => {
   const [isSaved, setIsSaved] = useState(false);
   const isMobile = useMediaQuery("(max-width: 899px)");
 
+  // Fetch a random movie when the component mounts
+  // and set up a parallax effect on scroll
+
   useEffect(() => {
     fetchRandomMovie();
 
@@ -38,6 +41,8 @@ const HomeBanner = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Fetch a random movie from TMDB API
+  // and check if it's already saved in the user's favorites
   const fetchRandomMovie = async () => {
     setIsLoading(true);
     try {
@@ -94,6 +99,8 @@ const HomeBanner = () => {
     }
   };
 
+  // Handle saving the movie to favorites
+  // and updating the state accordingly
   const handleSave = async () => {
     if (!randomMovie) return;
   

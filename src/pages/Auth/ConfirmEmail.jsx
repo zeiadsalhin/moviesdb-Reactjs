@@ -3,6 +3,9 @@ import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+// This component is used to display a confirmation message after the user has signed up
+// and is redirected to confirm their email address. It shows a message indicating that a confirmation email has been sent to the user's email address.
+// The email address is extracted from the URL query parameters. The user can click a button to navigate back to the home page.
 const ConfirmEmail = () => {
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);

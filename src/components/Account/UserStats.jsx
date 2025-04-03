@@ -5,6 +5,9 @@ import StarRateIcon from '@mui/icons-material/StarRate';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
+// This component displays user statistics such as watchlist items, average rating, favorite genre, and total hours watched.
+// It simulates fetching data with a delay and shows skeleton loaders while the data is being fetched.
+
 const UserStats = () => {
   const [stats, setStats] = useState(null);
 
@@ -22,6 +25,9 @@ const UserStats = () => {
     return () => clearTimeout(timeout);
   }, []);
 
+  // Define the stats array based on the fetched stats
+  // If stats is null, it means the data is still being fetched, so we show skeletons instead.
+  // If stats is available, we create an array of objects to display the statistics.
   const statsArray = stats ? [
     {
       label: "Watchlist Items",

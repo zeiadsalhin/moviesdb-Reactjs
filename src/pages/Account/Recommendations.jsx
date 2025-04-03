@@ -14,6 +14,10 @@ const Recommendations = () => {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch user favorites and get recommendations from TMDB API
+  // using the random movie ID from favorites
+  // and set the recommendations state with the response data
+  // If no favorites are found, show a message to add favorites
   useEffect(() => {
     const fetchRecs = async () => {
       const { data: { session } } = await supabase.auth.getSession();

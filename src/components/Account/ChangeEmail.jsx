@@ -12,6 +12,8 @@ const ChangeEmail = ({ supabase, BASE_URL }) => {
       .required("Confirm Email is required"),
   });
 
+  // Function to handle email change
+  // This function will be called when the form is submitted
   const handleChangeEmail = async (values, { setSubmitting, resetForm }) => {
     const { email } = values;
 

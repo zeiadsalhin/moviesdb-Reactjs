@@ -7,6 +7,10 @@ import { supabase } from "../../utils/authConfig";
 import { useRequireAAL2 } from "../../hooks/useRequireAAL2";
 import TwoFactorAuthInput from "../../components/Auth/TwoFactorAuthInput";
 
+// This component is responsible for rendering the profile page where users can edit their profile, manage authentication providers, and enable 2FA.
+// It uses the `useRequireAAL2` hook to check if the user is authenticated and has AAL2 enabled. If not, it shows a modal for reauthentication.
+// The `useEffect` hooks are used to set the document title and manage the state of the modal based on the user's authentication status.
+// The `EditProfile`, `AuthProviders`, and `Enable2FA` components are imported to handle the respective functionalities on the profile page.
 const Profile = () => {
   useEffect(() => {
     document.title = "Edit Profile | The Movies";
@@ -16,6 +20,8 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
 
+  // Check if the user is authenticated and has AAL2 enabled
+  // If not, show the reauthentication modal
   useEffect(() => {
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();

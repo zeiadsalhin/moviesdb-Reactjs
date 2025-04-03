@@ -11,12 +11,16 @@ import ViewAll from "../pages/ViewAll";
 import ViewDetails from "../pages/DetailsPage";
 import ErrorPage from "../pages/404Page";
 
+// Animation variants for page transitions
+// These define the initial, animate, and exit states for the animations
 const pageVariants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.3 } },
   exit: { opacity: 0, transition: { duration: 0 } },
 };
 
+// AnimatedRoutes component handles the routing and animation of pages
+// It uses React Router for routing and Framer Motion for animations
 const AnimatedRoutes = () => {
   const location = useLocation();
 

@@ -13,6 +13,11 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import WhatshotIcon from '@mui/icons-material/Whatshot'; // Fire Icon 🔥
 import CircularProgress from "@mui/material/CircularProgress";
 
+// Favorites Component
+// This component fetches and displays a list of movies currently playing in theaters.
+// It includes a horizontal scrollable view with left and right navigation buttons.
+// The movies are fetched from the TMDB API and displayed in cards with their title, rating, and release date.
+// The component also includes a loading state to show a spinner while the movies are being fetched.
 const Favorites = () => {
   const [movies, setMovies] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -37,6 +42,8 @@ const Favorites = () => {
     }
   };
 
+  // Function to scroll the movie list left or right
+  // This function uses the scrollBy method to scroll the container by a specified amount.
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
       const scrollAmount = 250;

@@ -6,6 +6,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
+// This component is used to display the navbar on the top of the page
+// It contains the logo and the search button
 const Navbar = ({ display }) => {
 
   return (

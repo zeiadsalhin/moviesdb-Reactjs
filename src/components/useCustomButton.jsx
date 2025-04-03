@@ -2,6 +2,8 @@ import { Button, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+// This component is a custom button that can be used for both internal and external links.
+// It accepts various props to customize its appearance and behavior.
 const CustomButton = ({
   text,
   color = "primary",

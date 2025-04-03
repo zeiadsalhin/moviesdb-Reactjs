@@ -2,6 +2,9 @@ import { useEffect, lazy, Suspense } from "react";
 import Banner from "../components/Banner";
 const MediaList = lazy(() => import("../components/MediaList")); // Lazy load MediaList;
 
+// This component is responsible for rendering the home page of the application.
+// It includes a banner and sections for latest movies, latest TV shows, trending movies, and trending TV shows.
+// The data for these sections is fetched from an external API using the MediaList component.
 const Home = () => {
   useEffect(() => {
     document.title = "Home | The Movies";

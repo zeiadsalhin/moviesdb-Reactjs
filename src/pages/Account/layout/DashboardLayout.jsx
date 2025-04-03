@@ -2,6 +2,8 @@ import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 import Sidebar from "./Sidebar";
 
+// This is the main layout for the dashboard, which includes a sidebar and a content area
+// The Sidebar component is imported and used here, and the Outlet component is used to render the current route inside the layout
 const DashboardLayout = () => {
   return (
     <Box

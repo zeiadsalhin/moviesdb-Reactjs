@@ -7,6 +7,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 import ClearIcon from "@mui/icons-material/Clear";
 import MovieCard from "../components/movieCard";
 
+// This component handles the search functionality for movies and TV shows
+// It includes a search bar, displays results, and handles infinite scrolling
+// It uses Axios for API calls and Material-UI for styling
+// The component is designed to be responsive and user-friendly
 const Search = () => {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
@@ -18,6 +22,7 @@ const Search = () => {
   useEffect(() => {
     document.title = "Search Movies & TV Shows | The Movies";
 
+    // handle scroll event for infinite scrolling
     const handleScroll = () => {
       if (
         window.innerHeight + window.pageYOffset >=
@@ -56,6 +61,7 @@ const Search = () => {
         },
       });
 
+      // Check if the response contains results
       if (page === 1) {
         setResults(response.data.results || []);
         setCurrentPage(2);

@@ -1,4 +1,5 @@
 
+// DEPRECATED: This function is deprecated and removed. Use Supabase default instead.
 // Makes url compatible and detectable by authenticator
 
 export const fixOtpAuthUri = (uri) => {

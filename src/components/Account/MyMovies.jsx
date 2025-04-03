@@ -13,6 +13,9 @@ const movieCategories = [
   { icon: <ThumbUpIcon sx={{ color: "#e50914" }} />, text: "Recommended", count: 56 },
 ];
 
+// This component displays a list of movie categories with icons and counts.
+// Each category is represented by a ListItem with an icon, text, and count.
+
 const MyMovies = () => {
   return (
     <Box sx={{ backgroundColor: "rgba(0, 0, 0, 0.3)", p: 2, borderRadius: 2 }}>

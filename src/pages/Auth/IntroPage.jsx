@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import CustomButton from "../../components/useCustomButton"; // Import your custom button
 
+// IntroPage component
+// This component serves as the landing page for the authentication section of the application.
 const IntroPage = () => {
   const navigate = useNavigate();
 

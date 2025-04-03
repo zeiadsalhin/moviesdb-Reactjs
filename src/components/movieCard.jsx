@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
+// MovieCard component to display individual movie or TV show details
+// It takes in a result object and a type (movie or tv) as props
 const MovieCard = ({ result, type }) => {  
   return (
     <Box className="movie-item" sx={{ flexBasis: "8%", height: "fit-content", paddingX: "4px" }}>

@@ -8,6 +8,10 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
+// This component is used to reset the password for a user. It sends a password reset email to the user.
+// The user can enter their email address and click the "Send Reset Link" button to receive the email.
+// If the email is sent successfully, a success message is displayed. If there is an error, an error message is displayed.
+// The component also includes a link to the login page for users who have remembered their password.
 const ForgotPassword = () => {
   useEffect(() => {
     document.title = "Reset Password | The Movies";
